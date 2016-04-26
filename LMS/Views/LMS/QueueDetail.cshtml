@@ -1,0 +1,260 @@
+﻿@{
+    ViewBag.Title = "Queue Detail";
+    //Layout = "~/Views/Shared/_LayoutLogIn.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Queue Detail
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Forms</a></li>
+        <li class="active">QueueDetail</li>
+    </ol>
+</section>
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Driver</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>นาย ธนพงศ์ ขำโชติ</td>
+                                    <td>0818602028</td>
+                                    <td><span class="label label-success">Avaliable</span></td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Select Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>นาย aaa bbbbb</td>
+                                    <td>0818602028</td>
+                                    <td><span class="label label-success">Avaliable</span></td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Select Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>นาย ccc dddddd</td>
+                                    <td>0818602028</td>
+                                    <td><span class="label label-success">Avaliable</span></td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Select Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>นาย eee ffffff</td>
+                                    <td>0818602028</td>
+                                    <td><span class="label label-success">Avaliable</span></td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Select Now</a></td>
+                                </tr>
+                         
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+
+            </div>
+
+            <div class="box box-success">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
+
+                    <h3 class="profile-username text-center">นาย ธนพงศ์ ขำโชติ</h3>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>เบอร์โทร</b> <a class="pull-right">0818602028</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>เพศ</b> <a class="pull-right">ชาย</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>อายุ</b> <a class="pull-right">40 ปี</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>ประสบการณ์เส้นทาง</b> <a class="pull-right">กรุงเทพฯและต่างจังหวัดทั่วไป</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>ใบอนุญาตขับขี่</b> <a class="pull-right">ชนิดที่ 2 ทุกประเภท</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>อายุงาน</b> <a class="pull-right">15 ปี</a>
+                        </li>
+                    </ul>
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>ภาษา</th>
+                                    <th>ฟัง</th>
+                                    <th>พูด</th>
+                                    <th>อ่าน</th>
+                                    <th>เขียน</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ไทย</td>
+                                    <td>ดี</td>
+                                    <td>ดี</td>
+                                    <td>ดี</td>
+                                    <td>ดี</td>
+                                </tr>
+                                <tr>
+                                    <td>อังกฤษ</td>
+                                    <td>พอใช้</td>
+                                    <td>พอใช้</td>
+                                    <td>พอใช้</td>
+                                    <td>พอใช้</td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                  
+                </div>
+              
+                <div class="box-footer clearfix">
+                    @*   <a href="javascript:void(0)" class="btn btn-sm btn-success btn-flat pull-right">Confirm</a>*@
+                    <a href="#" class="btn btn-success btn-block"><b>Confirm</b></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Booking Detail</h3>
+                </div>
+            
+                <div class="box-body box-profile">
+                    <b>Booking ID</b> <a class="pull-right">B00001</a>
+                  
+                </div>
+                <div class="box-footer clearfix">
+                    <a href="/LMS/Booking" class="btn btn-sm btn-info btn-warning pull-left">Edit Booking</a>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-danger btn-flat pull-right">Cancel Booking</a>
+                </div>
+                
+            </div>
+
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Reservation Detail</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                    </div>
+                </div>
+               
+                <div class="box-body box-profile">
+
+                    <ul class="list-group list-group-unbordered">
+                        
+                        <li class="list-group-item">
+                            <b>Costomer</b> <a class="pull-right">Walk In</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Service</b> <a class="pull-right">One Way</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>From</b> <a class="pull-right">Suvarnabhumi Airport</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>To</b> <a class="pull-right">Bangna</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Date</b> <a class="pull-right">7/5/2016</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>No of passenger</b> <a class="pull-right">4</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>No of luggage</b> <a class="pull-right">5</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Car Model</b> <a class="pull-right">Toyota Camry</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Price (Baht)</b> <a class="pull-right">3,000.00</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+
+            </div>
+
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Contact Detail</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                    </div>
+                </div>
+
+                <div class="box-body box-profile">
+
+                    <ul class="list-group list-group-unbordered">
+
+                        <li class="list-group-item">
+                            <b>Title</b> <a class="pull-right">Mr.</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>First Name</b> <a class="pull-right">Nopporn</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last Name</b> <a class="pull-right">Chaothai</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Address</b> <a class="pull-right">111/5 Bangkok Thailand 10120</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>E-Mail</b> <a class="pull-right">tuuranger@hotmail.com</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Telephone</b> <a class="pull-right">022222222</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Mobile</b> <a class="pull-right">0933270912</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Remark</b> <a class="pull-right"></a>
+                        </li>
+                        
+                    </ul>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</section>

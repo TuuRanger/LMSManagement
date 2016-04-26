@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Booking Detail";
+    //Layout = "~/Views/Shared/_LayoutLogIn.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Booking Detail
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Forms</a></li>
+        <li class="active">BookingDetail</li>
+    </ol>
+</section>
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Contact Person</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form role="form">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>Title</label>
+                            <select class="form-control">
+
+                                <option>Mr.</option>
+                                <option>Ms.</option>
+                        
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>E-Mail</label>
+                            <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Telephone</label>
+                            <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Moblie</label>
+                            <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Remark</label>
+                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                        </div>
+                        
+                        <div class="box-footer clearfix">
+                          @*  <a href="javascript:void(0)" class="btn btn-sm btn-success btn-flat pull-right">Confirm</a>*@
+                            <a href="#" class="btn btn-success btn-block"><b>Confirm</b></a>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Reservation Detail</h3>
+                </div>
+                <div class="box-body box-profile">
+                  
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Costomer</b> <a class="pull-right">Walk In</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Service</b> <a class="pull-right">One Way</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>From</b> <a class="pull-right">Suvarnabhumi Airport</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>To</b> <a class="pull-right">Bangna</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Date</b> <a class="pull-right">7/5/2016</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>No of passenger</b> <a class="pull-right">4</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>No of luggage</b> <a class="pull-right">5</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Car Model</b> <a class="pull-right">Toyota Camry</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Price (Baht)</b> <a class="pull-right">3,000.00</a>
+                        </li>
+                    </ul>
+
+                </div>
+                
+              
+            </div>
+
+        </div>
+    </div>
+
+</section>

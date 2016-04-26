@@ -1,0 +1,214 @@
+﻿@{
+    ViewBag.Title = "Booking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Booking
+    </h1>
+    <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Forms</a></li>
+            <li class="active">Booking</li>
+        </ol>
+</section>
+<section class="content">
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Search</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <form role="form">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>Customer</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optiosCustomer" id="optiosCustomer1" value="WalkIn" checked>
+                                   Walk In
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optiosCustomer" id="optiosCustomer2" value="SubAgent">
+                                   Sub Agent
+                                </label>
+                            </div>
+                          
+                        </div>
+                        <div class="form-group">
+                            <label>Service</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optiosService" id="optiosService1" value="OneWay" checked>
+                                    One Way
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="optiosService" id="optiosService2" value="OneDay">
+                                    One Day
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label>From</label>
+                            <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>To</label>
+                            <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="form-control" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>No of passenger</label>
+                            <select class="form-control">
+                                
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>No of luggage</label>
+                            <select class="form-control">
+
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+
+                            </select>
+                        </div>
+                        <div class="box-footer clearfix">
+                          @*  <a href="javascript:void(0)" class="btn btn-sm btn-success btn-flat pull-right">Search</a>*@
+                            <a href="#" class="btn btn-success btn-block"><b>Search</b></a>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
+          
+        </div>
+        <div class="col-md-8">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Car Detail</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Car</th>
+                                    <th>Model</th>
+                                    <th>Price (Baht)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Benz</td>
+                                    <td>A500</td>
+                                    <td>5,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Toyota</td>
+                                    <td>Camry</td>
+                                    <td>3,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Honda</td>
+                                    <td>Accord</td>
+                                    <td>1,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Benz</td>
+                                    <td>zzzzzzzzzzzzz</td>
+                                    <td>5,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Toyota</td>
+                                    <td>aaaaaa</td>
+                                    <td>3,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Honda</td>
+                                    <td>xxxxx</td>
+                                    <td>1,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Benz</td>
+                                    <td>zzzzzzzzzzzzz</td>
+                                    <td>5,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Toyota</td>
+                                    <td>aaaaaa</td>
+                                    <td>3,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Honda</td>
+                                    <td>xxxxx</td>
+                                    <td>1,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Benz</td>
+                                    <td>zzzzzzzzzzzzz</td>
+                                    <td>5,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Toyota</td>
+                                    <td>aaaaaa</td>
+                                    <td>3,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                                <tr>
+                                    <td>Honda</td>
+                                    <td>xxxxx</td>
+                                    <td>1,000.00</td>
+                                    <td><a href="/LMS/BookingDetail" class="btn btn-sm btn-success btn-flat pull-right">Book Now</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+               
+            </div>
+
+        </div>
+    </div>
+
+</section>
