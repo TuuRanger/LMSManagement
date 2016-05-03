@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="LMS_Account">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="40" />
+    <Property Name="Password" Type="varchar" MaxLength="40" />
+    <Property Name="Title" Type="varchar" MaxLength="40" />
+    <Property Name="Firstname" Type="varchar" MaxLength="40" />
+    <Property Name="Lastname" Type="varchar" MaxLength="40" />
+    <Property Name="Department" Type="varchar" MaxLength="40" />
+    <Property Name="Telephone" Type="varchar" MaxLength="40" />
+    <Property Name="Email" Type="varchar" MaxLength="40" />
+    <Property Name="RoleID" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="LMS_Booking">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="Telephone" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Date" Type="varchar" MaxLength="40" />
+    <Property Name="Contact" Type="varchar" MaxLength="40" />
+    <Property Name="Telephone" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="40" />
+    <Property Name="OrderBy" Type="varchar" MaxLength="40" />
+    <Property Name="FromTo" Type="varchar" MaxLength="40" />
+    <Property Name="Remark" Type="varchar" MaxLength="40" />
+    <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="DriverID" Type="int" />
+    <Property Name="CarID" Type="int" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="LMS_Car">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="VehicleRegis" Type="varchar" MaxLength="40" />
+    <Property Name="VehicleID" Type="int" />
+    <Property Name="Modle" Type="varchar" MaxLength="40" />
+    <Property Name="PhotoPath" Type="varchar" MaxLength="40" />
+    <Property Name="SitNumber" Type="int" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="LMS_Driver">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="52" />
+    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="LastName" Type="varchar" MaxLength="255" />
+    <Property Name="Birthday" Type="date" />
+    <Property Name="Mobile" Type="varchar" MaxLength="10" />
+    <Property Name="IDCard" Type="varchar" MaxLength="13" />
+    <Property Name="Status" Type="int" />
+    <Property Name="Nationality" Type="char" MaxLength="20" />
+    <Property Name="ENG_Listen" Type="int" />
+    <Property Name="ENG_Speak" Type="int" />
+    <Property Name="ENG_Read" Type="int" />
+    <Property Name="ENG_Write" Type="int" />
+    <Property Name="TH_Listen" Type="int" />
+    <Property Name="TH_Speak" Type="int" />
+    <Property Name="TH_Read" Type="int" />
+    <Property Name="TH_Write" Type="int" />
+    <Property Name="Experience" Type="varchar" MaxLength="500" />
+    <Property Name="YOS" Type="int" />
+  </EntityType>
+  <EntityType Name="LMS_From">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Detail" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="LMS_Job">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="BookingID" Type="int" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Time" Type="time" Precision="7" />
+    <Property Name="Itineray" Type="varchar" MaxLength="500" />
+    <Property Name="MileageOut" Type="int" />
+    <Property Name="MileageIn" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="LMS_Passenger">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="BookingID" Type="int" />
+    <Property Name="Title" Type="varchar" MaxLength="40" />
+    <Property Name="FristName" Type="varchar" MaxLength="40" />
+    <Property Name="LastName" Type="varchar" MaxLength="40" />
+    <Property Name="DOB" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="LMS_Product">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="AgentID" Type="int" />
+    <Property Name="RouteID" Type="int" />
+    <Property Name="TpyeOfService" Type="int" />
+    <Property Name="TpyeOfVihicle" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="LMS_Route">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="FromID" Type="int" />
+    <Property Name="ToID" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="LMS_SubAgent">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="Address" Type="varchar" MaxLength="500" />
+    <Property Name="Province" Type="varchar" MaxLength="40" />
+    <Property Name="Zipcode" Type="varchar" MaxLength="40" />
+    <Property Name="Telephone" Type="varchar" MaxLength="40" />
+    <Property Name="Email" Type="varchar" MaxLength="40" />
+    <Property Name="Contact" Type="varchar" MaxLength="40" />
+    <Property Name="CreditTerm" Type="int" />
+  </EntityType>
+  <EntityType Name="LMS_TO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Detail" Type="varchar" MaxLength="255" />
+    <Property Name="FromID" Type="int" />
+  </EntityType>
+  <EntityType Name="LMS_Vehicle">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityContainer Name="LMSModelStoreContainer">
+    <EntitySet Name="LMS_Account" EntityType="Self.LMS_Account" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_Booking" EntityType="Self.LMS_Booking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_Car" EntityType="Self.LMS_Car" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_Driver" EntityType="Self.LMS_Driver" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_From" EntityType="Self.LMS_From" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_Job" EntityType="Self.LMS_Job" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_Passenger" EntityType="Self.LMS_Passenger" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_Product" EntityType="Self.LMS_Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_Route" EntityType="Self.LMS_Route" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_SubAgent" EntityType="Self.LMS_SubAgent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_TO" EntityType="Self.LMS_TO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

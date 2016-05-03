@@ -30,3 +30,7 @@ C:\Project\LMS\LMS\bin\System.Web.WebPages.Razor.xml
 C:\Project\LMS\LMS\obj\Debug\LMS.csprojResolveAssemblyReference.cache
 C:\Project\LMS\LMS\obj\Debug\LMS.dll
 C:\Project\LMS\LMS\obj\Debug\LMS.pdb
+C:\Project\LMS\LMS\bin\itextsharp.dll
+C:\Project\LMS\LMS\bin\itextsharp.pdfa.dll
+C:\Project\LMS\LMS\bin\itextsharp.xtra.dll
+C:\Project\LMS\LMS\bin\itextsharp.xml

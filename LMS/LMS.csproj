@@ -39,11 +39,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\Users\TuuRanger\Downloads\itextsharp-all-5.5.9\itextsharp-dll-core\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.pdfa">
+      <HintPath>..\..\..\Users\TuuRanger\Downloads\itextsharp-all-5.5.9\itextsharp-dll-pdfa\itextsharp.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xtra">
+      <HintPath>..\..\..\Users\TuuRanger\Downloads\itextsharp-all-5.5.9\itextsharp-dll-xtra\itextsharp.xtra.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -130,6 +141,58 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LMSModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LMSModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMSModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMSModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LMSModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Account.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Booking.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Car.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Driver.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_From.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Job.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Passenger.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Product.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Route.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_SubAgent.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_TO.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Vehicle.cs">
+      <DependentUpon>LMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LMSModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +203,15 @@
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -168,6 +240,7 @@
     <Content Include="Content\themes\base\jquery.ui.slider.css" />
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\menu.css" />
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -194,6 +267,16 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="dist\css\AdminLTE.css" />
     <Content Include="dist\css\AdminLTE.min.css" />
     <Content Include="dist\css\skins\skin-black-light.css" />
@@ -1229,6 +1312,24 @@
     <Content Include="plugins\datatables\extensions\TableTools\Readme.md" />
     <Content Include="plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="plugins\input-mask\phone-codes\phone-codes.json" />
+    <EntityDeploy Include="LMSModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LMSModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="LMSModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LMSModel.edmx</DependentUpon>
+      <LastGenOutput>LMSModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="LMSModel.edmx.diagram">
+      <DependentUpon>LMSModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="LMSModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LMSModel.edmx</DependentUpon>
+      <LastGenOutput>LMSModel.cs</LastGenOutput>
+    </Content>
+    <None Include="Properties\PublishProfiles\LMS.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1238,6 +1339,8 @@
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -1252,6 +1355,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\LMS\advanced.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1270,13 +1374,18 @@
     <Content Include="Views\LMS\Login.cshtml" />
     <Content Include="Views\Shared\_LayoutLogIn.cshtml" />
     <Content Include="Views\LMS\QueueDetail.cshtml" />
+    <Content Include="Views\LMS\test.cshtml" />
+    <Content Include="Views\LMS\BookingCommit.cshtml" />
+    <Content Include="Views\LMS\BookingInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

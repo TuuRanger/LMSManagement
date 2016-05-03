@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LMSModelStoreContainer" CdmEntityContainer="LMSEntities">
+    <EntitySetMapping Name="LMS_Account">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Account">
+        <MappingFragment StoreEntitySet="LMS_Account">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Booking">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Booking">
+        <MappingFragment StoreEntitySet="LMS_Booking">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Contact" ColumnName="Contact" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+          <ScalarProperty Name="FromTo" ColumnName="FromTo" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+          <ScalarProperty Name="CarID" ColumnName="CarID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Car">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Car">
+        <MappingFragment StoreEntitySet="LMS_Car">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VehicleRegis" ColumnName="VehicleRegis" />
+          <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+          <ScalarProperty Name="Modle" ColumnName="Modle" />
+          <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+          <ScalarProperty Name="SitNumber" ColumnName="SitNumber" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Driver">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Driver">
+        <MappingFragment StoreEntitySet="LMS_Driver">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="IDCard" ColumnName="IDCard" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+          <ScalarProperty Name="ENG_Listen" ColumnName="ENG_Listen" />
+          <ScalarProperty Name="ENG_Speak" ColumnName="ENG_Speak" />
+          <ScalarProperty Name="ENG_Read" ColumnName="ENG_Read" />
+          <ScalarProperty Name="ENG_Write" ColumnName="ENG_Write" />
+          <ScalarProperty Name="TH_Listen" ColumnName="TH_Listen" />
+          <ScalarProperty Name="TH_Speak" ColumnName="TH_Speak" />
+          <ScalarProperty Name="TH_Read" ColumnName="TH_Read" />
+          <ScalarProperty Name="TH_Write" ColumnName="TH_Write" />
+          <ScalarProperty Name="Experience" ColumnName="Experience" />
+          <ScalarProperty Name="YOS" ColumnName="YOS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_From">
+      <EntityTypeMapping TypeName="LMSModel.LMS_From">
+        <MappingFragment StoreEntitySet="LMS_From">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Job">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Job">
+        <MappingFragment StoreEntitySet="LMS_Job">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Itineray" ColumnName="Itineray" />
+          <ScalarProperty Name="MileageOut" ColumnName="MileageOut" />
+          <ScalarProperty Name="MileageIn" ColumnName="MileageIn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Passenger">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Passenger">
+        <MappingFragment StoreEntitySet="LMS_Passenger">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FristName" ColumnName="FristName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Product">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Product">
+        <MappingFragment StoreEntitySet="LMS_Product">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+          <ScalarProperty Name="RouteID" ColumnName="RouteID" />
+          <ScalarProperty Name="TpyeOfService" ColumnName="TpyeOfService" />
+          <ScalarProperty Name="TpyeOfVihicle" ColumnName="TpyeOfVihicle" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Route">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Route">
+        <MappingFragment StoreEntitySet="LMS_Route">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FromID" ColumnName="FromID" />
+          <ScalarProperty Name="ToID" ColumnName="ToID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_SubAgent">
+      <EntityTypeMapping TypeName="LMSModel.LMS_SubAgent">
+        <MappingFragment StoreEntitySet="LMS_SubAgent">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Contact" ColumnName="Contact" />
+          <ScalarProperty Name="CreditTerm" ColumnName="CreditTerm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_TO">
+      <EntityTypeMapping TypeName="LMSModel.LMS_TO">
+        <MappingFragment StoreEntitySet="LMS_TO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+          <ScalarProperty Name="FromID" ColumnName="FromID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Vehicle">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Vehicle">
+        <MappingFragment StoreEntitySet="LMS_Vehicle">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
