@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Queue Management";
 }
 
@@ -13,7 +14,27 @@
     </ol>
 </section>
 <section class="content">
+    @{ string UserFullName = "";
+     string UserType = "0";
+     string UserTypeName = "";
+     string AgentID = "";
+     if (HttpContext.Current.Session["LogedUserFullname"] != null)
+     {
+         UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
+         AgentID = HttpContext.Current.Session["LogedAgentID"].ToString();
+         UserType = HttpContext.Current.Session["LogedUserType"].ToString();
 
+         if (UserType == "1")
+         {
+             UserTypeName = "Internal";
+         }
+         else if (UserType == "2")
+         {
+             UserTypeName = "Sub Agent";
+         }
+     }
+
+    }
     <div class="row">
         <div class="col-md-12">
 
@@ -43,65 +64,114 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00001</a></td>
-                                    <td>One Way</td>
-                                    <td>Suwanabhumi Airport</td>
-                                    <td>Bangna</td>
-                                    <td>7/5/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-success">New</span></td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00002</a></td>
-                                    <td>One Way</td>
-                                    <td>Rama 3</td>
-                                    <td>Siam</td>
-                                    <td>7/5/2016</td>
-                                    <td>Benz A500</td>
-                                    <td><span class="label label-warning">Queue</span></td>
+                                @foreach (var item in Model)
+                                {
+                                    String ServiceName = "";
 
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00003</a></td>
-                                    <td>One Way</td>
-                                    <td>Rama 9</td>
-                                    <td>Central Word</td>
-                                    <td>7/9/2016</td>
-                                    <td>Honda Accrod</td>
-                                    <td><span class="label label-danger">Delivered</span></td>
+                                    if (item.ServiceType == 1)
+                                    {
+                                        ServiceName = "One Way";
+                                    }
+                                    else if (item.ServiceType == 2)
+                                    {
+                                        ServiceName = "Return";
+                                    }
+                                    else if (item.ServiceType == 3)
+                                    {
+                                        ServiceName = "Return";
+                                    }
+                                    String Status = "";
+                                    String SClass = "";
+                                    if (item.Status == 1)
+                                    {
+                                        ServiceName = "New";
+                                        SClass = "label label-success";
+                                    }
+                                    else if (item.Status == 2)
+                                    {
+                                        ServiceName = "Queue";
+                                        SClass = "label label-warning";
+                                    }
+                                    else if (item.Status == 3)
+                                    {
+                                        ServiceName = "Delivered";
+                                        SClass = "label label-primary";
+                                    }
+                                    else if (item.Status == 4)
+                                    {
+                                        ServiceName = "Finish";
+                                        SClass = "label label-info";
+                                    }
+                                    else if (item.Status == 5)
+                                    {
+                                        ServiceName = "Cancel";
+                                        SClass = "label label-danger";
+                                    }
 
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00004</a></td>
-                                    <td>One Day</td>
-                                    <td>Rama 9</td>
-                                    <td></td>
-                                    <td>7/9/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-info">Finish</span></td>
 
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00005</a></td>
-                                    <td>One Day</td>
-                                    <td>Rama 9</td>
-                                    <td></td>
-                                    <td>17/12/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-danger">Delivered</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00006</a></td>
-                                    <td>One Way</td>
-                                    <td>Rama 9</td>
-                                    <td>DMK Airport</td>
-                                    <td>17/12/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-success">New</span></td>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">@item.BookingID</a></td>
+                                        <td>@ServiceName</td>
+                                        <td>@item.FromDetail</td>
+                                        <td>@item.ToDetail</td>
+                                        <td>@item.Date</td>
+                                        <td>@item.CarModel</td>
+                                        <td><span class="@SClass">@ServiceName</span></td>
 
-                                </tr>
+                                    </tr>
+
+
+                                }
+
+                                @*<tr>
+                                        <td><a href="/LMS/QueueDetail">B00002</a></td>
+                                        <td>One Way</td>
+                                        <td>Rama 3</td>
+                                        <td>Siam</td>
+                                        <td>7/5/2016</td>
+                                        <td>Benz A500</td>
+                                        <td><span class="label label-warning">Queue</span></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00003</a></td>
+                                        <td>One Way</td>
+                                        <td>Rama 9</td>
+                                        <td>Central Word</td>
+                                        <td>7/9/2016</td>
+                                        <td>Honda Accrod</td>
+                                        <td><span class="label label-danger">Delivered</span></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00004</a></td>
+                                        <td>One Day</td>
+                                        <td>Rama 9</td>
+                                        <td></td>
+                                        <td>7/9/2016</td>
+                                        <td>Toyota Camry</td>
+                                        <td><span class="label label-info">Finish</span></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00005</a></td>
+                                        <td>One Day</td>
+                                        <td>Rama 9</td>
+                                        <td></td>
+                                        <td>17/12/2016</td>
+                                        <td>Toyota Camry</td>
+                                        <td><span class="label label-danger">Delivered</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00006</a></td>
+                                        <td>One Way</td>
+                                        <td>Rama 9</td>
+                                        <td>DMK Airport</td>
+                                        <td>17/12/2016</td>
+                                        <td>Toyota Camry</td>
+                                        <td><span class="label label-success">New</span></td>
+
+                                    </tr>*@
                             </tbody>
                         </table>
                     </div>
@@ -116,7 +186,7 @@
             </div>
 
         </div>
-        
+
     </div>
 
 </section>

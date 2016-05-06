@@ -126,7 +126,7 @@
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Costomer</b> <a class="pull-right">@CustomerName</a>
+                                <b>Costomer</b> <a class="pull-right">@CustomerName (@Model.AgentName)</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Service</b> <a class="pull-right">@ServiceName</a>
@@ -159,7 +159,7 @@
                                 <b>Car Model</b> <a class="pull-right">@Model.CarModel</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Price (Baht)</b><a class="pull-right">@Model.Price</a>
+                                <b>Price (Baht)</b><a class="pull-right">@Model.Price.ToString("#,###.##")</a>
 
                             </li>
                         </ul>
@@ -180,18 +180,31 @@
                     </div>
                     <div class="box-body box-profile">
 
+                        @{
+                            Decimal Price = 0;
+                            Decimal Discount = 0;
+                            Decimal SumPrice = 0;
+                            
+                            Price = Model.Price;
+                            Discount = Model.Discount;
+                            SumPrice = Model.Price - Discount;
+
+                        }
+
                         <ul class="list-group list-group-unbordered">
 
                             <li class="list-group-item">
-                                <b>Total (Baht)</b> <a class="pull-right"><input type="text" id="Price" name="Price" style="text-align:right" placeholder="@Model.Price" value="@Model.Price"></a>
+                                <b>Total (Baht)</b> <a class="pull-right"><input type="text" id="Price" name="Price" style="text-align:right" placeholder="@Model.Price" value="@Price.ToString("#,###.00")"></a>
 
                             </li>
                             <li class="list-group-item">
-                                <b>Discount (Baht)</b> <a class="pull-right"><input type="text" id="Discount" name="Discount" style="text-align:right" placeholder="00.00" value="00.00"></a>
+                                <b>Discount (Baht)</b> <a class="pull-right"><input type="text" id="Discount" name="Discount" style="text-align:right" placeholder="@Model.Discount" value="@Discount.ToString("#,###.00")"></a>
 
                             </li>
+
+                         
                             <li class="list-group-item">
-                                <b>Grand Total (Baht)</b> <a class="pull-right"><input type="text" id="TotalPrice" name="TotalPrice" style="text-align:right" placeholder="@Model.Price" value="@Model.Price"></a>
+                                <b>Grand Total (Baht)</b> <a class="pull-right"><input type="text" id="TotalPrice" name="TotalPrice" style="text-align:right" placeholder="@SumPrice" value="@SumPrice.ToString("#,###.00")"></a>
 
                             </li>
                         </ul>
