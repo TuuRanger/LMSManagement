@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="synergilimoModelStoreContainer" CdmEntityContainer="synergilimoEntities">
+    <EntitySetMapping Name="LMS_Account">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Account">
+        <MappingFragment StoreEntitySet="LMS_Account">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_AgentPrice">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_AgentPrice">
+        <MappingFragment StoreEntitySet="LMS_AgentPrice">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Booking">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
+        <MappingFragment StoreEntitySet="LMS_Booking">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+          <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Passenger" ColumnName="Passenger" />
+          <ScalarProperty Name="Luggage" ColumnName="Luggage" />
+          <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
+          <ScalarProperty Name="FlightTime" ColumnName="FlightTime" />
+          <ScalarProperty Name="FromDetail" ColumnName="FromDetail" />
+          <ScalarProperty Name="ToDetail" ColumnName="ToDetail" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="CarID" ColumnName="CarID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Car">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Car">
+        <MappingFragment StoreEntitySet="LMS_Car">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VehicleRegis" ColumnName="VehicleRegis" />
+          <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+          <ScalarProperty Name="SitNumber" ColumnName="SitNumber" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Driver">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Driver">
+        <MappingFragment StoreEntitySet="LMS_Driver">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="IDCard" ColumnName="IDCard" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+          <ScalarProperty Name="ENG_Listen" ColumnName="ENG_Listen" />
+          <ScalarProperty Name="ENG_Speak" ColumnName="ENG_Speak" />
+          <ScalarProperty Name="ENG_Read" ColumnName="ENG_Read" />
+          <ScalarProperty Name="ENG_Write" ColumnName="ENG_Write" />
+          <ScalarProperty Name="TH_Listen" ColumnName="TH_Listen" />
+          <ScalarProperty Name="TH_Speak" ColumnName="TH_Speak" />
+          <ScalarProperty Name="TH_Read" ColumnName="TH_Read" />
+          <ScalarProperty Name="TH_Write" ColumnName="TH_Write" />
+          <ScalarProperty Name="Experience" ColumnName="Experience" />
+          <ScalarProperty Name="YOS" ColumnName="YOS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_From">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_From">
+        <MappingFragment StoreEntitySet="LMS_From">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Job">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Job">
+        <MappingFragment StoreEntitySet="LMS_Job">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Itineray" ColumnName="Itineray" />
+          <ScalarProperty Name="MileageOut" ColumnName="MileageOut" />
+          <ScalarProperty Name="MileageIn" ColumnName="MileageIn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Passenger">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Passenger">
+        <MappingFragment StoreEntitySet="LMS_Passenger">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FristName" ColumnName="FristName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Product">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Product">
+        <MappingFragment StoreEntitySet="LMS_Product">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RouteID" ColumnName="RouteID" />
+          <ScalarProperty Name="TpyeOfService" ColumnName="TpyeOfService" />
+          <ScalarProperty Name="TpyeOfVihicle" ColumnName="TpyeOfVihicle" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Route">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Route">
+        <MappingFragment StoreEntitySet="LMS_Route">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FromID" ColumnName="FromID" />
+          <ScalarProperty Name="ToID" ColumnName="ToID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_SubAgent">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_SubAgent">
+        <MappingFragment StoreEntitySet="LMS_SubAgent">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Contact" ColumnName="Contact" />
+          <ScalarProperty Name="CreditTerm" ColumnName="CreditTerm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_TO">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_TO">
+        <MappingFragment StoreEntitySet="LMS_TO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+          <ScalarProperty Name="FromID" ColumnName="FromID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_User">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_User">
+        <MappingFragment StoreEntitySet="LMS_User">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UesrType" ColumnName="UesrType" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Vehicle">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Vehicle">
+        <MappingFragment StoreEntitySet="LMS_Vehicle">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

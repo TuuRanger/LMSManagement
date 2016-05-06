@@ -15,7 +15,6 @@ namespace LMS
     public partial class LMS_Product
     {
         public int ID { get; set; }
-        public Nullable<int> AgentID { get; set; }
         public Nullable<int> RouteID { get; set; }
         public Nullable<int> TpyeOfService { get; set; }
         public Nullable<int> TpyeOfVihicle { get; set; }

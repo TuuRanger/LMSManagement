@@ -17,32 +17,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="LMS_Booking">
-      <EntityTypeMapping TypeName="LMSModel.LMS_Booking">
-        <MappingFragment StoreEntitySet="LMS_Booking">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Contact" ColumnName="Contact" />
-          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
-          <ScalarProperty Name="FromTo" ColumnName="FromTo" />
-          <ScalarProperty Name="Remark" ColumnName="Remark" />
-          <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="DriverID" ColumnName="DriverID" />
-          <ScalarProperty Name="CarID" ColumnName="CarID" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="LMS_Car">
       <EntityTypeMapping TypeName="LMSModel.LMS_Car">
         <MappingFragment StoreEntitySet="LMS_Car">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="VehicleRegis" ColumnName="VehicleRegis" />
           <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
-          <ScalarProperty Name="Modle" ColumnName="Modle" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
           <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
           <ScalarProperty Name="SitNumber" ColumnName="SitNumber" />
           <ScalarProperty Name="Status" ColumnName="Status" />
@@ -158,6 +139,40 @@
         <MappingFragment StoreEntitySet="LMS_Vehicle">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Booking">
+      <EntityTypeMapping TypeName="LMSModel.LMS_Booking">
+        <MappingFragment StoreEntitySet="LMS_Booking">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+          <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Passenger" ColumnName="Passenger" />
+          <ScalarProperty Name="Luggage" ColumnName="Luggage" />
+          <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
+          <ScalarProperty Name="FlightTime" ColumnName="FlightTime" />
+          <ScalarProperty Name="FromDetail" ColumnName="FromDetail" />
+          <ScalarProperty Name="ToDetail" ColumnName="ToDetail" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="CarID" ColumnName="CarID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

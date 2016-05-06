@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Username" Type="varchar" MaxLength="40" />
     <Property Name="Password" Type="varchar" MaxLength="40" />
     <Property Name="Title" Type="varchar" MaxLength="40" />
@@ -15,6 +15,8 @@
     <Property Name="Email" Type="varchar" MaxLength="40" />
     <Property Name="RoleID" Type="varchar" MaxLength="40" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'synergilimo.dbo.LMS_Booking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="LMS_Booking">
     <Key>
       <PropertyRef Name="ID" />
@@ -52,7 +54,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="VehicleRegis" Type="nvarchar" MaxLength="40" />
     <Property Name="VehicleID" Type="int" />
     <Property Name="Model" Type="nvarchar" MaxLength="255" />
@@ -64,15 +66,15 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
-    <Property Name="Title" Type="nvarchar" MaxLength="10" />
-    <Property Name="Name" Type="nvarchar" MaxLength="255" />
-    <Property Name="LastName" Type="nvarchar" MaxLength="255" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="40" />
+    <Property Name="Name" Type="nvarchar" MaxLength="40" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="40" />
     <Property Name="Birthday" Type="date" />
-    <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
-    <Property Name="IDCard" Type="nvarchar" MaxLength="20" />
+    <Property Name="Mobile" Type="nvarchar" MaxLength="40" />
+    <Property Name="IDCard" Type="varchar" MaxLength="13" />
     <Property Name="Status" Type="int" />
-    <Property Name="Nationality" Type="nvarchar" MaxLength="50" />
+    <Property Name="Nationality" Type="nvarchar" MaxLength="40" />
     <Property Name="ENG_Listen" Type="int" />
     <Property Name="ENG_Speak" Type="int" />
     <Property Name="ENG_Read" Type="int" />
@@ -81,7 +83,7 @@
     <Property Name="TH_Speak" Type="int" />
     <Property Name="TH_Read" Type="int" />
     <Property Name="TH_Write" Type="int" />
-    <Property Name="Experience" Type="nvarchar" MaxLength="255" />
+    <Property Name="Experience" Type="nvarchar" MaxLength="500" />
     <Property Name="YOS" Type="int" />
   </EntityType>
   <EntityType Name="LMS_From">
@@ -89,13 +91,13 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Detail" Type="nvarchar(max)" />
+    <Property Name="Detail" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="LMS_Job">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="BookingID" Type="int" />
     <Property Name="Date" Type="date" />
     <Property Name="Time" Type="time" Precision="7" />
@@ -107,7 +109,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="BookingID" Type="int" />
     <Property Name="Title" Type="varchar" MaxLength="40" />
     <Property Name="FristName" Type="varchar" MaxLength="40" />
@@ -141,10 +143,10 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="Address" Type="nvarchar" MaxLength="500" />
-    <Property Name="Province" Type="nvarchar" MaxLength="50" />
+    <Property Name="Province" Type="nvarchar" MaxLength="40" />
     <Property Name="Zipcode" Type="nvarchar" MaxLength="5" />
-    <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
-    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="40" />
+    <Property Name="Email" Type="nvarchar" MaxLength="40" />
     <Property Name="Contact" Type="nvarchar" MaxLength="50" />
     <Property Name="CreditTerm" Type="int" />
   </EntityType>
@@ -153,7 +155,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Detail" Type="nvarchar(max)" />
+    <Property Name="Detail" Type="nvarchar" MaxLength="255" />
     <Property Name="FromID" Type="int" />
   </EntityType>
   <EntityType Name="LMS_Vehicle">
@@ -161,11 +163,10 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar" MaxLength="40" />
   </EntityType>
   <EntityContainer Name="LMSModelStoreContainer">
     <EntitySet Name="LMS_Account" EntityType="Self.LMS_Account" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="LMS_Booking" EntityType="Self.LMS_Booking" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Car" EntityType="Self.LMS_Car" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Driver" EntityType="Self.LMS_Driver" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_From" EntityType="Self.LMS_From" Schema="dbo" store:Type="Tables" />
@@ -176,5 +177,37 @@
     <EntitySet Name="LMS_SubAgent" EntityType="Self.LMS_SubAgent" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_TO" EntityType="Self.LMS_TO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_Booking" EntityType="Self.LMS_Booking" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[LMS_Booking].[ID] AS [ID], 
+[LMS_Booking].[BookingID] AS [BookingID], 
+[LMS_Booking].[BookingDate] AS [BookingDate], 
+[LMS_Booking].[Title] AS [Title], 
+[LMS_Booking].[FirstName] AS [FirstName], 
+[LMS_Booking].[LastName] AS [LastName], 
+[LMS_Booking].[Address] AS [Address], 
+[LMS_Booking].[Telephone] AS [Telephone], 
+[LMS_Booking].[Mobile] AS [Mobile], 
+[LMS_Booking].[Email] AS [Email], 
+[LMS_Booking].[OrderBy] AS [OrderBy], 
+[LMS_Booking].[CustomerType] AS [CustomerType], 
+[LMS_Booking].[ServiceType] AS [ServiceType], 
+[LMS_Booking].[Date] AS [Date], 
+[LMS_Booking].[Time] AS [Time], 
+[LMS_Booking].[Passenger] AS [Passenger], 
+[LMS_Booking].[Luggage] AS [Luggage], 
+[LMS_Booking].[FlightNo] AS [FlightNo], 
+[LMS_Booking].[FlightTime] AS [FlightTime], 
+[LMS_Booking].[FromDetail] AS [FromDetail], 
+[LMS_Booking].[ToDetail] AS [ToDetail], 
+[LMS_Booking].[Remark] AS [Remark], 
+[LMS_Booking].[ProductID] AS [ProductID], 
+[LMS_Booking].[CarID] AS [CarID], 
+[LMS_Booking].[Price] AS [Price], 
+[LMS_Booking].[Discount] AS [Discount], 
+[LMS_Booking].[TotalPrice] AS [TotalPrice], 
+[LMS_Booking].[Status] AS [Status]
+FROM [dbo].[LMS_Booking] AS [LMS_Booking]</DefiningQuery>
+    </EntitySet>
   </EntityContainer>
 </Schema>

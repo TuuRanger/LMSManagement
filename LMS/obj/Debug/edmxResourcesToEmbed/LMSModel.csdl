@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Username" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
     <Property Name="Password" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
     <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
@@ -15,19 +15,31 @@
     <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
     <Property Name="RoleID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="LMS_Car">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VehicleRegis" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="VehicleID" Type="Int32" />
+    <Property Name="Model" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="PhotoPath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="SitNumber" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+  </EntityType>
   <EntityType Name="LMS_Driver">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
     <Property Name="Birthday" Type="DateTime" Precision="0" />
-    <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IDCard" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Mobile" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="IDCard" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
     <Property Name="Status" Type="Int32" />
-    <Property Name="Nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Nationality" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
     <Property Name="ENG_Listen" Type="Int32" />
     <Property Name="ENG_Speak" Type="Int32" />
     <Property Name="ENG_Read" Type="Int32" />
@@ -36,7 +48,7 @@
     <Property Name="TH_Speak" Type="Int32" />
     <Property Name="TH_Read" Type="Int32" />
     <Property Name="TH_Write" Type="Int32" />
-    <Property Name="Experience" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Experience" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="YOS" Type="Int32" />
   </EntityType>
   <EntityType Name="LMS_From">
@@ -44,13 +56,13 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Detail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="LMS_Job">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="BookingID" Type="Int32" />
     <Property Name="Date" Type="DateTime" Precision="0" />
     <Property Name="Time" Type="Time" Precision="7" />
@@ -62,7 +74,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="BookingID" Type="Int32" />
     <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
     <Property Name="FristName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
@@ -73,7 +85,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="AgentID" Type="Int32" />
     <Property Name="RouteID" Type="Int32" />
     <Property Name="TpyeOfService" Type="Int32" />
@@ -84,7 +96,7 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FromID" Type="Int32" />
     <Property Name="ToID" Type="Int32" />
     <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
@@ -93,13 +105,13 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
     <Property Name="Zipcode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Telephone" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
     <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CreditTerm" Type="Int32" />
   </EntityType>
@@ -107,42 +119,16 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="Detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Detail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="FromID" Type="Int32" />
   </EntityType>
   <EntityType Name="LMS_Vehicle">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-  </EntityType>
-  <EntityContainer Name="LMSEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="LMS_Account" EntityType="Self.LMS_Account" />
-    <EntitySet Name="LMS_Driver" EntityType="Self.LMS_Driver" />
-    <EntitySet Name="LMS_From" EntityType="Self.LMS_From" />
-    <EntitySet Name="LMS_Job" EntityType="Self.LMS_Job" />
-    <EntitySet Name="LMS_Passenger" EntityType="Self.LMS_Passenger" />
-    <EntitySet Name="LMS_Product" EntityType="Self.LMS_Product" />
-    <EntitySet Name="LMS_Route" EntityType="Self.LMS_Route" />
-    <EntitySet Name="LMS_SubAgent" EntityType="Self.LMS_SubAgent" />
-    <EntitySet Name="LMS_TO" EntityType="Self.LMS_TO" />
-    <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" />
-    <EntitySet Name="LMS_Car" EntityType="LMSModel.LMS_Car" />
-    <EntitySet Name="LMS_Booking" EntityType="LMSModel.LMS_Booking" />
-  </EntityContainer>
-  <EntityType Name="LMS_Car">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="VehicleRegis" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-    <Property Name="VehicleID" Type="Int32" />
-    <Property Name="Model" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="PhotoPath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="SitNumber" Type="Int32" />
-    <Property Name="Status" Type="Int32" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="LMS_Booking">
     <Key>
@@ -177,4 +163,18 @@
     <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Status" Type="Int32" />
   </EntityType>
+  <EntityContainer Name="LMSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="LMS_Account" EntityType="Self.LMS_Account" />
+    <EntitySet Name="LMS_Car" EntityType="Self.LMS_Car" />
+    <EntitySet Name="LMS_Driver" EntityType="Self.LMS_Driver" />
+    <EntitySet Name="LMS_From" EntityType="Self.LMS_From" />
+    <EntitySet Name="LMS_Job" EntityType="Self.LMS_Job" />
+    <EntitySet Name="LMS_Passenger" EntityType="Self.LMS_Passenger" />
+    <EntitySet Name="LMS_Product" EntityType="Self.LMS_Product" />
+    <EntitySet Name="LMS_Route" EntityType="Self.LMS_Route" />
+    <EntitySet Name="LMS_SubAgent" EntityType="Self.LMS_SubAgent" />
+    <EntitySet Name="LMS_TO" EntityType="Self.LMS_TO" />
+    <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" />
+    <EntitySet Name="LMS_Booking" EntityType="Self.LMS_Booking" />
+  </EntityContainer>
 </Schema>

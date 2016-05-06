@@ -42,5 +42,6 @@ namespace LMS
         public Nullable<decimal> Discount { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
         public Nullable<int> Status { get; set; }
+        public Nullable<int> AgentID { get; set; }
     }
 }

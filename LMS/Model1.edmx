@@ -1,0 +1,640 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="synergilimoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LMS_Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="40" />
+          <Property Name="Password" Type="varchar" MaxLength="40" />
+          <Property Name="Title" Type="varchar" MaxLength="40" />
+          <Property Name="Firstname" Type="varchar" MaxLength="40" />
+          <Property Name="Lastname" Type="varchar" MaxLength="40" />
+          <Property Name="Department" Type="varchar" MaxLength="40" />
+          <Property Name="Telephone" Type="varchar" MaxLength="40" />
+          <Property Name="Email" Type="varchar" MaxLength="40" />
+          <Property Name="RoleID" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="LMS_AgentPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgentID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Markup" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="LMS_Booking">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingID" Type="nvarchar" MaxLength="10" />
+          <Property Name="BookingDate" Type="date" />
+          <Property Name="Title" Type="nvarchar" MaxLength="5" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerType" Type="int" />
+          <Property Name="ServiceType" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Time" Type="nvarchar" MaxLength="10" />
+          <Property Name="Passenger" Type="int" />
+          <Property Name="Luggage" Type="int" />
+          <Property Name="FlightNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="FlightTime" Type="nvarchar" MaxLength="10" />
+          <Property Name="FromDetail" Type="nvarchar" MaxLength="255" />
+          <Property Name="ToDetail" Type="nvarchar" MaxLength="255" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="CarID" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Status" Type="int" />
+          <Property Name="AgentID" Type="int" />
+        </EntityType>
+        <EntityType Name="LMS_Car">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VehicleRegis" Type="nvarchar" MaxLength="40" />
+          <Property Name="VehicleID" Type="int" />
+          <Property Name="Model" Type="nvarchar" MaxLength="255" />
+          <Property Name="PhotoPath" Type="nvarchar" MaxLength="500" />
+          <Property Name="SitNumber" Type="int" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="LMS_Driver">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="40" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="40" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="40" />
+          <Property Name="IDCard" Type="varchar" MaxLength="13" />
+          <Property Name="Status" Type="int" />
+          <Property Name="Nationality" Type="nvarchar" MaxLength="40" />
+          <Property Name="ENG_Listen" Type="int" />
+          <Property Name="ENG_Speak" Type="int" />
+          <Property Name="ENG_Read" Type="int" />
+          <Property Name="ENG_Write" Type="int" />
+          <Property Name="TH_Listen" Type="int" />
+          <Property Name="TH_Speak" Type="int" />
+          <Property Name="TH_Read" Type="int" />
+          <Property Name="TH_Write" Type="int" />
+          <Property Name="Experience" Type="nvarchar" MaxLength="500" />
+          <Property Name="YOS" Type="int" />
+        </EntityType>
+        <EntityType Name="LMS_From">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Detail" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="LMS_Job">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingID" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Time" Type="time" Precision="7" />
+          <Property Name="Itineray" Type="varchar" MaxLength="500" />
+          <Property Name="MileageOut" Type="int" />
+          <Property Name="MileageIn" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="LMS_Passenger">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingID" Type="int" />
+          <Property Name="Title" Type="varchar" MaxLength="40" />
+          <Property Name="FristName" Type="varchar" MaxLength="40" />
+          <Property Name="LastName" Type="varchar" MaxLength="40" />
+          <Property Name="DOB" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="LMS_Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RouteID" Type="int" />
+          <Property Name="TpyeOfService" Type="int" />
+          <Property Name="TpyeOfVihicle" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="LMS_Route">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FromID" Type="int" />
+          <Property Name="ToID" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="LMS_SubAgent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Province" Type="nvarchar" MaxLength="40" />
+          <Property Name="Zipcode" Type="nvarchar" MaxLength="5" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="40" />
+          <Property Name="Email" Type="nvarchar" MaxLength="40" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreditTerm" Type="int" />
+        </EntityType>
+        <EntityType Name="LMS_TO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Detail" Type="nvarchar" MaxLength="255" />
+          <Property Name="FromID" Type="int" />
+        </EntityType>
+        <EntityType Name="LMS_User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="UesrType" Type="int" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="255" />
+          <Property Name="AgentID" Type="int" />
+        </EntityType>
+        <EntityType Name="LMS_Vehicle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityContainer Name="synergilimoModelStoreContainer">
+          <EntitySet Name="LMS_Account" EntityType="Self.LMS_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_AgentPrice" EntityType="Self.LMS_AgentPrice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Booking" EntityType="Self.LMS_Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Car" EntityType="Self.LMS_Car" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Driver" EntityType="Self.LMS_Driver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_From" EntityType="Self.LMS_From" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Job" EntityType="Self.LMS_Job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Passenger" EntityType="Self.LMS_Passenger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Product" EntityType="Self.LMS_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Route" EntityType="Self.LMS_Route" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_SubAgent" EntityType="Self.LMS_SubAgent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_TO" EntityType="Self.LMS_TO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_User" EntityType="Self.LMS_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="synergilimoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LMS_Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Firstname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="RoleID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LMS_AgentPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgentID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Markup" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="LMS_Booking">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="BookingDate" Type="DateTime" Precision="0" />
+          <Property Name="Title" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerType" Type="Int32" />
+          <Property Name="ServiceType" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Time" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Passenger" Type="Int32" />
+          <Property Name="Luggage" Type="Int32" />
+          <Property Name="FlightNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FlightTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FromDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ToDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="CarID" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="AgentID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LMS_Car">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VehicleRegis" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleID" Type="Int32" />
+          <Property Name="Model" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PhotoPath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SitNumber" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LMS_Driver">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="Mobile" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="IDCard" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="Nationality" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="ENG_Listen" Type="Int32" />
+          <Property Name="ENG_Speak" Type="Int32" />
+          <Property Name="ENG_Read" Type="Int32" />
+          <Property Name="ENG_Write" Type="Int32" />
+          <Property Name="TH_Listen" Type="Int32" />
+          <Property Name="TH_Speak" Type="Int32" />
+          <Property Name="TH_Read" Type="Int32" />
+          <Property Name="TH_Write" Type="Int32" />
+          <Property Name="Experience" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="YOS" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LMS_From">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Detail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LMS_Job">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Time" Type="Time" Precision="7" />
+          <Property Name="Itineray" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MileageOut" Type="Int32" />
+          <Property Name="MileageIn" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LMS_Passenger">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingID" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="FristName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LMS_Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RouteID" Type="Int32" />
+          <Property Name="TpyeOfService" Type="Int32" />
+          <Property Name="TpyeOfVihicle" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="LMS_Route">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromID" Type="Int32" />
+          <Property Name="ToID" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="LMS_SubAgent">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Zipcode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Telephone" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreditTerm" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LMS_TO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Detail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FromID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LMS_User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UesrType" Type="Int32" />
+          <Property Name="FullName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AgentID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LMS_Vehicle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="synergilimoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LMS_Account" EntityType="Self.LMS_Account" />
+          <EntitySet Name="LMS_AgentPrice" EntityType="Self.LMS_AgentPrice" />
+          <EntitySet Name="LMS_Booking" EntityType="Self.LMS_Booking" />
+          <EntitySet Name="LMS_Car" EntityType="Self.LMS_Car" />
+          <EntitySet Name="LMS_Driver" EntityType="Self.LMS_Driver" />
+          <EntitySet Name="LMS_From" EntityType="Self.LMS_From" />
+          <EntitySet Name="LMS_Job" EntityType="Self.LMS_Job" />
+          <EntitySet Name="LMS_Passenger" EntityType="Self.LMS_Passenger" />
+          <EntitySet Name="LMS_Product" EntityType="Self.LMS_Product" />
+          <EntitySet Name="LMS_Route" EntityType="Self.LMS_Route" />
+          <EntitySet Name="LMS_SubAgent" EntityType="Self.LMS_SubAgent" />
+          <EntitySet Name="LMS_TO" EntityType="Self.LMS_TO" />
+          <EntitySet Name="LMS_User" EntityType="Self.LMS_User" />
+          <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="synergilimoModelStoreContainer" CdmEntityContainer="synergilimoEntities">
+          <EntitySetMapping Name="LMS_Account">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Account">
+              <MappingFragment StoreEntitySet="LMS_Account">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_AgentPrice">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_AgentPrice">
+              <MappingFragment StoreEntitySet="LMS_AgentPrice">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Markup" ColumnName="Markup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Booking">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
+              <MappingFragment StoreEntitySet="LMS_Booking">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+                <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Passenger" ColumnName="Passenger" />
+                <ScalarProperty Name="Luggage" ColumnName="Luggage" />
+                <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
+                <ScalarProperty Name="FlightTime" ColumnName="FlightTime" />
+                <ScalarProperty Name="FromDetail" ColumnName="FromDetail" />
+                <ScalarProperty Name="ToDetail" ColumnName="ToDetail" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="CarID" ColumnName="CarID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Car">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Car">
+              <MappingFragment StoreEntitySet="LMS_Car">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VehicleRegis" ColumnName="VehicleRegis" />
+                <ScalarProperty Name="VehicleID" ColumnName="VehicleID" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="SitNumber" ColumnName="SitNumber" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Driver">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Driver">
+              <MappingFragment StoreEntitySet="LMS_Driver">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="IDCard" ColumnName="IDCard" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="ENG_Listen" ColumnName="ENG_Listen" />
+                <ScalarProperty Name="ENG_Speak" ColumnName="ENG_Speak" />
+                <ScalarProperty Name="ENG_Read" ColumnName="ENG_Read" />
+                <ScalarProperty Name="ENG_Write" ColumnName="ENG_Write" />
+                <ScalarProperty Name="TH_Listen" ColumnName="TH_Listen" />
+                <ScalarProperty Name="TH_Speak" ColumnName="TH_Speak" />
+                <ScalarProperty Name="TH_Read" ColumnName="TH_Read" />
+                <ScalarProperty Name="TH_Write" ColumnName="TH_Write" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="YOS" ColumnName="YOS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_From">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_From">
+              <MappingFragment StoreEntitySet="LMS_From">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Job">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Job">
+              <MappingFragment StoreEntitySet="LMS_Job">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Itineray" ColumnName="Itineray" />
+                <ScalarProperty Name="MileageOut" ColumnName="MileageOut" />
+                <ScalarProperty Name="MileageIn" ColumnName="MileageIn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Passenger">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Passenger">
+              <MappingFragment StoreEntitySet="LMS_Passenger">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FristName" ColumnName="FristName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Product">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Product">
+              <MappingFragment StoreEntitySet="LMS_Product">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RouteID" ColumnName="RouteID" />
+                <ScalarProperty Name="TpyeOfService" ColumnName="TpyeOfService" />
+                <ScalarProperty Name="TpyeOfVihicle" ColumnName="TpyeOfVihicle" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Route">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Route">
+              <MappingFragment StoreEntitySet="LMS_Route">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FromID" ColumnName="FromID" />
+                <ScalarProperty Name="ToID" ColumnName="ToID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_SubAgent">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_SubAgent">
+              <MappingFragment StoreEntitySet="LMS_SubAgent">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="CreditTerm" ColumnName="CreditTerm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_TO">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_TO">
+              <MappingFragment StoreEntitySet="LMS_TO">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="FromID" ColumnName="FromID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_User">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_User">
+              <MappingFragment StoreEntitySet="LMS_User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UesrType" ColumnName="UesrType" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Vehicle">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Vehicle">
+              <MappingFragment StoreEntitySet="LMS_Vehicle">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
