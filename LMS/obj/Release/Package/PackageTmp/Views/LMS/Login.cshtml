@@ -1,4 +1,5 @@
-﻿@{
+﻿@model LMS.Models.User
+@{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_LayoutLogIn.cshtml";
 }
@@ -31,39 +32,62 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>SYNERGI</b>LOG IN</a>
+            <a href="/LMS/Index"><b>SYNERGI</b>SIGN IN</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Sign in to start your session</p>
-            <form action="../../index2.html" method="post">
-                <div class="form-group has-feedback">
-                    <input type="email" class="form-control" placeholder="Email">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          @using (Html.BeginForm("Login", "LMS", FormMethod.Post))
+          {
+              //this  is for create form tag
+            @Html.AntiForgeryToken()          // this is for prevent CSRF attack
+                                    @Html.ValidationSummary(true)
+              if (@ViewBag.Message != null)
+              {
+                <div style="border: 1px solid red">
+                    @ViewBag.Message
                 </div>
-                <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Password">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+              }
+            <div class="form-group has-feedback" >
+                <div class="col-md-4">
+                    @Html.LabelFor(a => a.UserName)
+                   
                 </div>
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox"> Remember Me
-                            </label>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                    </div>
-                    <!-- /.col -->
+                <div class="col-md-8">
+
+                    @Html.TextBoxFor(a => a.UserName)
                 </div>
-            </form>
-         
-            <!-- /.social-auth-links -->
-            <a href="#">I forgot my password</a><br>
-          
+               <br />
+           @*     @Html.ValidationMessageFor(a => a.UserName)*@
+           
+            </div>
+    <div class="form-group has-feedback">
+        <div class="col-md-4">
+            @Html.LabelFor(a => a.Password)
+        </div>
+        <div class="col-md-8">
+            @Html.PasswordFor(a => a.Password)
+        </div>
+        <br />
+        @*     @Html.ValidationMessageFor(a => a.UserName)*@
+        @*     @Html.ValidationMessageFor(a => a.Password)*@
+
+    </div>
+    
+    <div class="form-group has-feedback">
+      
+        <input type="submit" class="btn btn-primary btn-block btn-flat" value="Sign In" />
+    </div>
+    
+          }
+
+        @* This below line is for create javascript section *@
+
+        @section Scripts{
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+
+
         </div>
         <!-- /.login-box-body -->
     </div>

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model LMS.Models.BookingDetail
+@{
     ViewBag.Title = "Booking Detail";
     //Layout = "~/Views/Shared/_LayoutLogIn.cshtml";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,162 +16,204 @@
     </ol>
 </section>
 <section class="content">
+    <form action="/LMS/BookingCommit" method="post" onsubmit="return chk_form()">
+        <div class="row">
+            <div class="col-md-7">
 
-    <div class="row">
-        <div class="col-md-7">
-
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Contact Person</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Contact Person</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                        </div>
                     </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <form role="form">
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
                         <!-- text input -->
                         <div class="form-group">
                             <label>Title</label>
-                            <select class="form-control">
+                            <select class="form-control" id="Title" name="Title">
 
-                                <option>Mr.</option>
-                                <option>Ms.</option>
-                        
+                                <option value="Mr">Mr.</option>
+                                <option value="Ms">Ms.</option>
+                                <option value="Mrs">Mrs.</option>
+
                             </select>
                         </div>
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" class="form-control" placeholder="Enter ...">
+                            <input id="FirstName" name="FirstName" type="text" class="form-control" placeholder="Enter ...">
                         </div>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input type="text" class="form-control" placeholder="Enter ...">
+                            <input id="LastName" name="LastName" type="text" class="form-control" placeholder="Enter ...">
                         </div>
                         <div class="form-group">
                             <label>Address</label>
-                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                            <textarea id="Address" name="Address" class="form-control" rows="3" placeholder="Enter ..."></textarea>
                         </div>
                         <div class="form-group">
                             <label>E-Mail</label>
-                            <input type="text" class="form-control" placeholder="Enter ...">
+                            <input id="Email" name="Email" type="text" class="form-control" placeholder="Enter ...">
                         </div>
                         <div class="form-group">
                             <label>Telephone</label>
-                            <input type="text" class="form-control" placeholder="Enter ...">
+                            <input id="Telephone" name="Telephone" type="text" class="form-control" placeholder="Enter ...">
                         </div>
                         <div class="form-group">
                             <label>Moblie</label>
-                            <input type="text" class="form-control" placeholder="Enter ...">
+                            <input id="Mobile" name="Mobile" type="text" class="form-control" placeholder="Enter ...">
                         </div>
                         <div class="form-group">
                             <label>Remark</label>
-                            <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                            <textarea id="Remark" name="Remark" class="form-control" rows="3" placeholder="Enter ..."></textarea>
                         </div>
-                        
+
                         <div class="box-footer clearfix">
-                          @*  <a href="javascript:void(0)" class="btn btn-sm btn-success btn-flat pull-right">Confirm</a>*@
-                            <a href="#" class="btn btn-success btn-block"><b>Confirm</b></a>
+                            @*  <a href="javascript:void(0)" class="btn btn-sm btn-success btn-flat pull-right">Confirm</a>*@
+                          @*  <a href="#" class="btn btn-success btn-block"><b>Confirm</b></a>*@
+                            <button type="submit" class="btn btn-success btn-block" data-animation-type="bounce" data-animation-duration="1" style="animation-duration: 1s; visibility: visible;">Confirm</button>
                         </div>
-                    </form>
-                </div>
-                <!-- /.box-body -->
-            </div>
 
-        </div>
-        <div class="col-md-5">
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Reservation Detail</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
                     </div>
+                    <!-- /.box-body -->
                 </div>
-                <div class="box-body box-profile">
-                  
-                    <ul class="list-group list-group-unbordered">
-                        <li class="list-group-item">
-                            <b>Costomer</b> <a class="pull-right">Walk In</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Service</b> <a class="pull-right">One Way</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>From</b> <a class="pull-right">Suvarnabhumi Airport</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>To</b> <a class="pull-right">Bangna</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Date of Service</b> <a class="pull-right">7/5/2016</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Pick up time</b> <a class="pull-right">13:30</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>No of passenger</b> <a class="pull-right">4</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>No of luggage</b> <a class="pull-right">5</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Flight No.</b> <a class="pull-right">7/5/2016</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Time</b> <a class="pull-right">14:30</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Car Model</b> <a class="pull-right">Toyota All new Camry 2016</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b>Price (Baht)</b> <a class="pull-right"><input type="text" style="text-align:right" placeholder="1,600.00" value="1,600.00"></a>
+
+            </div>
+            <div class="col-md-5">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Reservation Detail</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                        </div>
+                    </div>
+
+
+                    @{string CustomerName = "";
+                    string ServiceName = "";
+
+                    if (@Model.CustomerType == 1)
+                    {
+                        CustomerName = "Walk In";
+                    }
+                    else
+                    {
+                        CustomerName = "Sub Agent";
+                    }
+
+                    if (@Model.ServiceType == 1)
+                    {
+                        ServiceName = "One Way";
+                    }
+                    else if (@Model.ServiceType == 2)
+                    {
+                        ServiceName = "Return";
+                    }
+                    else if (@Model.ServiceType == 3)
+                    {
+                        ServiceName = "Sale Visit";
+                    }
+                    }
+                    <div class="box-body box-profile">
+
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>Costomer</b> <a class="pull-right">@CustomerName (@Model.AgentName)</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Service</b> <a class="pull-right">@ServiceName</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>From</b> <a class="pull-right">@Model.FromDetail</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>To</b> <a class="pull-right">@Model.ToDetail</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Date of Service</b> <a class="pull-right">@Model.Date</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Pick up time</b> <a class="pull-right">@Model.Time</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>No of passenger</b> <a class="pull-right">@Model.Passenger</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>No of luggage</b> <a class="pull-right">@Model.Luggage</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Flight No.</b> <a class="pull-right">@Model.FlightNo</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Time</b> <a class="pull-right">@Model.FlightTime</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Car Model</b> <a class="pull-right">@Model.CarModel</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Price (Baht)</b><a class="pull-right">@Model.Price.ToString("#,###.##")</a>
+
+                            </li>
+                        </ul>
+
+                    </div>
+
+
+                </div>
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Summary Detail</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                        </div>
+                    </div>
+                    <div class="box-body box-profile">
+
+                        @{
+                            Decimal Price = 0;
+                            Decimal Discount = 0;
+                            Decimal SumPrice = 0;
                             
-                        </li>
-                    </ul>
+                            Price = Model.Price;
+                            Discount = Model.Discount;
+                            SumPrice = Model.Price - Discount;
 
-                </div>
-                
-              
-            </div>
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Summary Detail</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                        }
+
+                        <ul class="list-group list-group-unbordered">
+
+                            <li class="list-group-item">
+                                <b>Total (Baht)</b> <a class="pull-right"><input type="text" id="Price" name="Price" style="text-align:right" placeholder="@Model.Price" value="@Price.ToString("#,###.00")"></a>
+
+                            </li>
+                            <li class="list-group-item">
+                                <b>Discount (Baht)</b> <a class="pull-right"><input type="text" id="Discount" name="Discount" style="text-align:right" placeholder="@Model.Discount" value="@Discount.ToString("#,###.00")"></a>
+
+                            </li>
+
+                         
+                            <li class="list-group-item">
+                                <b>Grand Total (Baht)</b> <a class="pull-right"><input type="text" id="TotalPrice" name="TotalPrice" style="text-align:right" placeholder="@SumPrice" value="@SumPrice.ToString("#,###.00")"></a>
+
+                            </li>
+                        </ul>
+
                     </div>
-                </div>
-                <div class="box-body box-profile">
 
-                    <ul class="list-group list-group-unbordered">
-                      
-                        <li class="list-group-item">
-                            <b>Total (Baht)</b> <a class="pull-right"><input type="text" style="text-align:right" placeholder="1,600.00" value="1,600.00"></a>
-
-                        </li>
-                        <li class="list-group-item">
-                            <b>Discount (Baht)</b> <a class="pull-right"><input type="text" style="text-align:right" placeholder="00.00" value="00.00"></a>
-
-                        </li>
-                        <li class="list-group-item">
-                            <b>Grand Total (Baht)</b> <a class="pull-right"><input type="text" style="text-align:right" placeholder="1,600.00" value="1,600.00"></a>
-
-                        </li>
-                    </ul>
 
                 </div>
-
-
             </div>
         </div>
-    </div>
-
+    </form>
 </section>

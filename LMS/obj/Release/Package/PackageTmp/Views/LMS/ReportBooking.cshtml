@@ -1,17 +1,16 @@
-﻿@model List<LMS.Models.BookingList>
-@{
-    ViewBag.Title = "Dashboard";
+﻿@{
+    ViewBag.Title = "Queue Management";
 }
+
 
 <section class="content-header">
     <h1>
-        Dashboard
-
+        Queue Management
     </h1>
     <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i>Forms</a></li>
-            <li class="active">Booking</li>
-        </ol>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Reports</a></li>
+        <li class="active">Booking</li>
+    </ol>
 </section>
 <section class="content">
     @{ string UserFullName = "";
@@ -108,70 +107,70 @@
                                         SClass = "label label-danger";
                                     }
 
-                                  
-                                        <tr>
-                                            <td><a href="/LMS/QueueDetail">@item.BookingID</a></td>
-                                            <td>@ServiceName</td>
-                                            <td>@item.FromDetail</td>
-                                            <td>@item.ToDetail</td>
-                                            <td>@item.Date</td>
-                                            <td>@item.CarModel</td>
-                                            <td><span class="@SClass">@ServiceName</span></td>
 
-                                        </tr>
-                                  
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">@item.BookingID</a></td>
+                                        <td>@ServiceName</td>
+                                        <td>@item.FromDetail</td>
+                                        <td>@item.ToDetail</td>
+                                        <td>@item.Date</td>
+                                        <td>@item.CarModel</td>
+                                        <td><span class="@SClass">@ServiceName</span></td>
+
+                                    </tr>
+
 
                                 }
-                              
+
                                 @*<tr>
-                                    <td><a href="/LMS/QueueDetail">B00002</a></td>
-                                    <td>One Way</td>
-                                    <td>Rama 3</td>
-                                    <td>Siam</td>
-                                    <td>7/5/2016</td>
-                                    <td>Benz A500</td>
-                                    <td><span class="label label-warning">Queue</span></td>
+                                        <td><a href="/LMS/QueueDetail">B00002</a></td>
+                                        <td>One Way</td>
+                                        <td>Rama 3</td>
+                                        <td>Siam</td>
+                                        <td>7/5/2016</td>
+                                        <td>Benz A500</td>
+                                        <td><span class="label label-warning">Queue</span></td>
 
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00003</a></td>
-                                    <td>One Way</td>
-                                    <td>Rama 9</td>
-                                    <td>Central Word</td>
-                                    <td>7/9/2016</td>
-                                    <td>Honda Accrod</td>
-                                    <td><span class="label label-danger">Delivered</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00003</a></td>
+                                        <td>One Way</td>
+                                        <td>Rama 9</td>
+                                        <td>Central Word</td>
+                                        <td>7/9/2016</td>
+                                        <td>Honda Accrod</td>
+                                        <td><span class="label label-danger">Delivered</span></td>
 
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00004</a></td>
-                                    <td>One Day</td>
-                                    <td>Rama 9</td>
-                                    <td></td>
-                                    <td>7/9/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-info">Finish</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00004</a></td>
+                                        <td>One Day</td>
+                                        <td>Rama 9</td>
+                                        <td></td>
+                                        <td>7/9/2016</td>
+                                        <td>Toyota Camry</td>
+                                        <td><span class="label label-info">Finish</span></td>
 
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00005</a></td>
-                                    <td>One Day</td>
-                                    <td>Rama 9</td>
-                                    <td></td>
-                                    <td>17/12/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-danger">Delivered</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00006</a></td>
-                                    <td>One Way</td>
-                                    <td>Rama 9</td>
-                                    <td>DMK Airport</td>
-                                    <td>17/12/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-success">New</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00005</a></td>
+                                        <td>One Day</td>
+                                        <td>Rama 9</td>
+                                        <td></td>
+                                        <td>17/12/2016</td>
+                                        <td>Toyota Camry</td>
+                                        <td><span class="label label-danger">Delivered</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00006</a></td>
+                                        <td>One Way</td>
+                                        <td>Rama 9</td>
+                                        <td>DMK Airport</td>
+                                        <td>17/12/2016</td>
+                                        <td>Toyota Camry</td>
+                                        <td><span class="label label-success">New</span></td>
 
-                                </tr>*@
+                                    </tr>*@
                             </tbody>
                         </table>
                     </div>
@@ -188,4 +187,5 @@
         </div>
 
     </div>
+
 </section>
