@@ -27,6 +27,6 @@ C:\Project\LMS\LMS\bin\System.Web.Razor.xml
 C:\Project\LMS\LMS\bin\System.Web.WebPages.xml
 C:\Project\LMS\LMS\bin\System.Web.WebPages.Deployment.xml
 C:\Project\LMS\LMS\bin\System.Web.WebPages.Razor.xml
-C:\Project\LMS\LMS\obj\Debug\LMS.csprojResolveAssemblyReference.cache
 C:\Project\LMS\LMS\obj\Debug\LMS.dll
 C:\Project\LMS\LMS\obj\Debug\LMS.pdb
+C:\Project\LMS\LMS\obj\Debug\LMS.csprojResolveAssemblyReference.cache

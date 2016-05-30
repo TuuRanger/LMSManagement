@@ -66,17 +66,28 @@ namespace LMS.Controllers
 
         public ActionResult Index()
         {
-             int UserType = 0;
+             string sUserType = "0";
              if (Session["LogedUserType"] != null)
             {
-                UserType = Convert.ToInt32(Session["LogedUserType"]);
+                sUserType = Session["LogedUserType"].ToString();
             }
             else
             {
-                UserType = 0;
+                sUserType = "0";
             }
 
-           
+             int UserType = 0;
+             if (sUserType == "")
+             {
+                 UserType = 0;
+             }
+             else
+             {
+                 UserType = Convert.ToInt32(sUserType);
+             }
+         
+
+         
             var UserID = (from u in db.LMS_User
                           where u.UesrType == UserType
                               select new
@@ -100,7 +111,7 @@ namespace LMS.Controllers
                                     CarModel = v.Name,
                                     BStatus = b.Status,
                                     AgentID = b.AgentID,
-                                    UserID = b.OrderBy
+                                    UserID = b.UserID
                                 }
                ).ToList();
               foreach (var bl in sBookingList)
@@ -134,7 +145,7 @@ namespace LMS.Controllers
                                     CarModel = v.Name,
                                     BStatus = b.Status,
                                     AgentID = b.AgentID,
-                                    UserID = b.OrderBy
+                                    UserID = b.UserID
                                 }
                ).ToList();
              foreach (var bl in sBookingList)
@@ -157,10 +168,59 @@ namespace LMS.Controllers
             return View(model);
         }
 
+
+        public JsonResult searchRoute(string dFrom)
+         {
+             int dS = 1;
+             dS = Convert.ToInt32(dFrom);
+             var dTo = (from r in db.LMS_Route
+                     join  t in db.LMS_TO  on r.ToID equals t.ID
+                        where r.FromID == dS
+                     orderby t.Detail ascending
+                         select new
+                         {
+                             tDetail = t.Detail,
+                             tID = t.ID
+                         }
+                  ).ToList();
+          List<ToModel> data = new List<ToModel>();
+          foreach (var bt in dTo)
+          {
+              ToModel b = new ToModel();
+              b.TDetail = bt.tDetail.ToString();
+              b.TId = Convert.ToInt32(bt.tID.ToString());
+              data.Add(b);
+          }
+
+          return Json(data, JsonRequestBehavior.AllowGet);
+         }
+
         public ActionResult Booking ()
         {
+         //  var path = Path.Combine(Server.MapPath("~/DriverProfile/"));
+            string sUserID = "0";
+            if (Session["LogedUserID"] != null)
+            {
+                sUserID = Session["LogedUserID"].ToString();
+            }
+            else
+            {
+                sUserID = "0";
+            }
+
+            int UserID = 0;
+            if (sUserID == "")
+            {
+                UserID = 0;
+            }
+            else
+            {
+               UserID = Convert.ToInt32(sUserID);
+            }
+         
            
             var dForm = (from p in db.LMS_From
+                         orderby p.Detail ascending
                          select new
                     {
                         cDetail = p.Detail,
@@ -168,6 +228,7 @@ namespace LMS.Controllers
                     }
                     ).ToList();
             var dTo = (from t in db.LMS_TO
+                       orderby t.Detail ascending
                          select new
                          {
                              tDetail = t.Detail,
@@ -176,6 +237,7 @@ namespace LMS.Controllers
                   ).ToList();
 
             var dCar = (from c in db.LMS_Vehicle
+                        orderby c.Name ascending
                        select new
                        {
                            tModel = c.Name,
@@ -183,13 +245,7 @@ namespace LMS.Controllers
                        }
                 ).ToList();
 
-            var dSubAgent = (from c in db.LMS_SubAgent
-                        select new
-                        {
-                            tName = c.Name,
-                            tID = c.ID
-                        }
-               ).ToList();
+          
 
             List<FromToModel> model = new List<FromToModel>();
             List<FromModel> FModel = new List<FromModel>();
@@ -197,6 +253,46 @@ namespace LMS.Controllers
             List<Car> Car = new List<Car>();
             List<SubAgent> SubAgent = new List<SubAgent>();
 
+            if (UserID == 1)
+            {
+                var dSubAgent = (from c in db.LMS_SubAgent
+                                 select new
+                                 {
+                                     tName = c.Name,
+                                     tID = c.ID,
+                                     tUserID = c.UserID
+                                 }
+              ).ToList();
+                foreach (var bs in dSubAgent)
+                {
+                    SubAgent s = new SubAgent();
+                    s.AName = bs.tName.ToString();
+                    s.AId = Convert.ToInt32(bs.tID.ToString());
+                    s.UserID = Convert.ToInt32(bs.tUserID.ToString());
+                    SubAgent.Add(s);
+                }
+            }
+            else
+            {
+                var dSubAgent = (from c in db.LMS_SubAgent
+                                 where c.UserID == UserID
+                                 select new
+                                 {
+                                     tName = c.Name,
+                                     tID = c.ID,
+                                     tUserID = c.UserID
+                                 }
+              ).ToList();
+                foreach (var bs in dSubAgent)
+                {
+                    SubAgent s = new SubAgent();
+                    s.AName = bs.tName.ToString();
+                    s.AId = Convert.ToInt32(bs.tID.ToString());
+                    s.UserID = Convert.ToInt32(bs.tUserID.ToString());
+                    SubAgent.Add(s);
+                }
+            }
+           
             foreach (var bf in dForm)
             {
                 FromModel a = new FromModel();
@@ -213,13 +309,7 @@ namespace LMS.Controllers
                 TModel.Add(b);
             }
 
-            foreach (var bs in dSubAgent)
-            {
-                SubAgent s = new SubAgent();
-                s.AName = bs.tName.ToString();
-                s.AId = Convert.ToInt32(bs.tID.ToString());
-                SubAgent.Add(s);
-            }
+          
 
             foreach (var cc in dCar)
             {
@@ -266,11 +356,11 @@ namespace LMS.Controllers
                 bkd.ServiceType = Convert.ToInt32(Request["ServiceType"]);
                 bkd.AgentID = Convert.ToInt32(Request["SubAgent"]);
                 bkd.CustomerType = Convert.ToInt32(Request["CustomerType"]);
-                bkd.OrderBy = Request["UserType"];
+                bkd.UserID = Convert.ToInt32(Request["UserType"]);
                 bkd.Status = 1;
                 if (bkd.ServiceType == 1)
                 {
-                    bkd.CarID = Convert.ToInt32(Request["CarModel"]);
+                    bkd.VechileID = Convert.ToInt32(Request["CarModel"]);
 
                     bkd.Date = Convert.ToDateTime(Request["Date"]);
 
@@ -291,7 +381,7 @@ namespace LMS.Controllers
 
                 }else if (bkd.ServiceType == 3)
                 {
-                    bkd.CarID = Convert.ToInt32(Request["CarModel3"]);
+                    bkd.VechileID = Convert.ToInt32(Request["CarModel3"]);
 
                     bkd.Date = Convert.ToDateTime(Request["Date3"]);
 
@@ -311,11 +401,11 @@ namespace LMS.Controllers
                     bkd.Vechile = Convert.ToInt32(Request["Vechile3"]);
                 }
 
-               
 
-                var CarModel = (from c in db.LMS_Car
-                                where c.ID == bkd.CarID
-                                select c.Model
+
+                var CarModel = (from c in db.LMS_Vehicle
+                                where c.ID == bkd.VechileID
+                                select c.Name
                    ).First();
 
                 var FromDetail = (from f in db.LMS_From
@@ -334,13 +424,51 @@ namespace LMS.Controllers
 
                 var Product = (from p in db.LMS_Product
                                join r in db.LMS_Route on p.RouteID equals r.ID
-                               where r.FromID == bkd.FromID && r.ToID == bkd.ToID && p.TpyeOfService == bkd.ServiceType && p.TpyeOfVihicle == bkd.CarID
+                               where r.FromID == bkd.FromID && r.ToID == bkd.ToID && p.TpyeOfService == bkd.ServiceType && p.TpyeOfVihicle == bkd.VechileID
                                select new
                                {
                                    ProductID = p.ID,
                                    Price = p.Price
                                }
                       ).First();
+
+                string dTime = "";
+                dTime = bkd.Time.Substring(0, 2) + bkd.Time.Substring(3, 2);
+                int iTime = Convert.ToInt32(dTime);
+                var WorkTime = (from t in db.LMS_WorkTime
+                                where t.TStart <= iTime && t.TEnd >= iTime
+                                select t.TID
+                   ).FirstOrDefault();
+
+                int iTID = 0; 
+                if (WorkTime == 0)
+                {
+                    iTID = 2;
+                }
+                else
+                {
+                    iTID = WorkTime;
+                }
+                
+               
+                var Car = (from c in db.LMS_Car
+                               join dc in db.LMS_DriverOfCar on c.ID equals dc.CarID
+                                join d in db.LMS_Driver on dc.DriverID equals d.ID
+                           where c.VehicleID == bkd.VechileID && dc.TID == iTID
+                           orderby dc.LastBooking,dc.LastJobDate ascending,dc.LastJobTime ascending,c.ID
+                               select new
+                               {
+                                   DID = dc.DID,
+                                   CarID = dc.CarID,
+                                   DriverID = dc.DriverID,
+                                   TID = dc.TID,
+                                   VehicleRegis = c.VehicleRegis,
+                                   DTitle = d.Title,
+                                   DFirstName = d.Name,
+                                   DLastName = d.LastName,
+                                   DMobile = d.Mobile
+                               }
+                     ).First();
 
                 var AgentEmail = (from ag in db.LMS_SubAgent
                                where ag.ID == bkd.AgentID 
@@ -357,7 +485,8 @@ namespace LMS.Controllers
                                   select new
                                   {
                                       aID = ap.ID,
-                                      aDiscount = ap.Discount,
+                                      aDiscountP = ap.DiscountP,
+                                      aDiscountB = ap.DiscountB,
                                       aMarkup = ap.Markup
                                   }
                   ).FirstOrDefault();
@@ -365,15 +494,30 @@ namespace LMS.Controllers
               
                 bkd.ProductID = Convert.ToInt32(Product.ProductID.ToString());
                 bkd.Price = Convert.ToDecimal(Product.Price.ToString()) * bkd.Vechile;
+
+                bkd.DID = Convert.ToInt32(Car.DID.ToString());
+                bkd.CarID = Convert.ToInt32(Car.CarID.ToString());
+                bkd.DriverID = Convert.ToInt32(Car.DriverID.ToString());
+                bkd.TID = Convert.ToInt32(Car.TID.ToString());
+                bkd.VehicleRegis = Car.VehicleRegis.ToString();
+                bkd.DTitle = Car.DTitle.ToString();
+                bkd.DFirstName = Car.DFirstName.ToString();
+                bkd.DLastName = Car.DLastName.ToString();
+                bkd.DMobile = Car.DMobile.ToString();
+
                 if (bkd.AgentID == 0)
                 {
                     bkd.AgentEmail = "";
+                    bkd.DiscountP = 0;
+                    bkd.DiscountB = 0;
                     bkd.Discount = 0;
                     bkd.AgentName = "";
                 }else
                 {
                     bkd.AgentEmail = AgentEmail.aEmail.ToString();
-                    bkd.Discount = bkd.Price * (Convert.ToDecimal(AgentPrice.aDiscount)/100);
+                    bkd.DiscountP = Convert.ToDecimal(AgentPrice.aDiscountP);
+                    bkd.DiscountB = Convert.ToDecimal(AgentPrice.aDiscountB);
+                    bkd.Discount = (bkd.Price * (Convert.ToDecimal(AgentPrice.aDiscountP)/100)) + Convert.ToDecimal(AgentPrice.aDiscountB);
                     bkd.AgentName = AgentEmail.aName.ToString();
                 }
               
@@ -448,7 +592,7 @@ namespace LMS.Controllers
             AddBooking.LastName = bkd.LastName;
             AddBooking.Luggage = bkd.Luggage;
             AddBooking.Mobile = bkd.Mobile;
-            AddBooking.OrderBy = bkd.OrderBy;
+            AddBooking.UserID = bkd.UserID;
             AddBooking.Passenger = bkd.Passenger;
             AddBooking.Price = bkd.Price;
             AddBooking.ProductID = bkd.ProductID;
@@ -461,32 +605,344 @@ namespace LMS.Controllers
             AddBooking.ToDetail = bkd.ToDetail;
             AddBooking.TotalPrice = bkd.TotalPrice;
             AddBooking.AgentID = bkd.AgentID;
+            AddBooking.DID = bkd.DID;
+            AddBooking.DriverID = bkd.DriverID;
 
             db.LMS_Booking.Add(AddBooking);
             db.SaveChanges();
-           
+
+            LMS_DriverOfCar UpdateQ = new LMS_DriverOfCar();
+
+            var DriverOfCar = (from dc in db.LMS_DriverOfCar
+                           where dc.DID == bkd.DID
+                           select dc).Single();
+
+            DriverOfCar.LastJobDate = bkd.Date;
+            DriverOfCar.LastJobTime = bkd.Time;
+            DriverOfCar.LastBooking = BID;
+        
+            db.SaveChanges();
+
+               StringBuilder sb = new StringBuilder();
+            //BookingInfo
+
+              var sBookingInfo = (from b in db.LMS_Booking
+                                   join c in db.LMS_Car on b.CarID equals c.ID
+                                   //join u in db.LMS_User on b.UserID equals u.UserID
+                                   //join a in db.LMS_SubAgent on b.AgentID equals a.ID
+                                   join d in db.LMS_Driver on b.DriverID equals d.ID
+                                where b.BookingID == BID
+                                select new
+                                {
+                                    BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
+                                    Title = b.Title,
+                                    FirstName =b.FirstName,
+                                    LastName = b.LastName,
+                                    Address  = b.Address,
+                                    Telephone = b.Telephone,
+                                    Mobile = b.Mobile,
+                                    Email = b.Email,
+                                    //OrderBy = u.UserName,
+                                    CustomerType = b.CustomerType,
+                                    ServiceType = b.ServiceType,
+                                    bDate = b.Date,
+                                    bTime = b.Time,
+                                    Passenger = b.Passenger,
+                                    Luggage = b.Luggage,
+                                    FlightNo = b.FlightNo,
+                                    FlightTime = b.FlightTime,
+                                    FromDetail = b.FromDetail,
+                                    ToDetail = b.ToDetail,
+                                    Remark = b.Remark,
+                                    ProductID = b.ProductID,
+                                    CarID = b.CarID,
+                                    CModel = c.Model,
+                                    Price = b.Price,
+                                    Discount = b.Discount,
+                                    TotalPrice = b.TotalPrice,
+                                    Status = b.Status,
+                                    //AgentName = a.Name,
+                                    DriverID = b.DriverID,
+                                    DTitle = d.Title,
+                                    DName = d.Name,
+                                    DLastName = d.LastName,
+                                    DMobile = d.Mobile,
+                                    VehicleRegis = c.VehicleRegis,
+                                    AgentID = b.AgentID,
+                                    UserID = b.UserID
+                                    //AgentEmail = a.Email,
+                                }
+                 ).ToList();
+              foreach (var bl in sBookingInfo)
+              {
+                  BookingInfo a = new BookingInfo();
+                  a.Address = bl.Address.ToString();
+                  //a.AgentEmail = bl.AgentEmail.ToString();
+                  //a.AgentName = bl.AgentName.ToString();
+                  a.BookingDate = Convert.ToDateTime(bl.BookingDate);
+                  a.BookingID = bl.BookingID.ToString();
+                  a.CarID = Convert.ToInt32(bl.CarID);
+                  a.CarModel = bl.CModel.ToString();
+                  a.CustomerType = Convert.ToInt32(bl.CustomerType);
+                  a.Date = Convert.ToDateTime(bl.bDate);
+                  a.DFirstName = bl.DName.ToString();
+                  a.DLastName = bl.DLastName.ToString();
+                  a.DMobile = bl.DMobile.ToString();
+                  a.DriverID = Convert.ToInt32(bl.DriverID);
+                  a.DTitle = bl.DTitle.ToString();
+                  a.Email = bl.Email.ToString();
+                  a.FirstName = bl.FirstName.ToString();
+                  a.FlightNo = bl.FlightNo.ToString();
+                  a.FlightTime = bl.FlightTime.ToString();
+                  a.FromDetail = bl.FromDetail.ToString();
+                  a.LastName = bl.LastName.ToString();
+                  a.Luggage = Convert.ToInt32(bl.Luggage);
+                  a.Mobile = bl.Mobile.ToString();
+                  //a.OrderBy = bl.OrderBy.ToString();
+                  a.Passenger = Convert.ToInt32(bl.Passenger);
+                  a.Price = Convert.ToDecimal(bl.Price);
+                  a.Remark = bl.Remark.ToString();
+                  a.ServiceType = Convert.ToInt32(bl.ServiceType);
+                  a.Status = Convert.ToInt32(bl.Status);
+                  a.Telephone = bl.Telephone.ToString();
+                  a.Time = bl.bTime.ToString();
+                  a.Title = bl.Title.ToString();
+                  a.ToDetail = bl.ToDetail.ToString();
+                  a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
+                  a.VehicleRegis = bl.VehicleRegis.ToString();
+
+                  if (bl.AgentID != 0)
+                  {
+                      var sAgent = (from sg in db.LMS_SubAgent
+                                    where sg.ID == bl.AgentID
+                                    select new
+                                    {
+                                        AgentName = sg.Name,
+                                        AgentMobile = sg.Telephone,
+                                        AgentEMail = sg.Email
+                                    }
+                   ).FirstOrDefault();
+
+                      a.AgentEmail = sAgent.AgentEMail.ToString();
+                      a.AgentMobile = sAgent.AgentMobile.ToString();
+                      a.AgentName = sAgent.AgentName.ToString();
+
+                  }
+                  else
+                  {
+
+                      a.AgentEmail = "";
+                      a.AgentMobile = "";
+                      a.AgentName = "";
+
+                  }
+                  if (bl.UserID != 0)
+                  {
+                      var sUser = (from u in db.LMS_User
+                                   where u.UserID == bl.UserID
+                                   select new
+                                   {
+                                       UName = u.FullName,
+                                       UEmail = u.Email,
+                                       UTelephone = u.Telephone
+                                   }
+                   ).FirstOrDefault();
+
+                      a.UName = sUser.UName.ToString();
+                      a.UEmail = sUser.UEmail.ToString();
+                      a.UTelephone = sUser.UTelephone.ToString();
+
+                  }
+                  else
+                  {
+
+                      a.UName = "";
+                      a.UEmail = "";
+                      a.UTelephone = "";
+
+                  }
+
+                  string SType = "";
+                  if (a.ServiceType == 1)
+                  {
+                      SType = "One Way";
+                  }
+                  else if (a.ServiceType == 2)
+                  {
+                      SType = "Return";
+                  }
+                  else if (a.ServiceType == 3)
+                  {
+                      SType = "Sale Visit";
+                  }
+                  sb.Append(" <font size=\"2\">");
+                  sb.Append("                <table>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td>");
+            sb.Append("                        Thank you for your reservation with Synergi.Your transfer service has been booked as follow<br>");
+            sb.Append("                            Please check to ensure all details are correct.");
+            sb.Append("                        </td>");
+            sb.Append("                </table>");
+            sb.Append("                <br>");
+            sb.Append("                <table border=\"1\" width=\"100%\">");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>Lead Passenger : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.Title +" &nbsp;" + a.FirstName +" &nbsp;"+ a.LastName +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Address : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.Address +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>EMail : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.Email +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Contact Call : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.Mobile +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                </table>");
+            sb.Append("                <br>");
+            sb.Append("                <table border=\"1\" width=\"100%\">");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Type of Service  : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ SType +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Passenger : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.Passenger +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Luggage : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.Luggage +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Flight Detail : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.FlightNo +" &nbsp; "+ a.FlightTime +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>Pick up date : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.Date +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Pick up time : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.Time +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>From : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.FromDetail +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>To : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.ToDetail +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>Remark : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.Remark +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                </table>");
+            sb.Append("                <br>");
+            sb.Append("                <table border=\"1\" width=\"100%\">");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>Agent : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.AgentName +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>EMail : &nbsp;</b></td>");
+            sb.Append("                        <td>"+ a.AgentEmail +"<br> </td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>Contact Call : &nbsp;</b></td>");
+            sb.Append("                        <td>"+ a.AgentMobile +"<br> </td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Booked by : &nbsp;</b></td>");
+            sb.Append("                        <td>"+ a.UName +"<br> </td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Booked ID : &nbsp;</b></td>");
+            sb.Append("                        <td>IV &nbsp;"+ a.BookingID +"<br> </td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Booked Date : &nbsp;</b></td>");
+            sb.Append("                        <td>"+ a.BookingDate +"<br> </td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>EMail : &nbsp;</b></td>");
+            sb.Append("                        <td>"+ a.UEmail +"<br> </td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>Contact Call : &nbsp;</b></td>");
+            sb.Append("                        <td>"+ a.UTelephone +"<br> </td>");
+            sb.Append("                    </tr>");
+            sb.Append("                </table>");
+            sb.Append("                <br>");
+            sb.Append("                <table border=\"1\" width=\"100%\">");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Meeting point : &nbsp;</b> </td>");
+            sb.Append("                        <td>The chauffeur will send SMS or call to re -confirmed 24 hours before your travel date. <br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                </table>");
+            sb.Append("                <br>");
+            sb.Append("                <table border=\"1\" width=\"100%\">");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>Type of car : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.CarModel +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>Chauffeur : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.DTitle +" &nbsp;"+ a.DFirstName +" &nbsp;"+ a.DLastName +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                       <td width=\"20%\"><b>License Plate : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.VehicleRegis +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td width=\"20%\"><b>Contact Call : &nbsp;</b> </td>");
+            sb.Append("                        <td>"+ a.DMobile +"<br></td>");
+            sb.Append("                    </tr>");
+            sb.Append("                </table>");
+            sb.Append("                <br>");
+            sb.Append("                <table>");
+            sb.Append("                    <tr>");
+            sb.Append("                        <td>");
+            sb.Append("                        Term and Condition<br>");
+            sb.Append("                            Cancellation/ No show<br>");
+            sb.Append("                            1.For any cancellation made more than 48 hours in advance, there is no charge.<br>");
+            sb.Append("                            2. For any cancellation made within 48 hours, there is a 50% charge.<br>");
+            sb.Append("                            3.For any cancellation made within 24 hours, or no show there is a 100% charge.<br><br>");
+            sb.Append("                            Airport Transfer<br>");
+            sb.Append("                            1.The company is not responsible for any damage arising from the use or not use any.<br>");
+            sb.Append("                            2. If the passengers do not appear or late show up more than 2 hours from appointed time<br>");
+            sb.Append("                            we reserve the right to assume the inability as NO SHOW the service will charge in full.<br>");
+            sb.Append("                            3. Due to the size of the vehicle<br>");
+            sb.Append("                            Big luggage size 28x20x12 โ€ including wheels and handle.<br>");
+            sb.Append("                            Small luggage size 22x14x9 โ€ including wheels and handle.<br>");
+            sb.Append("                            4. Maximum of passenger to be seated / Camry sedan 3 passengers / Van 6 passengers<br>");
+            sb.Append("                        </td>");
+            sb.Append("                    </tr>");
+            sb.Append("                </table>");
+            sb.Append("                <br>");
+            sb.Append("  </font>");
+
+              }
+
+            //BookingInfo
+
             //EMail
-            StringBuilder sbE = new StringBuilder();
-
-                    sbE.Append("<table>");
-                    sbE.Append(" <tr>");
-                    sbE.Append("  <td><font size=\"2\">");
-                    sbE.Append("  <b>LMS Booking : "+ BID +"</b>");
-                    sbE.Append("  </font></td>");
-                    sbE.Append(" </tr>");
-                    sbE.Append("</table> ");
-
-                
-
-
-                    StringReader srE = new StringReader(sbE.ToString());
+         
+                    StringReader sr = new StringReader(sb.ToString());
                
                     //C:\Miramar\Hotel\img\imgEmail
                     //string imagepath = "E:\\Test\\MirmarHotel\\Miramar.Hotel\\img\\imgEmail\\";
                         //string imagepath = "C:\\Miramar\\Hotel\\img\\imgEmail\\";
                       //  string imagepath = "C:\\Miramar\\Conxxe\\img\\imgEmail\\";
-                   // string pdfpath = "E:\\Test\\";
-
+                
+                 //   string pdfpath = "C:\\inetpub\\wwwroot\\LMS\\DriverProfile\\";
+                    BaseFont EnCodefont = BaseFont.CreateFont(Server.MapPath("/font/ANGSA.TTF"), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    Font Nfont = new Font(EnCodefont, 18, Font.NORMAL);
+                    string pdfpath = Path.Combine(Server.MapPath("~/DriverProfile/"));
                     Document pdfDoc = new Document(PageSize.A4, 36f, 36f, 0f, 0f);
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     using (MemoryStream memoryStream = new MemoryStream())
@@ -495,60 +951,10 @@ namespace LMS.Controllers
                         pdfDoc.Open();
                         // PdfWriter.GetInstance(pdfDoc, new FileStream(pdfpath +"test"+ rcb.BookingReference+".pdf", FileMode.Create));
                         // pdfDoc.Open();
-                        pdfDoc.Add(new Paragraph(""));
-                        //Image imgHeadYnotFly = Image.GetInstance(imagepath + "HeadYnotFly.png");
-                        //imgHeadYnotFly.ScalePercent(23f);
-                        //Image imgGeneral = Image.GetInstance(imagepath + "General.png");
-                        //imgGeneral.ScalePercent(23f);
-                        //Image imgArrival = Image.GetInstance(imagepath + "Arrival.png");
-                        //imgArrival.ScalePercent(23f);
-                        //Image imgDeparture = Image.GetInstance(imagepath + "Departure.png");
-                        //imgDeparture.ScalePercent(23f);
-                        //Image imgEmergency = Image.GetInstance(imagepath + "Emergency.png");
-                        //imgEmergency.ScalePercent(23f);
-                        //Image imgPaymentMethod = Image.GetInstance(imagepath + "PaymentMethod.png");
-                        //imgPaymentMethod.ScalePercent(23f);
-                        //Image imgPayment = Image.GetInstance(imagepath + "Payment.png");
-                        //imgPayment.ScalePercent(23f);
-                        //Image imgCredit = Image.GetInstance(imagepath + "Credit.png");
-                        //imgCredit.ScalePercent(23f);
-                        //Image imgTicketingMethod = Image.GetInstance(imagepath + "TicketingMethod.png");
-                        //imgTicketingMethod.ScalePercent(23f);
-                        //Image imgFooterBooking = Image.GetInstance(imagepath + "FooterBooking.png");
-                        //imgFooterBooking.ScalePercent(23f);
-                        //pdfDoc.Add(imgHeadYnotFly);
-                        //htmlparser.Parse(srH);
-                        //pdfDoc.Add(imgGeneral);
-                        //htmlparser.Parse(srG);
 
-                        //if (rcb.BookingTypeId == "1")
-                        //{
-                        //    pdfDoc.Add(imgArrival);
-                        //    htmlparser.Parse(srA);
-                        //    pdfDoc.Add(imgDeparture);
-                        //    htmlparser.Parse(srD);
-                        //}
-                        //else if (rcb.BookingTypeId == "2")
-                        //{
-                        //    pdfDoc.Add(imgArrival);
-                        //    htmlparser.Parse(srA);
-                        //                        }
-                        //else if (rcb.BookingTypeId == "3")
-                        //{
-                        //    pdfDoc.Add(imgDeparture);
-                        //    htmlparser.Parse(srD);
-                        //}
-
-                        // pdfDoc.Add(imgEmergency);
-                        htmlparser.Parse(srE);
-                        //pdfDoc.Add(imgPaymentMethod);
-                        //pdfDoc.Add(imgCredit);
-                        //pdfDoc.Add(imgPayment);
-                        //pdfDoc.Add(imgTicketingMethod);
-                        //htmlparser.Parse(srT);
-                        //pdfDoc.Add(imgFooterBooking);
-
-
+                        pdfDoc.Add(new Paragraph("", Nfont));  
+                        htmlparser.Parse(sr);
+                      
                         pdfDoc.Close();
                         byte[] bytes = memoryStream.ToArray();
                         memoryStream.Close();
@@ -565,9 +971,15 @@ namespace LMS.Controllers
                         MailMessage msg = new MailMessage();
                         msg.From = new MailAddress("booking@synergilimo.com");
                         msg.To.Add(bkd.Email);
-                        msg.Subject = "LMS Booking" + BID;
-                        msg.Body = "CONFIRMATION Your booking has been successful.(Booking Reference :" + BID +")";
+                        msg.Subject = "CONFIRMATION Your booking has been successful.(Booking Reference : IV" + BID + ")";
+                        msg.Body = sb.ToString();
+                        msg.IsBodyHtml = true;
+                     //   msg.IsBodyHtml = sb.ToString();
+                   
+                   //    msg.Body = "Thank you for your reservation with Synergi.Your transfer service has been booked as follow  Please check to ensure all details are correct.";
                         msg.Attachments.Add(new Attachment(new MemoryStream(bytes), "LMSBooking.pdf"));
+                        msg.Attachments.Add(new Attachment(pdfpath + "DriverProfile" + bkd.DriverID + ".pdf"));
+                    //    msg.Attachments.Add(new FileStream(pdfpath +"test"+ rcb.BookingReference+".pdf");
                         msg.Priority = MailPriority.High;
                         msg.BodyEncoding = UTF8Encoding.UTF8;
                         msg.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
@@ -577,13 +989,167 @@ namespace LMS.Controllers
                         //EMail
 
                     }
+                    Session["BookingID"] = BID;
                     return RedirectToAction("BookingInfo", "LMS");
             //return View();
         }
 
         public ActionResult BookingInfo()
         {
-            return View();
+            string BID = "";
+            if (Session["BookingID"] != null)
+            {
+                BID = Session["BookingID"].ToString();
+            }
+            else
+            {
+                BID = "";
+                return RedirectToAction("Booking", "LMS");
+            }
+            List<BookingInfo> model = new List<BookingInfo>();
+            var sBookingInfo = (from b in db.LMS_Booking
+                                   join c in db.LMS_Car on b.CarID equals c.ID
+                                   //join u in db.LMS_User on b.UserID equals u.UserID
+                                   //join a in db.LMS_SubAgent on b.AgentID equals a.ID
+                                   join d in db.LMS_Driver on b.DriverID equals d.ID
+                                where b.BookingID == BID
+                                select new
+                                {
+                                    BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
+                                    Title = b.Title,
+                                    FirstName =b.FirstName,
+                                    LastName = b.LastName,
+                                    Address  = b.Address,
+                                    Telephone = b.Telephone,
+                                    Mobile = b.Mobile,
+                                    Email = b.Email,
+                                    //OrderBy = u.UserName,
+                                    CustomerType = b.CustomerType,
+                                    ServiceType = b.ServiceType,
+                                    bDate = b.Date,
+                                    bTime = b.Time,
+                                    Passenger = b.Passenger,
+                                    Luggage = b.Luggage,
+                                    FlightNo = b.FlightNo,
+                                    FlightTime = b.FlightTime,
+                                    FromDetail = b.FromDetail,
+                                    ToDetail = b.ToDetail,
+                                    Remark = b.Remark,
+                                    ProductID = b.ProductID,
+                                    CarID = b.CarID,
+                                    CModel = c.Model,
+                                    Price = b.Price,
+                                    Discount = b.Discount,
+                                    TotalPrice = b.TotalPrice,
+                                    Status = b.Status,
+                                    //AgentName = a.Name,
+                                    DriverID = b.DriverID,
+                                    DTitle = d.Title,
+                                    DName = d.Name,
+                                    DLastName = d.LastName,
+                                    DMobile = d.Mobile,
+                                    VehicleRegis = c.VehicleRegis,
+                                    AgentID = b.AgentID,
+                                    UserID = b.UserID
+                                    //AgentEmail = a.Email,
+                                }
+                 ).ToList();
+            foreach (var bl in sBookingInfo)
+            {
+                BookingInfo a = new BookingInfo();
+                a.Address = bl.Address.ToString();
+                //a.AgentEmail = bl.AgentEmail.ToString();
+                //a.AgentName = bl.AgentName.ToString();
+                a.BookingDate = Convert.ToDateTime(bl.BookingDate);
+                a.BookingID = bl.BookingID.ToString();
+                a.CarID = Convert.ToInt32(bl.CarID);
+                a.CarModel = bl.CModel.ToString();
+                a.CustomerType = Convert.ToInt32(bl.CustomerType);
+                a.Date = Convert.ToDateTime(bl.bDate);
+                a.DFirstName = bl.DName.ToString();
+                a.DLastName = bl.DLastName.ToString();
+                a.DMobile = bl.DMobile.ToString();
+                a.DriverID = Convert.ToInt32(bl.DriverID);
+                a.DTitle = bl.DTitle.ToString();
+                a.Email = bl.Email.ToString();
+                a.FirstName = bl.FirstName.ToString();
+                a.FlightNo = bl.FlightNo.ToString();
+                a.FlightTime = bl.FlightTime.ToString();
+                a.FromDetail = bl.FromDetail.ToString();
+                a.LastName = bl.LastName.ToString();
+                a.Luggage = Convert.ToInt32(bl.Luggage);
+                a.Mobile = bl.Mobile.ToString();
+                //a.OrderBy = bl.OrderBy.ToString();
+                a.Passenger = Convert.ToInt32(bl.Passenger);
+                a.Price = Convert.ToDecimal(bl.Price);
+                a.Remark = bl.Remark.ToString();
+                a.ServiceType = Convert.ToInt32(bl.ServiceType);
+                a.Status = Convert.ToInt32(bl.Status);
+                a.Telephone = bl.Telephone.ToString();
+                a.Time = bl.bTime.ToString();
+                a.Title = bl.Title.ToString();
+                a.ToDetail = bl.ToDetail.ToString();
+                a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
+                a.VehicleRegis = bl.VehicleRegis.ToString();
+
+                if (bl.AgentID != 0)
+                {
+                    var sAgent = (from sg in db.LMS_SubAgent
+                                  where sg.ID == bl.AgentID
+                                  select new
+                                  {
+                                      AgentName = sg.Name,
+                                      AgentMobile = sg.Telephone,
+                                      AgentEMail = sg.Email
+                                  }
+                 ).FirstOrDefault();
+
+                    a.AgentEmail = sAgent.AgentEMail.ToString();
+                    a.AgentMobile = sAgent.AgentMobile.ToString();
+                    a.AgentName = sAgent.AgentName.ToString();
+
+                }
+                else
+                {
+
+                    a.AgentEmail = "";
+                    a.AgentMobile = "";
+                    a.AgentName = "";
+
+                }
+                if (bl.UserID != 0)
+                {
+                    var sUser = (from u in db.LMS_User
+                                  where u.UserID == bl.UserID
+                                  select new
+                                  {
+                                      UName = u.FullName,
+                                      UEmail = u.Email,
+                                      UTelephone = u.Telephone
+                                  }
+                 ).FirstOrDefault();
+
+                    a.UName = sUser.UName.ToString();
+                    a.UEmail = sUser.UEmail.ToString();
+                    a.UTelephone = sUser.UTelephone.ToString();
+
+                }
+                else
+                {
+
+                    a.UName = "";
+                    a.UEmail = "";
+                    a.UTelephone = "";
+
+                }
+               
+
+                model.Add(a);
+
+            }
+
+            return View(model);
         }
 
         public ActionResult Queue()
@@ -622,7 +1188,7 @@ namespace LMS.Controllers
                                         CarModel = v.Name,
                                         BStatus = b.Status,
                                         AgentID = b.AgentID,
-                                        UserID = b.OrderBy
+                                        UserID = b.UserID
                                     }
                  ).ToList();
                 foreach (var bl in sBookingList)
@@ -656,7 +1222,7 @@ namespace LMS.Controllers
                                         CarModel = v.Name,
                                         BStatus = b.Status,
                                         AgentID = b.AgentID,
-                                        UserID = b.OrderBy
+                                        UserID = b.UserID
                                     }
                   ).ToList();
                 foreach (var bl in sBookingList)
@@ -676,6 +1242,268 @@ namespace LMS.Controllers
             }
            
             return View(model);
+        }
+
+        public ActionResult DriverList()
+        {
+            int UserType = 0;
+            if (Session["LogedUserType"] != null)
+            {
+                UserType = Convert.ToInt32(Session["LogedUserType"]);
+            }
+            else
+            {
+                UserType = 0;
+            }
+
+
+            var UserID = (from u in db.LMS_User
+                          where u.UesrType == UserType
+                          select new
+                          {
+                              uAgentID = u.AgentID
+                          }
+                   ).FirstOrDefault();
+            List<Driver> model = new List<Driver>();
+            if (UserID.uAgentID == 0)
+            {
+                var sDriver = (from d in db.LMS_Driver
+                                  
+                                    select new
+                                    {
+                                        ID = d.ID,
+                                        Title = d.Title,
+                                        Name = d.Name,
+                                        LastName = d.LastName,
+                                        Mobile = d.Mobile
+                                     
+                                    }
+                 ).ToList();
+                foreach (var dl in sDriver)
+                {
+                    Driver a = new Driver();
+                    a.Id = Convert.ToInt32(dl.ID);
+                    a.Title = dl.Title.ToString();
+                    a.Name = dl.Name.ToString();
+                    a.LastName = dl.LastName.ToString();
+                    a.Mobile = dl.Mobile.ToString();
+                    model.Add(a);
+
+                }
+            }
+            else
+            {
+              
+            }
+
+            return View(model);
+        }
+        public ActionResult CarList()
+        {
+            int UserType = 0;
+            if (Session["LogedUserType"] != null)
+            {
+                UserType = Convert.ToInt32(Session["LogedUserType"]);
+            }
+            else
+            {
+                UserType = 0;
+            }
+
+
+            var UserID = (from u in db.LMS_User
+                          where u.UesrType == UserType
+                          select new
+                          {
+                              uAgentID = u.AgentID
+                          }
+                   ).FirstOrDefault();
+            List<CarList> model = new List<CarList>();
+            if (UserID.uAgentID == 0)
+            {
+                var sCar = (from d in db.LMS_Car
+
+                               select new
+                               {
+                                   ID = d.ID,
+                                   VehicleRegis = d.VehicleRegis,
+                                   VehicleID = d.VehicleID,
+                                   Model = d.Model,
+                                   PhotoPath = d.PhotoPath,
+                                   SitNumber = d.SitNumber,
+                                   Status = d.Status
+
+                               }
+                 ).ToList();
+                foreach (var dl in sCar)
+                {
+                    CarList a = new CarList();
+                    a.Id = Convert.ToInt32(dl.ID);
+                    a.VehicleRegis = dl.VehicleRegis.ToString();
+                    a.VehicleID = Convert.ToInt32(dl.VehicleID);
+                    a.Model = dl.Model.ToString();
+                    a.PhotoPath = dl.PhotoPath.ToString();
+                    a.SitNumber = Convert.ToInt32(dl.SitNumber);
+                    a.Status = Convert.ToInt32(dl.Status);
+                    model.Add(a);
+
+                }
+            }
+            else
+            {
+
+            }
+
+            return View(model);
+        }
+        public ActionResult QueueList()
+        {
+            string sUserType = "0";
+            if (Session["LogedUserType"] != null)
+            {
+                sUserType = Session["LogedUserType"].ToString();
+            }
+            else
+            {
+                sUserType = "0";
+            }
+
+            int UserType = 0;
+            if (sUserType == "")
+            {
+                UserType = 0;
+            }
+            else
+            {
+                UserType = Convert.ToInt32(sUserType);
+            }
+
+            var UserID = (from u in db.LMS_User
+                          where u.UesrType == UserType
+                          select new
+                          {
+                              uAgentID = u.AgentID
+                          }
+                   ).FirstOrDefault();
+            List<QueueList> model = new List<QueueList>();
+            if (UserID.uAgentID == 0)
+            {
+                var sQueue = (from c in db.LMS_Car
+                           join dc in db.LMS_DriverOfCar on c.ID equals dc.CarID
+                           join d in db.LMS_Driver on dc.DriverID equals d.ID
+                        join w in db.LMS_WorkTime on dc.TID equals w.TID
+                              orderby dc.TID,c.VehicleID,dc.LastBooking ascending,dc.LastJobDate ascending, dc.LastJobTime ascending, c.ID
+                           select new
+                           {
+                               DID = dc.DID,
+                               CarID = dc.CarID,
+                               CModel = c.Model,
+                               DriverID = dc.DriverID,
+                               TID = dc.TID,
+                               VehicleRegis = c.VehicleRegis,
+                               DTitle = d.Title,
+                               DFirstName = d.Name,
+                               DLastName = d.LastName,
+                               DMobile = d.Mobile,
+                               TRemark = w.TRemark,
+                               LastJobDate = dc.LastJobDate,
+                               LastJobTime = dc.LastJobTime,
+                               LastBooking = dc.LastBooking
+                           }
+                  ).ToList();
+
+                foreach (var dl in sQueue)
+                {
+                    QueueList a = new QueueList();
+                  
+                    a.VehicleRegis = dl.VehicleRegis.ToString();
+                    a.Model = dl.CModel.ToString();
+                    a.DFirstName = dl.DFirstName.ToString();
+                    a.DLastName = dl.DLastName.ToString();
+                    a.DMobile = dl.DMobile.ToString();
+                    a.DriverID = Convert.ToInt32(dl.DriverID);
+                    a.DTitle = dl.DTitle.ToString();
+                    a.LastJobDate = Convert.ToDateTime(dl.LastJobDate);
+                    a.LastJobTime = dl.LastJobTime.ToString();
+                    a.TRemark = dl.TRemark.ToString();
+                    a.LastBooking = dl.LastBooking.ToString();
+                    model.Add(a);
+
+                }
+            }
+            else
+            {
+
+            }
+
+            return View(model);
+        }
+        public ActionResult Car()
+        {
+            //int UserType = 0;
+            //if (Session["LogedUserType"] != null)
+            //{
+            //    UserType = Convert.ToInt32(Session["LogedUserType"]);
+            //}
+            //else
+            //{
+            //    UserType = 0;
+            //}
+
+
+            //var UserID = (from u in db.LMS_User
+            //              where u.UesrType == UserType
+            //              select new
+            //              {
+            //                  uAgentID = u.AgentID
+            //              }
+            //       ).FirstOrDefault();
+            //List<CarList> model = new List<CarList>();
+            //if (UserID.uAgentID == 0)
+            //{
+            //    var sCar = (from d in db.LMS_Car
+
+            //                select new
+            //                {
+            //                    ID = d.ID,
+            //                    VehicleRegis = d.VehicleRegis,
+            //                    VehicleID = d.VehicleID,
+            //                    Model = d.Model,
+            //                    PhotoPath = d.PhotoPath,
+            //                    SitNumber = d.SitNumber,
+            //                    Status = d.Status
+
+            //                }
+            //     ).ToList();
+            //    foreach (var dl in sCar)
+            //    {
+            //        CarList a = new CarList();
+            //        a.Id = Convert.ToInt32(dl.ID);
+            //        a.VehicleRegis = dl.VehicleRegis.ToString();
+            //        a.VehicleID = Convert.ToInt32(dl.VehicleID);
+            //        a.Model = dl.Model.ToString();
+            //        a.PhotoPath = dl.PhotoPath.ToString();
+            //        a.SitNumber = Convert.ToInt32(dl.SitNumber);
+            //        a.Status = Convert.ToInt32(dl.Status);
+            //        model.Add(a);
+
+            //    }
+            //}
+            //else
+            //{
+
+            //}
+
+            //return View(model);
+            return View();
+        }
+        public ActionResult NewCar()
+        {
+            return View();
+        }
+        public ActionResult NewDriver()
+        {
+            return View();
         }
         public ActionResult ReportBooking()
         {
@@ -702,6 +1530,7 @@ namespace LMS.Controllers
             {
                 var sBookingList = (from b in db.LMS_Booking
                                     join v in db.LMS_Vehicle on b.CarID equals v.ID
+                                    orderby b.BookingID descending
                                     select new
                                     {
                                         BookingID = b.BookingID,
@@ -713,7 +1542,7 @@ namespace LMS.Controllers
                                         CarModel = v.Name,
                                         BStatus = b.Status,
                                         AgentID = b.AgentID,
-                                        UserID = b.OrderBy
+                                        UserID = b.UserID
                                     }
                  ).ToList();
                 foreach (var bl in sBookingList)
@@ -747,7 +1576,7 @@ namespace LMS.Controllers
                                         CarModel = v.Name,
                                         BStatus = b.Status,
                                         AgentID = b.AgentID,
-                                        UserID = b.OrderBy
+                                        UserID = b.UserID
                                     }
                   ).ToList();
                 foreach (var bl in sBookingList)

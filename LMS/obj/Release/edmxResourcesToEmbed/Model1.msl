@@ -23,43 +23,9 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="AgentID" ColumnName="AgentID" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="DiscountP" ColumnName="DiscountP" />
+          <ScalarProperty Name="DiscountB" ColumnName="DiscountB" />
           <ScalarProperty Name="Markup" ColumnName="Markup" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="LMS_Booking">
-      <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
-        <MappingFragment StoreEntitySet="LMS_Booking">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
-          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
-          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
-          <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
-          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="Time" ColumnName="Time" />
-          <ScalarProperty Name="Passenger" ColumnName="Passenger" />
-          <ScalarProperty Name="Luggage" ColumnName="Luggage" />
-          <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
-          <ScalarProperty Name="FlightTime" ColumnName="FlightTime" />
-          <ScalarProperty Name="FromDetail" ColumnName="FromDetail" />
-          <ScalarProperty Name="ToDetail" ColumnName="ToDetail" />
-          <ScalarProperty Name="Remark" ColumnName="Remark" />
-          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-          <ScalarProperty Name="CarID" ColumnName="CarID" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Discount" ColumnName="Discount" />
-          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="AgentID" ColumnName="AgentID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -85,6 +51,7 @@
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="Birthday" ColumnName="Birthday" />
           <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Emergency" ColumnName="Emergency" />
           <ScalarProperty Name="IDCard" ColumnName="IDCard" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Nationality" ColumnName="Nationality" />
@@ -96,8 +63,22 @@
           <ScalarProperty Name="TH_Speak" ColumnName="TH_Speak" />
           <ScalarProperty Name="TH_Read" ColumnName="TH_Read" />
           <ScalarProperty Name="TH_Write" ColumnName="TH_Write" />
-          <ScalarProperty Name="Experience" ColumnName="Experience" />
+          <ScalarProperty Name="Route" ColumnName="Route" />
+          <ScalarProperty Name="DriverLicense" ColumnName="DriverLicense" />
           <ScalarProperty Name="YOS" ColumnName="YOS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_DriverOfCar">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_DriverOfCar">
+        <MappingFragment StoreEntitySet="LMS_DriverOfCar">
+          <ScalarProperty Name="LastBooking" ColumnName="LastBooking" />
+          <ScalarProperty Name="DID" ColumnName="DID" />
+          <ScalarProperty Name="CarID" ColumnName="CarID" />
+          <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+          <ScalarProperty Name="TID" ColumnName="TID" />
+          <ScalarProperty Name="LastJobDate" ColumnName="LastJobDate" />
+          <ScalarProperty Name="LastJobTime" ColumnName="LastJobTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -162,11 +143,15 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="Province" ColumnName="Province" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
           <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
           <ScalarProperty Name="Telephone" ColumnName="Telephone" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Contact" ColumnName="Contact" />
           <ScalarProperty Name="CreditTerm" ColumnName="CreditTerm" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -182,6 +167,8 @@
     <EntitySetMapping Name="LMS_User">
       <EntityTypeMapping TypeName="synergilimoModel.LMS_User">
         <MappingFragment StoreEntitySet="LMS_User">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="Password" ColumnName="Password" />
@@ -196,6 +183,54 @@
         <MappingFragment StoreEntitySet="LMS_Vehicle">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_WorkTime">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_WorkTime">
+        <MappingFragment StoreEntitySet="LMS_WorkTime">
+          <ScalarProperty Name="TID" ColumnName="TID" />
+          <ScalarProperty Name="TStart" ColumnName="TStart" />
+          <ScalarProperty Name="TEnd" ColumnName="TEnd" />
+          <ScalarProperty Name="TRemark" ColumnName="TRemark" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_Booking">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
+        <MappingFragment StoreEntitySet="LMS_Booking">
+          <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+          <ScalarProperty Name="DID" ColumnName="DID" />
+          <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="CarID" ColumnName="CarID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="ToDetail" ColumnName="ToDetail" />
+          <ScalarProperty Name="FromDetail" ColumnName="FromDetail" />
+          <ScalarProperty Name="FlightTime" ColumnName="FlightTime" />
+          <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
+          <ScalarProperty Name="Luggage" ColumnName="Luggage" />
+          <ScalarProperty Name="Passenger" ColumnName="Passenger" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+          <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

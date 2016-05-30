@@ -31,6 +31,7 @@ namespace LMS.Models
     {
         public int AId { get; set; }
         public string AName { get; set; }
+        public int UserID { get; set; }
 
     }
     public class FromModel
@@ -53,6 +54,40 @@ namespace LMS.Models
         public int CId { get; set; }
         public string CModel { get; set; }
 
+    }
+
+    public class CarList
+    {
+        public int Id { get; set; }
+        public string VehicleRegis { get; set; }
+        public int VehicleID { get; set; }
+        public string Model { get; set; }
+        public string PhotoPath { get; set; }
+        public int SitNumber { get; set; }
+        public int Status { get; set; }
+      
+    }
+    public class Driver
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public DateTime Birthday { get; set; }
+        public string Mobile { get; set; }
+        public string IDCard { get; set; }
+        public int Status { get; set; }
+        public string Nationality { get; set; }
+        public string Experience { get; set; }
+        public int ENG_Listen { get; set; }
+        public int ENG_Speak { get; set; }
+        public int ENG_Read { get; set; }
+        public int ENG_Write { get; set; }
+        public int TH_Listen { get; set; }
+        public int TH_Speak { get; set; }
+        public int TH_Read { get; set; }
+        public int TH_Write { get; set; }
+        public int YOS { get; set; }
     }
 
     public class BookingDetail
@@ -83,9 +118,11 @@ namespace LMS.Models
          public int ToID { get; set; }
          public string Remark { get; set; }
          public int ProductID { get; set; }
-         public int CarID { get; set; }
+         public int VechileID { get; set; }
          public string CarModel { get; set; }
          public Decimal Price { get; set; }
+         public Decimal DiscountP { get; set; }
+         public Decimal DiscountB { get; set; }
          public Decimal Discount { get; set; }
          public Decimal TotalPrice { get; set; }
          public int Status { get; set; }
@@ -93,7 +130,17 @@ namespace LMS.Models
          public int AgentID { get; set; }
          public string AgentEmail { get; set; }
          public string AgentName { get; set; }
-       
+
+         public int DID { get; set; }
+         public int CarID { get; set; }
+         public int DriverID { get; set; }
+         public int TID { get; set; }
+         public string VehicleRegis { get; set; }
+         public string DTitle { get; set; }
+         public string DFirstName { get; set; }
+         public string DLastName { get; set; }
+         public string DMobile { get; set; }
+
     
     }
 
@@ -112,5 +159,86 @@ namespace LMS.Models
         public int AgentID { get; set; }
         public int UserID { get; set; }
     }
+
+    public class WorkTime
+    {
+        public int TID { get; set; }
+        public string TStart { get; set; }
+        public string TEnd { get; set; }
+    }
+    public class QueueList
+    {
+       
+        public string VehicleRegis { get; set; }
+        public string Model { get; set; }
+        public int DriverID { get; set; }
+        public string DTitle { get; set; }
+        public string DFirstName { get; set; }
+        public string DLastName { get; set; }
+        public string DMobile { get; set; }
+        public string TRemark { get; set; }
+        public DateTime LastJobDate { get; set; }
+        public string LastJobTime { get; set; }
+        public string LastBooking { get; set; }
+    }
+
+    public class BookingInfo
+    {
+
+        public string BookingID { get; set; }
+        public DateTime BookingDate { get; set; }
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string Telephone { get; set; }
+        public string Mobile { get; set; }
+        public string Email { get; set; }
+        public string OrderBy { get; set; }
+        public int CustomerType { get; set; }
+        public int ServiceType { get; set; }
+        public DateTime Date { get; set; }
+        public string Time { get; set; }
+        public int Passenger { get; set; }
+        public int Luggage { get; set; }
+        public int Vechile { get; set; }
+        public string FlightNo { get; set; }
+        public string FlightTime { get; set; }
+        public string FromDetail { get; set; }
+        public string ToDetail { get; set; }
+        public int FromID { get; set; }
+        public int ToID { get; set; }
+        public string Remark { get; set; }
+        public int ProductID { get; set; }
+        public int VechileID { get; set; }
+        public string CarModel { get; set; }
+        public Decimal Price { get; set; }
+        public Decimal DiscountP { get; set; }
+        public Decimal DiscountB { get; set; }
+        public Decimal Discount { get; set; }
+        public Decimal TotalPrice { get; set; }
+        public int Status { get; set; }
+        public int UserID { get; set; }
+        public int AgentID { get; set; }
+        public string AgentEmail { get; set; }
+        public string AgentName { get; set; }
+        public string AgentMobile { get; set; }
+
+        public int DID { get; set; }
+        public int CarID { get; set; }
+        public int DriverID { get; set; }
+        public int TID { get; set; }
+        public string VehicleRegis { get; set; }
+        public string DTitle { get; set; }
+        public string DFirstName { get; set; }
+        public string DLastName { get; set; }
+        public string DMobile { get; set; }
+
+        public string UName { get; set; }
+        public string UTelephone { get; set; }
+        public string UEmail { get; set; }
     
+
+
+    }
 }

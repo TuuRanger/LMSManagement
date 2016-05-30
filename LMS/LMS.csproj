@@ -156,6 +156,9 @@
     <Compile Include="LMS_Driver.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="LMS_DriverOfCar.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="LMS_From.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -181,6 +184,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="LMS_Vehicle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_WorkTime.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.Context.cs">
@@ -1294,6 +1300,18 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="DriverProfile\DriverProfile1.pdf" />
+    <Content Include="DriverProfile\DriverProfile2.pdf" />
+    <Content Include="DriverProfile\DriverProfile3.pdf" />
+    <Content Include="DriverProfile\DriverProfile4.pdf" />
+    <Content Include="font\angsa.ttf" />
+    <Content Include="font\angsab.ttf" />
+    <Content Include="font\angsai.ttf" />
+    <Content Include="font\angsau.ttf" />
+    <Content Include="font\angsaub.ttf" />
+    <Content Include="font\angsaui.ttf" />
+    <Content Include="font\angsauz.ttf" />
+    <Content Include="font\angsaz.ttf" />
     <None Include="Properties\PublishProfiles\LMS.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1346,6 +1364,15 @@
     <Content Include="Views\LMS\AfterLogin.cshtml" />
     <Content Include="Views\LMS\LogOut.cshtml" />
     <Content Include="Views\LMS\ReportBooking.cshtml" />
+    <Content Include="Views\LMS\Driver.cshtml" />
+    <Content Include="Views\LMS\NewDriver.cshtml" />
+    <Content Include="Views\LMS\EditDriver.cshtml" />
+    <Content Include="Views\LMS\DriverList.cshtml" />
+    <Content Include="Views\LMS\CarList.cshtml" />
+    <Content Include="Views\LMS\Car.cshtml" />
+    <Content Include="Views\LMS\EditCar.cshtml" />
+    <Content Include="Views\LMS\NewCar.cshtml" />
+    <Content Include="Views\LMS\QueueList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

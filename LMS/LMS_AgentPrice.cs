@@ -17,7 +17,8 @@ namespace LMS
         public int ID { get; set; }
         public Nullable<int> AgentID { get; set; }
         public Nullable<int> ProductID { get; set; }
-        public Nullable<decimal> Discount { get; set; }
+        public Nullable<decimal> DiscountP { get; set; }
+        public Nullable<decimal> DiscountB { get; set; }
         public Nullable<decimal> Markup { get; set; }
     }
 }

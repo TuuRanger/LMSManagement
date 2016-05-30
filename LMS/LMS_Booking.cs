@@ -24,7 +24,7 @@ namespace LMS
         public string Telephone { get; set; }
         public string Mobile { get; set; }
         public string Email { get; set; }
-        public string OrderBy { get; set; }
+        public Nullable<int> UserID { get; set; }
         public Nullable<int> CustomerType { get; set; }
         public Nullable<int> ServiceType { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
@@ -43,5 +43,7 @@ namespace LMS
         public Nullable<decimal> TotalPrice { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<int> AgentID { get; set; }
+        public Nullable<int> DID { get; set; }
+        public Nullable<int> DriverID { get; set; }
     }
 }

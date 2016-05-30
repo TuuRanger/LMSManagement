@@ -27,9 +27,9 @@ namespace LMS
     
         public DbSet<LMS_Account> LMS_Account { get; set; }
         public DbSet<LMS_AgentPrice> LMS_AgentPrice { get; set; }
-        public DbSet<LMS_Booking> LMS_Booking { get; set; }
         public DbSet<LMS_Car> LMS_Car { get; set; }
         public DbSet<LMS_Driver> LMS_Driver { get; set; }
+        public DbSet<LMS_DriverOfCar> LMS_DriverOfCar { get; set; }
         public DbSet<LMS_From> LMS_From { get; set; }
         public DbSet<LMS_Job> LMS_Job { get; set; }
         public DbSet<LMS_Passenger> LMS_Passenger { get; set; }
@@ -39,5 +39,7 @@ namespace LMS
         public DbSet<LMS_TO> LMS_TO { get; set; }
         public DbSet<LMS_User> LMS_User { get; set; }
         public DbSet<LMS_Vehicle> LMS_Vehicle { get; set; }
+        public DbSet<LMS_WorkTime> LMS_WorkTime { get; set; }
+        public DbSet<LMS_Booking> LMS_Booking { get; set; }
     }
 }

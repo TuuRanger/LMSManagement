@@ -20,5 +20,7 @@ namespace LMS
         public Nullable<int> UesrType { get; set; }
         public string FullName { get; set; }
         public Nullable<int> AgentID { get; set; }
+        public string Telephone { get; set; }
+        public string Email { get; set; }
     }
 }

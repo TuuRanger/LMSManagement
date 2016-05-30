@@ -123,10 +123,11 @@
 
                                                 @foreach (var SItem in item.sSubAgent)
                                                 {
-                                                    if (AgentID == SItem.AId.ToString())
+                                                    <option value="@SItem.AId">@SItem.AName</option>
+                                                    @*if (AgentID == SItem.UserID.ToString())
                                                     {
                                                         <option value="@SItem.AId">@SItem.AName</option>
-                                                    }
+                                                    }*@
 
                                                 }
                                             </select>
@@ -196,7 +197,7 @@
                             <div class="col-md-6">
                                 <label>From</label>
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
-                                <select class="form-control" id="From" name="From" placeholder="-- Type pick-up location --" onchange="chk_FromOneWay();">
+                                <select class="form-control" id="From" name="From" placeholder="-- Type pick-up location --" onchange="chk_To1();">
                                     <option value="">-- Type pick-up location --</option>
                                     @foreach (var FItem in item.sFromModel)
                                     {
@@ -209,10 +210,10 @@
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
                                 <select class="form-control" id="To" name="To" placeholder="-- Type drop-off location --" onchange="chk_ToOneWay();">
                                     <option value="">-- Type drop-off location --</option>
-                                    @foreach (var TItem in item.sToModel)
-                                    {
-                                        <option value="@TItem.TId">@TItem.TDetail</option>
-                                    }
+                                 @*   @foreach (var TItem in item.sToModel)
+    {
+        <option value="@TItem.TId">@TItem.TDetail</option>
+    }*@
                                 </select>
 
 
@@ -437,7 +438,7 @@
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label>From</label>
-                                <select class="form-control" id="FromReturn" name="FromReturn" placeholder="-- Type pick-up location --" onchange="chk_FromOneWay();">
+                                <select class="form-control" id="FromReturn1" name="FromReturn1" placeholder="-- Type pick-up location --" onchange="chk_ToReturn1();">
                                     <option value="">-- Type pick-up location --</option>
                                     @foreach (var FItem in item.sFromModel)
                                     {
@@ -447,12 +448,12 @@
                             </div>
                             <div class="col-md-6">
                                 <label>To</label>
-                                <select class="form-control" id="ToReturn" name="ToReturn" placeholder="-- Type drop-off location --" onchange="chk_ToOneWay();">
+                                <select class="form-control" id="ToReturn1" name="ToReturn1" placeholder="-- Type drop-off location --">
                                     <option value="">-- Type drop-off location --</option>
-                                    @foreach (var TItem in item.sToModel)
+                                    @*@foreach (var TItem in item.sToModel)
                                     {
                                         <option value="@TItem.TId">@TItem.TDetail</option>
-                                    }
+                                    }*@
                                 </select>
                             </div>
 
@@ -639,7 +640,7 @@
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label>From</label>
-                                <select class="form-control" id="FromReturn2" name="FromReturn2" placeholder="-- Type pick-up location --" onchange="chk_FromOneWay();">
+                                <select class="form-control" id="FromReturn2" name="FromReturn2" placeholder="-- Type pick-up location --" onchange="chk_ToReturn2();">
                                     <option value="">-- Type pick-up location --</option>
                                     @foreach (var FItem in item.sFromModel)
                                     {
@@ -651,10 +652,10 @@
                                 <label>To</label>
                                 <select class="form-control" id="ToReturn2" name="ToReturn2" placeholder="-- Type drop-off location --" onchange="chk_ToOneWay();">
                                     <option value="">-- Type drop-off location --</option>
-                                    @foreach (var TItem in item.sToModel)
-                                    {
-                                        <option value="@TItem.TId">@TItem.TDetail</option>
-                                    }
+                                    @*@foreach (var TItem in item.sToModel)
+            {
+                <option value="@TItem.TId">@TItem.TDetail</option>
+            }*@
                                 </select>
                             </div>
                         </div>
@@ -863,7 +864,7 @@
                             <div class="col-md-6">
                                 <label>From</label>
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
-                                <select class="form-control" id="From3" name="From3" placeholder="-- Type pick-up location --" onchange="chk_FromOneWay();">
+                                <select class="form-control" id="From3" name="From3" placeholder="-- Type pick-up location --" onchange="chk_To3();">
                                     <option value="">-- Type pick-up location --</option>
                                     @foreach (var FItem in item.sFromModel)
                                     {
@@ -874,12 +875,12 @@
                             <div class="col-md-6">
                                 <label>To</label>
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
-                                <select class="form-control" id="To3" name="To3" placeholder="-- Type drop-off location --" onchange="chk_ToOneWay();">
+                                <select class="form-control" id="To3" name="To3" placeholder="-- Type drop-off location --">
                                     <option value="">-- Type drop-off location --</option>
-                                    @foreach (var TItem in item.sToModel)
+                                    @*@foreach (var TItem in item.sToModel)
                                     {
                                         <option value="@TItem.TId">@TItem.TDetail</option>
-                                    }
+                                    }*@
                                 </select>
 
 
@@ -1306,6 +1307,163 @@
     $(function () {
         $(".datefield").datepicker();
     });
+
+    function chk_To1() {
+       
+        var dFrom = $("#From").val();
+
+       // alert(dFrom);
+        $.ajax({
+            url: 'LMS/searchRoute', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            //contentType: 'application/json; charset=utf-8', define a contentType of your request
+            cache: false, //avoid caching results
+            data: { dFrom: dFrom }, // here you can pass arguments to your request if you need
+          //  data: { dFrom: $("#From").val() },
+            success: function (data) {
+
+                //  data is your result from controller
+                if (data) {
+
+                 
+                    var items = '<option value="">-- Type  drop-off location --</option>';
+                    $.each(data, function (i, state) {
+                        items += "<option value='" + data[i].TId + "'>" + data[i].TDetail + "</option>";
+
+                    });
+
+                    $('#To').html(items);
+                }
+                else {
+
+                }
+
+            },
+            error: function (xhr) {
+                alert('error');
+            }
+        });
+       
+        return false;
+    }
+    function chk_ToReturn1() {
+
+        var dFrom = $("#FromReturn1").val();
+
+        //  alert(dFrom);
+        $.ajax({
+            url: 'LMS/searchRoute', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            //contentType: 'application/json; charset=utf-8', define a contentType of your request
+            cache: false, //avoid caching results
+            data: { dFrom: dFrom }, // here you can pass arguments to your request if you need
+            //  data: { dFrom: $("#From").val() },
+            success: function (data) {
+
+                //  data is your result from controller
+                if (data) {
+
+
+                    var items = '<option value="">-- Type  drop-off location --</option>';
+                    $.each(data, function (i, state) {
+                        items += "<option value='" + data[i].TId + "'>" + data[i].TDetail + "</option>";
+
+                    });
+
+                    $('#ToReturn1').html(items);
+                }
+                else {
+
+                }
+
+            },
+            error: function (xhr) {
+                alert('error');
+            }
+        });
+
+        return false;
+    }
+    function chk_ToReturn2() {
+
+        var dFrom = $("#FromReturn2").val();
+
+        //  alert(dFrom);
+        $.ajax({
+            url: 'LMS/searchRoute', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            //contentType: 'application/json; charset=utf-8', define a contentType of your request
+            cache: false, //avoid caching results
+            data: { dFrom: dFrom }, // here you can pass arguments to your request if you need
+            //  data: { dFrom: $("#From").val() },
+            success: function (data) {
+
+                //  data is your result from controller
+                if (data) {
+
+
+                    var items = '<option value="">-- Type  drop-off location --</option>';
+                    $.each(data, function (i, state) {
+                        items += "<option value='" + data[i].TId + "'>" + data[i].TDetail + "</option>";
+
+                    });
+
+                    $('#ToReturn2').html(items);
+                }
+                else {
+
+                }
+
+            },
+            error: function (xhr) {
+                alert('error');
+            }
+        });
+
+        return false;
+    }
+    function chk_To3() {
+
+        var dFrom = $("#From3").val();
+
+      //  alert(dFrom);
+        $.ajax({
+            url: 'LMS/searchRoute', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            dataType: "json", //to work with json format
+            type: "POST", //to do a post request
+            //contentType: 'application/json; charset=utf-8', define a contentType of your request
+            cache: false, //avoid caching results
+            data: { dFrom: dFrom }, // here you can pass arguments to your request if you need
+            //  data: { dFrom: $("#From").val() },
+            success: function (data) {
+
+                //  data is your result from controller
+                if (data) {
+
+
+                    var items = '<option value="">-- Type  drop-off location --</option>';
+                    $.each(data, function (i, state) {
+                        items += "<option value='" + data[i].TId + "'>" + data[i].TDetail + "</option>";
+
+                    });
+
+                    $('#To3').html(items);
+                }
+                else {
+
+                }
+
+            },
+            error: function (xhr) {
+                alert('error');
+            }
+        });
+
+        return false;
+    }
 </script>
 
 

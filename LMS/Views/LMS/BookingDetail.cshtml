@@ -126,7 +126,7 @@
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Costomer</b> <a class="pull-right">@CustomerName (@Model.AgentName)</a>
+                                <b>Customer</b> <a class="pull-right">@CustomerName (@Model.AgentName)</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Service</b> <a class="pull-right">@ServiceName</a>
@@ -162,6 +162,44 @@
                                 <b>Price (Baht)</b><a class="pull-right">@Model.Price.ToString("#,###.##")</a>
 
                             </li>
+                        </ul>
+
+                    </div>
+
+
+                </div>
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Driver Detail</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                        </div>
+                    </div>
+
+
+                 
+                    <div class="box-body box-profile">
+
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>License Plate</b> <a class="pull-right">@Model.VehicleRegis</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Title</b> <a class="pull-right">@Model.DTitle</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>First Name</b> <a class="pull-right">@Model.DFirstName</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Last Name</b> <a class="pull-right">@Model.DLastName</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Mobile</b> <a class="pull-right">@Model.DMobile</a>
+                            </li>
+                           
                         </ul>
 
                     </div>

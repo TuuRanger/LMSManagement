@@ -18,10 +18,14 @@ namespace LMS
         public string Name { get; set; }
         public string Address { get; set; }
         public string Province { get; set; }
+        public string Country { get; set; }
         public string Zipcode { get; set; }
         public string Telephone { get; set; }
         public string Email { get; set; }
         public string Contact { get; set; }
         public Nullable<int> CreditTerm { get; set; }
+        public string Tax { get; set; }
+        public string Remark { get; set; }
+        public Nullable<int> UserID { get; set; }
     }
 }

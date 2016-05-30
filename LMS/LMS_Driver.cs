@@ -20,6 +20,7 @@ namespace LMS
         public string LastName { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
         public string Mobile { get; set; }
+        public string Emergency { get; set; }
         public string IDCard { get; set; }
         public Nullable<int> Status { get; set; }
         public string Nationality { get; set; }
@@ -31,7 +32,8 @@ namespace LMS
         public Nullable<int> TH_Speak { get; set; }
         public Nullable<int> TH_Read { get; set; }
         public Nullable<int> TH_Write { get; set; }
-        public string Experience { get; set; }
+        public string Route { get; set; }
+        public string DriverLicense { get; set; }
         public Nullable<int> YOS { get; set; }
     }
 }

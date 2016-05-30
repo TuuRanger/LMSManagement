@@ -1,0 +1,99 @@
+﻿@model List<LMS.Models.Driver>
+@{
+    ViewBag.Title = "Driver List";
+}
+
+
+<section class="content-header">
+    <h1>
+        Driver List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Data</a></li>
+        <li class="active">Driver</li>
+    </ol>
+</section>
+<section class="content">
+    @{ string UserFullName = "";
+     string UserType = "0";
+     string UserTypeName = "";
+     string AgentID = "";
+     if (HttpContext.Current.Session["LogedUserFullname"] != null)
+     {
+         UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
+         AgentID = HttpContext.Current.Session["LogedAgentID"].ToString();
+         UserType = HttpContext.Current.Session["LogedUserType"].ToString();
+
+         if (UserType == "1")
+         {
+             UserTypeName = "Internal";
+         }
+         else if (UserType == "2")
+         {
+             UserTypeName = "Sub Agent";
+         }
+     }
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Driver List</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Mobile</th>
+                                 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                  
+                                    <tr>
+                                        <td><a href="/LMS/Driver">@item.Id</a></td>     
+                                        <td>@item.Title</td>
+                                        <td>@item.Name</td>
+                                        <td>@item.LastName</td>
+                                        <td>@item.Mobile</td>
+                                    
+                                    </tr>
+
+
+                                }
+
+                   
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <a href="/LMS/NewDriver" class="btn btn-sm btn-info btn-flat pull-right">New Driver</a>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-left">View All</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

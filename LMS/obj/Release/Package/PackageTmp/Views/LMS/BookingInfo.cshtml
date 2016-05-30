@@ -1,5 +1,209 @@
-﻿@{
-    ViewBag.Title = "BookingInfo";
-}
+﻿@model List<LMS.Models.BookingInfo> 
+    @{
+        ViewBag.Title = "Booking Info";
+    }
 
-<h2>BookingInfo</h2>
+    <section class="content-header">
+        @*<h1>
+                rTest
+            </h1>*@
+        @*<ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Dashboard</li>
+            </ol>*@
+    </section>
+@foreach (var item in Model)
+{
+
+    <section class="invoice">
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i>Booking Info
+                    <small class="pull-right">Booking Reference : IV &nbsp; @item.BookingID</small>
+                </h2>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- info row -->
+        <div class="row invoice-info">
+
+            @{string SType = "";
+              if(@item.ServiceType == 1)
+              {
+                  SType = "One Way";
+              }
+              else if (@item.ServiceType == 2)
+              {
+                  SType = "Return";
+              }
+              else if (@item.ServiceType == 3)
+              {
+                  SType = "Sale Visit";
+              }
+              }
+           
+            <div class="col-sm-12 invoice-col">
+                <table>
+                    <tr>
+                      
+                        <td>
+                        Thank you for your reservation with Synergi.Your transfer service has been booked as follow<br>
+                            Please check to ensure all details are correct.
+                        </td>
+                    </tr>
+              
+                </table>
+                <hr />
+                <table border="1" width="100%">
+                    <tr>
+                        <td width="20%"><b>Lead Passenger : &nbsp;</b> </td>
+                        <td>@item.Title &nbsp; @item.FirstName &nbsp; @item.LastName<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Address : &nbsp;</b> </td>
+                        <td>@item.Address<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>EMail : &nbsp;</b> </td>
+                        <td>@item.Email<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Contact Call : &nbsp;</b> </td>
+                        <td>@item.Mobile<br></td>
+                    </tr>
+
+                </table>
+                <hr />
+                <table border="1" width="100%">
+                    <tr>
+                        <td width="20%"><b>Type of Service  : &nbsp;</b> </td>
+                        <td>@SType<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Passenger : &nbsp;</b> </td>
+                        <td>@item.Passenger<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Luggage : &nbsp;</b> </td>
+                        <td>@item.Luggage<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Flight Detail : &nbsp;</b> </td>
+                        <td>@item.FlightNo &nbsp; @item.FlightTime<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Pick up date : &nbsp;</b> </td>
+                        <td>@item.Date<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Pick up time : &nbsp;</b> </td>
+                        <td>@item.Time<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>From : &nbsp;</b> </td>
+                        <td>@item.FromDetail<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>To : &nbsp;</b> </td>
+                        <td>@item.ToDetail<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Remark : &nbsp;</b> </td>
+                        <td>@item.Remark<br></td>
+                    </tr>
+                </table>
+                <hr />
+                <table border="1" width="100%">
+                    <tr>
+                        <td width="20%"><b>Agent : &nbsp;</b> </td>
+                        <td>@item.AgentName<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>EMail : &nbsp;</b></td>
+                        <td>@item.AgentEmail<br> </td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Contact Call : &nbsp;</b></td>
+                        <td>@item.AgentMobile<br> </td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Booked by : &nbsp;</b></td>
+                        <td>@item.UName<br> </td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Booked ID : &nbsp;</b></td>
+                        <td>IV &nbsp;@item.BookingID<br> </td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Booked Date : &nbsp;</b></td>
+                        <td>@item.BookingDate<br> </td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>EMail : &nbsp;</b></td>
+                        <td>@item.UEmail<br> </td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Contact Call : &nbsp;</b></td>
+                        <td>@item.UTelephone<br> </td>
+                    </tr>
+                </table>
+                <hr />
+                <table border="1" width="100%">
+                    <tr>
+                        <td width="20%"><b>Meeting point : &nbsp;</b> </td>
+                        <td>The chauffeur will send SMS or call to re -confirmed 24 hours before your travel date. <br></td>
+                    </tr>
+
+
+                </table>
+                <hr />
+                <table border="1" width="100%">
+                    <tr>
+                        <td width="20%"><b>Type of car : &nbsp;</b> </td>
+                        <td>@item.CarModel<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Chauffeur : &nbsp;</b> </td>
+                        <td>@item.DTitle &nbsp; @item.DFirstName &nbsp; @item.DLastName<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>License Plate : &nbsp;</b> </td>
+                        <td>@item.VehicleRegis<br></td>
+                    </tr>
+                    <tr>
+                        <td width="20%"><b>Contact Call : &nbsp;</b> </td>
+                        <td>@item.DMobile<br></td>
+                    </tr>
+
+                </table>
+                <hr />
+                <table>
+                    <tr>
+                        <td>
+                        Term and Condition<br>
+                            Cancellation/ No show<br>
+                            1.For any cancellation made more than 48 hours in advance, there is no charge.<br>
+                            2. For any cancellation made within 48 hours, there is a 50% charge.<br>
+                            3.For any cancellation made within 24 hours, or no show there is a 100% charge.<br><br>
+                            Airport Transfer<br>
+                            1.The company is not responsible for any damage arising from the use or not use any.<br>
+                            2. If the passengers do not appear or late show up more than 2 hours from appointed time<br>
+                            we reserve the right to assume the inability as NO SHOW the service will charge in full.<br>
+                            3. Due to the size of the vehicle<br>
+                            Big luggage size 28x20x12 ” including wheels and handle.<br>
+                            Small luggage size 22x14x9 ” including wheels and handle.<br>
+                            4. Maximum of passenger to be seated / Camry sedan 3 passengers / Van 6 passengers<br>
+                        </td>
+                    </tr>
+
+
+                </table>
+                <hr />
+            </div>
+            <!-- /.col -->
+        </div>
+       
+    </section>
+}

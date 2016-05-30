@@ -19,10 +19,11 @@
     <Key>
       <PropertyRef Name="ID" />
     </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID" Type="int" Nullable="false" />
     <Property Name="AgentID" Type="int" />
     <Property Name="ProductID" Type="int" />
-    <Property Name="Discount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountP" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DiscountB" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Markup" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="LMS_Booking">
@@ -39,7 +40,7 @@
     <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
     <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
-    <Property Name="OrderBy" Type="nvarchar" MaxLength="50" />
+    <Property Name="UserID" Type="int" />
     <Property Name="CustomerType" Type="int" />
     <Property Name="ServiceType" Type="int" />
     <Property Name="Date" Type="date" />
@@ -58,6 +59,8 @@
     <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Status" Type="int" />
     <Property Name="AgentID" Type="int" />
+    <Property Name="DID" Type="int" />
+    <Property Name="DriverID" Type="int" />
   </EntityType>
   <EntityType Name="LMS_Car">
     <Key>
@@ -81,6 +84,7 @@
     <Property Name="LastName" Type="nvarchar" MaxLength="40" />
     <Property Name="Birthday" Type="date" />
     <Property Name="Mobile" Type="nvarchar" MaxLength="40" />
+    <Property Name="Emergency" Type="nvarchar" MaxLength="50" />
     <Property Name="IDCard" Type="varchar" MaxLength="13" />
     <Property Name="Status" Type="int" />
     <Property Name="Nationality" Type="nvarchar" MaxLength="40" />
@@ -92,8 +96,21 @@
     <Property Name="TH_Speak" Type="int" />
     <Property Name="TH_Read" Type="int" />
     <Property Name="TH_Write" Type="int" />
-    <Property Name="Experience" Type="nvarchar" MaxLength="500" />
+    <Property Name="Route" Type="nvarchar" MaxLength="100" />
+    <Property Name="DriverLicense" Type="nvarchar" MaxLength="100" />
     <Property Name="YOS" Type="int" />
+  </EntityType>
+  <EntityType Name="LMS_DriverOfCar">
+    <Key>
+      <PropertyRef Name="DID" />
+    </Key>
+    <Property Name="DID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CarID" Type="int" />
+    <Property Name="DriverID" Type="int" />
+    <Property Name="TID" Type="int" />
+    <Property Name="LastBooking" Type="nvarchar" MaxLength="10" />
+    <Property Name="LastJobDate" Type="date" />
+    <Property Name="LastJobTime" Type="nvarchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="LMS_From">
     <Key>
@@ -149,14 +166,18 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
     <Property Name="Address" Type="nvarchar" MaxLength="500" />
     <Property Name="Province" Type="nvarchar" MaxLength="40" />
-    <Property Name="Zipcode" Type="nvarchar" MaxLength="5" />
-    <Property Name="Telephone" Type="nvarchar" MaxLength="40" />
-    <Property Name="Email" Type="nvarchar" MaxLength="40" />
-    <Property Name="Contact" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="Zipcode" Type="nvarchar" MaxLength="10" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="200" />
+    <Property Name="Email" Type="nvarchar" MaxLength="200" />
+    <Property Name="Contact" Type="nvarchar" MaxLength="200" />
     <Property Name="CreditTerm" Type="int" />
+    <Property Name="Tax" Type="nvarchar" MaxLength="20" />
+    <Property Name="Remark" Type="nvarchar(max)" />
+    <Property Name="UserID" Type="int" />
   </EntityType>
   <EntityType Name="LMS_TO">
     <Key>
@@ -175,6 +196,8 @@
     <Property Name="Password" Type="nvarchar" MaxLength="50" />
     <Property Name="UesrType" Type="int" />
     <Property Name="FullName" Type="nvarchar" MaxLength="255" />
+    <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="200" />
     <Property Name="AgentID" Type="int" />
   </EntityType>
   <EntityType Name="LMS_Vehicle">
@@ -184,12 +207,23 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="40" />
   </EntityType>
+  <EntityType Name="LMS_WorkTime">
+    <Key>
+      <PropertyRef Name="TID" />
+    </Key>
+    <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TStart" Type="int" />
+    <Property Name="TEnd" Type="int" />
+    <Property Name="TRemark" Type="nvarchar" MaxLength="50" />
+    <Property Name="Duration" Type="float" />
+  </EntityType>
   <EntityContainer Name="synergilimoModelStoreContainer">
     <EntitySet Name="LMS_Account" EntityType="Self.LMS_Account" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_AgentPrice" EntityType="Self.LMS_AgentPrice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Booking" EntityType="Self.LMS_Booking" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Car" EntityType="Self.LMS_Car" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Driver" EntityType="Self.LMS_Driver" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_DriverOfCar" EntityType="Self.LMS_DriverOfCar" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_From" EntityType="Self.LMS_From" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Job" EntityType="Self.LMS_Job" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Passenger" EntityType="Self.LMS_Passenger" Schema="dbo" store:Type="Tables" />
@@ -199,5 +233,6 @@
     <EntitySet Name="LMS_TO" EntityType="Self.LMS_TO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_User" EntityType="Self.LMS_User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_WorkTime" EntityType="Self.LMS_WorkTime" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>
