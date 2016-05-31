@@ -141,6 +141,7 @@ namespace LMS.Models
          public string DLastName { get; set; }
          public string DMobile { get; set; }
 
+         public string Currency { get; set; }
     
     }
 
@@ -158,6 +159,8 @@ namespace LMS.Models
         public int Status { get; set; }
         public int AgentID { get; set; }
         public int UserID { get; set; }
+
+        public string Currency { get; set; }
     }
 
     public class WorkTime
@@ -237,8 +240,8 @@ namespace LMS.Models
         public string UName { get; set; }
         public string UTelephone { get; set; }
         public string UEmail { get; set; }
-    
 
+        public string Currency { get; set; }
 
     }
 }

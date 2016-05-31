@@ -45,5 +45,6 @@ namespace LMS
         public Nullable<int> AgentID { get; set; }
         public Nullable<int> DID { get; set; }
         public Nullable<int> DriverID { get; set; }
+        public string Currency { get; set; }
     }
 }

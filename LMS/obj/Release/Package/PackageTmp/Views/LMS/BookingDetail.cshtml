@@ -232,17 +232,17 @@
                         <ul class="list-group list-group-unbordered">
 
                             <li class="list-group-item">
-                                <b>Total (Baht)</b> <a class="pull-right"><input type="text" id="Price" name="Price" style="text-align:right" placeholder="@Model.Price" value="@Price.ToString("#,###.00")"></a>
+                                <b>Total (@Model.Currency)</b> <a class="pull-right"><input type="text" id="Price" name="Price" style="text-align:right" placeholder="@Model.Price" value="@Price.ToString("#,###.00")"></a>
 
                             </li>
                             <li class="list-group-item">
-                                <b>Discount (Baht)</b> <a class="pull-right"><input type="text" id="Discount" name="Discount" style="text-align:right" placeholder="@Model.Discount" value="@Discount.ToString("#,###.00")"></a>
+                                <b>Discount (@Model.Currency)</b> <a class="pull-right"><input type="text" id="Discount" name="Discount" style="text-align:right" placeholder="@Model.Discount" value="@Discount.ToString("#,###.00")"></a>
 
                             </li>
 
                          
                             <li class="list-group-item">
-                                <b>Grand Total (Baht)</b> <a class="pull-right"><input type="text" id="TotalPrice" name="TotalPrice" style="text-align:right" placeholder="@SumPrice" value="@SumPrice.ToString("#,###.00")"></a>
+                                <b>Grand Total (@Model.Currency)</b> <a class="pull-right"><input type="text" id="TotalPrice" name="TotalPrice" style="text-align:right" placeholder="@SumPrice" value="@SumPrice.ToString("#,###.00")"></a>
 
                             </li>
                         </ul>

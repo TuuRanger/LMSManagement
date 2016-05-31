@@ -20,5 +20,8 @@ namespace LMS
         public Nullable<decimal> DiscountP { get; set; }
         public Nullable<decimal> DiscountB { get; set; }
         public Nullable<decimal> Markup { get; set; }
+        public Nullable<decimal> PriceTHB { get; set; }
+        public Nullable<decimal> PriceUSD { get; set; }
+        public Nullable<decimal> PriceEUR { get; set; }
     }
 }

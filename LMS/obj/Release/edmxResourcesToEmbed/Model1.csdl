@@ -25,6 +25,9 @@
     <Property Name="DiscountP" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="DiscountB" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="Markup" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceTHB" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceUSD" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceEUR" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="LMS_Car">
     <Key>
@@ -114,7 +117,9 @@
     <Property Name="RouteID" Type="Int32" />
     <Property Name="TpyeOfService" Type="Int32" />
     <Property Name="TpyeOfVihicle" Type="Int32" />
-    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceTHB" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceUSD" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceEUR" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="LMS_Route">
     <Key>
@@ -234,5 +239,6 @@
     <Property Name="AgentID" Type="Int32" />
     <Property Name="DID" Type="Int32" />
     <Property Name="DriverID" Type="Int32" />
+    <Property Name="Currency" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

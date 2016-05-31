@@ -378,6 +378,7 @@ namespace LMS.Controllers
                     bkd.Time = Request["Time"];
                
                     bkd.Vechile = Convert.ToInt32(Request["Vechile"]);
+                    bkd.Currency = Request["Currency"];
 
                 }else if (bkd.ServiceType == 3)
                 {
@@ -399,6 +400,7 @@ namespace LMS.Controllers
                     bkd.Time = Request["Time3"];
         
                     bkd.Vechile = Convert.ToInt32(Request["Vechile3"]);
+                    bkd.Currency = Request["Currency3"];
                 }
 
 
@@ -428,7 +430,9 @@ namespace LMS.Controllers
                                select new
                                {
                                    ProductID = p.ID,
-                                   Price = p.Price
+                                   PriceTHB = p.PriceTHB,
+                                   PriceUSD = p.PriceUSD,
+                                   PriceEUR = p.PriceEUR
                                }
                       ).First();
 
@@ -487,13 +491,29 @@ namespace LMS.Controllers
                                       aID = ap.ID,
                                       aDiscountP = ap.DiscountP,
                                       aDiscountB = ap.DiscountB,
-                                      aMarkup = ap.Markup
+                                      aMarkup = ap.Markup,
+                                      aPriceTHB = ap.PriceTHB,
+                                      aPriceUSD = ap.PriceUSD,
+                                      aPriceEUR = ap.PriceEUR
                                   }
                   ).FirstOrDefault();
 
               
                 bkd.ProductID = Convert.ToInt32(Product.ProductID.ToString());
-                bkd.Price = Convert.ToDecimal(Product.Price.ToString()) * bkd.Vechile;
+
+                if (bkd.Currency == "THB")
+                {
+                    bkd.Price = Convert.ToDecimal(Product.PriceTHB.ToString()) * bkd.Vechile;
+                }
+                else if (bkd.Currency == "USD")
+                {
+                    bkd.Price = Convert.ToDecimal(Product.PriceUSD.ToString()) * bkd.Vechile;
+                }
+                else if (bkd.Currency == "EUR")
+                {
+                    bkd.Price = Convert.ToDecimal(Product.PriceEUR.ToString()) * bkd.Vechile;
+                }
+               
 
                 bkd.DID = Convert.ToInt32(Car.DID.ToString());
                 bkd.CarID = Convert.ToInt32(Car.CarID.ToString());
@@ -514,6 +534,22 @@ namespace LMS.Controllers
                     bkd.AgentName = "";
                 }else
                 {
+                    if (bkd.CustomerType == 2)
+                    {
+                        if (bkd.Currency == "THB")
+                        {
+                            bkd.Price = Convert.ToDecimal(AgentPrice.aPriceTHB.ToString()) * bkd.Vechile;
+                        }
+                        else if (bkd.Currency == "USD")
+                        {
+                            bkd.Price = Convert.ToDecimal(AgentPrice.aPriceUSD.ToString()) * bkd.Vechile;
+                        }
+                        else if (bkd.Currency == "EUR")
+                        {
+                            bkd.Price = Convert.ToDecimal(AgentPrice.aPriceEUR.ToString()) * bkd.Vechile;
+                        }
+                    }
+                  
                     bkd.AgentEmail = AgentEmail.aEmail.ToString();
                     bkd.DiscountP = Convert.ToDecimal(AgentPrice.aDiscountP);
                     bkd.DiscountB = Convert.ToDecimal(AgentPrice.aDiscountB);
@@ -607,6 +643,7 @@ namespace LMS.Controllers
             AddBooking.AgentID = bkd.AgentID;
             AddBooking.DID = bkd.DID;
             AddBooking.DriverID = bkd.DriverID;
+            AddBooking.Currency = bkd.Currency;
 
             db.LMS_Booking.Add(AddBooking);
             db.SaveChanges();
@@ -670,7 +707,8 @@ namespace LMS.Controllers
                                     DMobile = d.Mobile,
                                     VehicleRegis = c.VehicleRegis,
                                     AgentID = b.AgentID,
-                                    UserID = b.UserID
+                                    UserID = b.UserID,
+                                    sCurrency = b.Currency
                                     //AgentEmail = a.Email,
                                 }
                  ).ToList();
@@ -711,6 +749,7 @@ namespace LMS.Controllers
                   a.ToDetail = bl.ToDetail.ToString();
                   a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
                   a.VehicleRegis = bl.VehicleRegis.ToString();
+                  a.Currency = bl.sCurrency.ToString();
 
                   if (bl.AgentID != 0)
                   {

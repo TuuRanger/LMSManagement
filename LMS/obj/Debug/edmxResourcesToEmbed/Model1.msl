@@ -20,6 +20,9 @@
     <EntitySetMapping Name="LMS_AgentPrice">
       <EntityTypeMapping TypeName="synergilimoModel.LMS_AgentPrice">
         <MappingFragment StoreEntitySet="LMS_AgentPrice">
+          <ScalarProperty Name="PriceEUR" ColumnName="PriceEUR" />
+          <ScalarProperty Name="PriceUSD" ColumnName="PriceUSD" />
+          <ScalarProperty Name="PriceTHB" ColumnName="PriceTHB" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="AgentID" ColumnName="AgentID" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -118,11 +121,13 @@
     <EntitySetMapping Name="LMS_Product">
       <EntityTypeMapping TypeName="synergilimoModel.LMS_Product">
         <MappingFragment StoreEntitySet="LMS_Product">
+          <ScalarProperty Name="PriceEUR" ColumnName="PriceEUR" />
+          <ScalarProperty Name="PriceUSD" ColumnName="PriceUSD" />
+          <ScalarProperty Name="PriceTHB" ColumnName="PriceTHB" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="RouteID" ColumnName="RouteID" />
           <ScalarProperty Name="TpyeOfService" ColumnName="TpyeOfService" />
           <ScalarProperty Name="TpyeOfVihicle" ColumnName="TpyeOfVihicle" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -200,6 +205,7 @@
     <EntitySetMapping Name="LMS_Booking">
       <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
         <MappingFragment StoreEntitySet="LMS_Booking">
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
           <ScalarProperty Name="DriverID" ColumnName="DriverID" />
           <ScalarProperty Name="DID" ColumnName="DID" />
           <ScalarProperty Name="AgentID" ColumnName="AgentID" />

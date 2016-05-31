@@ -390,7 +390,7 @@
                                     }
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label>No of vechile</label>
                                 <select class="form-control" id="Vechile" name="Vechile">
 
@@ -401,6 +401,16 @@
                                     <option value="4">4</option>
                                     <option value="5">5</option>
 
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Currency</label>
+                                <select class="form-control" id="Currency" name="Currency">
+
+                                    @* <option value="">-- Select No of vechile --</option>*@
+                                    <option value="THB">THB</option>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
                                 </select>
                             </div>
                         </div>
@@ -818,7 +828,7 @@
 
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label>No of vechile</label>
                                 <select class="form-control">
 
@@ -828,6 +838,16 @@
                                     <option>4</option>
                                     <option>5</option>
 
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Curency</label>
+                                <select class="form-control">
+
+                                    <option>THB</option>
+                                    <option>USD</option>
+                                    <option>EUR</option>
+                         
                                 </select>
                             </div>
                         </div>
@@ -1057,7 +1077,7 @@
                                     }
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <label>No of vechile</label>
                                 <select class="form-control" id="Vechile3" name="Vechile3">
 
@@ -1068,6 +1088,16 @@
                                     <option value="4">4</option>
                                     <option value="5">5</option>
 
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Currency</label>
+                                <select class="form-control" id="Currency3" name="Currency3">
+
+                                    @* <option value="">-- Select No of vechile --</option>*@
+                                    <option value="THB">THB</option>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
                                 </select>
                             </div>
                         </div>
@@ -1309,12 +1339,14 @@
     });
 
     function chk_To1() {
-       
+
         var dFrom = $("#From").val();
 
        // alert(dFrom);
         $.ajax({
-            url: 'LMS/searchRoute', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            url: '@Url.Action("searchRoute", "LMS")', // to get the right path to controller from TableRoutes of Asp.Net MVC
+          //  url: 'LMS/searchRoute', // to get the right path to controller from TableRoutes of Asp.Net MVC
+
             dataType: "json", //to work with json format
             type: "POST", //to do a post request
             //contentType: 'application/json; charset=utf-8', define a contentType of your request
@@ -1326,7 +1358,7 @@
                 //  data is your result from controller
                 if (data) {
 
-                 
+
                     var items = '<option value="">-- Type  drop-off location --</option>';
                     $.each(data, function (i, state) {
                         items += "<option value='" + data[i].TId + "'>" + data[i].TDetail + "</option>";
@@ -1344,7 +1376,7 @@
                 alert('error');
             }
         });
-       
+
         return false;
     }
     function chk_ToReturn1() {
@@ -1353,7 +1385,7 @@
 
         //  alert(dFrom);
         $.ajax({
-            url: 'LMS/searchRoute', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            url: '@Url.Action("searchRoute", "LMS")',  // to get the right path to controller from TableRoutes of Asp.Net MVC
             dataType: "json", //to work with json format
             type: "POST", //to do a post request
             //contentType: 'application/json; charset=utf-8', define a contentType of your request
@@ -1392,7 +1424,7 @@
 
         //  alert(dFrom);
         $.ajax({
-            url: 'LMS/searchRoute', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            url: '@Url.Action("searchRoute", "LMS")',  // to get the right path to controller from TableRoutes of Asp.Net MVC
             dataType: "json", //to work with json format
             type: "POST", //to do a post request
             //contentType: 'application/json; charset=utf-8', define a contentType of your request
@@ -1431,7 +1463,7 @@
 
       //  alert(dFrom);
         $.ajax({
-            url: 'LMS/searchRoute', // to get the right path to controller from TableRoutes of Asp.Net MVC
+            url: '@Url.Action("searchRoute", "LMS")',  // to get the right path to controller from TableRoutes of Asp.Net MVC
             dataType: "json", //to work with json format
             type: "POST", //to do a post request
             //contentType: 'application/json; charset=utf-8', define a contentType of your request

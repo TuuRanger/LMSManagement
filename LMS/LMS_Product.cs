@@ -18,6 +18,8 @@ namespace LMS
         public Nullable<int> RouteID { get; set; }
         public Nullable<int> TpyeOfService { get; set; }
         public Nullable<int> TpyeOfVihicle { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public Nullable<decimal> PriceTHB { get; set; }
+        public Nullable<decimal> PriceUSD { get; set; }
+        public Nullable<decimal> PriceEUR { get; set; }
     }
 }

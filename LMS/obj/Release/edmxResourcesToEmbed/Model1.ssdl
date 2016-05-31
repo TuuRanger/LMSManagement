@@ -25,6 +25,9 @@
     <Property Name="DiscountP" Type="decimal" Precision="18" Scale="0" />
     <Property Name="DiscountB" Type="decimal" Precision="18" Scale="0" />
     <Property Name="Markup" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceTHB" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceUSD" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceEUR" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="LMS_Booking">
     <Key>
@@ -61,6 +64,7 @@
     <Property Name="AgentID" Type="int" />
     <Property Name="DID" Type="int" />
     <Property Name="DriverID" Type="int" />
+    <Property Name="Currency" Type="nvarchar" MaxLength="5" />
   </EntityType>
   <EntityType Name="LMS_Car">
     <Key>
@@ -150,7 +154,9 @@
     <Property Name="RouteID" Type="int" />
     <Property Name="TpyeOfService" Type="int" />
     <Property Name="TpyeOfVihicle" Type="int" />
-    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceTHB" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceUSD" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceEUR" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="LMS_Route">
     <Key>

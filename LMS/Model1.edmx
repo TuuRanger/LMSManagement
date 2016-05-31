@@ -30,6 +30,9 @@
           <Property Name="DiscountP" Type="decimal" Precision="18" Scale="0" />
           <Property Name="DiscountB" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Markup" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PriceTHB" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PriceUSD" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PriceEUR" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="LMS_Booking">
           <Key>
@@ -66,6 +69,7 @@
           <Property Name="AgentID" Type="int" />
           <Property Name="DID" Type="int" />
           <Property Name="DriverID" Type="int" />
+          <Property Name="Currency" Type="nvarchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="LMS_Car">
           <Key>
@@ -155,7 +159,9 @@
           <Property Name="RouteID" Type="int" />
           <Property Name="TpyeOfService" Type="int" />
           <Property Name="TpyeOfVihicle" Type="int" />
-          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PriceTHB" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PriceUSD" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PriceEUR" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="LMS_Route">
           <Key>
@@ -269,6 +275,9 @@
           <Property Name="DiscountP" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="DiscountB" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Markup" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PriceTHB" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PriceUSD" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PriceEUR" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="LMS_Car">
           <Key>
@@ -358,7 +367,9 @@
           <Property Name="RouteID" Type="Int32" />
           <Property Name="TpyeOfService" Type="Int32" />
           <Property Name="TpyeOfVihicle" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PriceTHB" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PriceUSD" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PriceEUR" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="LMS_Route">
           <Key>
@@ -478,6 +489,7 @@
           <Property Name="AgentID" Type="Int32" />
           <Property Name="DID" Type="Int32" />
           <Property Name="DriverID" Type="Int32" />
+          <Property Name="Currency" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -504,6 +516,9 @@
           <EntitySetMapping Name="LMS_AgentPrice">
             <EntityTypeMapping TypeName="synergilimoModel.LMS_AgentPrice">
               <MappingFragment StoreEntitySet="LMS_AgentPrice">
+                <ScalarProperty Name="PriceEUR" ColumnName="PriceEUR" />
+                <ScalarProperty Name="PriceUSD" ColumnName="PriceUSD" />
+                <ScalarProperty Name="PriceTHB" ColumnName="PriceTHB" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="AgentID" ColumnName="AgentID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -602,11 +617,13 @@
           <EntitySetMapping Name="LMS_Product">
             <EntityTypeMapping TypeName="synergilimoModel.LMS_Product">
               <MappingFragment StoreEntitySet="LMS_Product">
+                <ScalarProperty Name="PriceEUR" ColumnName="PriceEUR" />
+                <ScalarProperty Name="PriceUSD" ColumnName="PriceUSD" />
+                <ScalarProperty Name="PriceTHB" ColumnName="PriceTHB" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="RouteID" ColumnName="RouteID" />
                 <ScalarProperty Name="TpyeOfService" ColumnName="TpyeOfService" />
                 <ScalarProperty Name="TpyeOfVihicle" ColumnName="TpyeOfVihicle" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -684,6 +701,7 @@
           <EntitySetMapping Name="LMS_Booking">
             <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
               <MappingFragment StoreEntitySet="LMS_Booking">
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
                 <ScalarProperty Name="DriverID" ColumnName="DriverID" />
                 <ScalarProperty Name="DID" ColumnName="DID" />
                 <ScalarProperty Name="AgentID" ColumnName="AgentID" />
