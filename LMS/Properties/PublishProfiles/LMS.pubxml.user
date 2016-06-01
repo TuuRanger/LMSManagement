@@ -25,7 +25,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2016 14:53:15</publishTime>
     </File>
     <File Include="bin/LMS.dll">
-      <publishTime>05/31/2016 23:43:51</publishTime>
+      <publishTime>06/02/2016 03:15:31</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>04/25/2016 14:01:04</publishTime>
@@ -3547,13 +3547,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2016 18:38:13</publishTime>
     </File>
     <File Include="Views/LMS/Booking.cshtml">
-      <publishTime>05/31/2016 23:27:59</publishTime>
+      <publishTime>06/02/2016 02:28:18</publishTime>
     </File>
     <File Include="Views/LMS/BookingCommit.cshtml">
       <publishTime>05/03/2016 04:11:54</publishTime>
     </File>
     <File Include="Views/LMS/BookingDetail.cshtml">
-      <publishTime>05/31/2016 23:14:24</publishTime>
+      <publishTime>06/02/2016 00:50:01</publishTime>
     </File>
     <File Include="Views/LMS/BookingInfo.cshtml">
       <publishTime>05/31/2016 03:44:33</publishTime>
@@ -3577,7 +3577,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/26/2016 00:02:33</publishTime>
     </File>
     <File Include="Views/LMS/Index.cshtml">
-      <publishTime>05/06/2016 00:07:19</publishTime>
+      <publishTime>06/02/2016 02:56:59</publishTime>
     </File>
     <File Include="Views/LMS/Login.cshtml">
       <publishTime>05/05/2016 23:02:51</publishTime>
@@ -3601,7 +3601,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/30/2016 00:05:58</publishTime>
     </File>
     <File Include="Views/LMS/ReportBooking.cshtml">
-      <publishTime>05/06/2016 00:31:33</publishTime>
+      <publishTime>06/02/2016 03:12:47</publishTime>
     </File>
     <File Include="Views/LMS/test.cshtml">
       <publishTime>04/29/2016 13:32:36</publishTime>

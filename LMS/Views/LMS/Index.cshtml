@@ -40,7 +40,7 @@
 
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Latest Booking</h3>
+                    <h3 class="box-title">Booking Last Month</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -55,10 +55,12 @@
                             <thead>
                                 <tr>
                                     <th>Booking ID</th>
+                                    <th>Booking Date</th>
                                     <th>Service</th>
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Date</th>
+                                    <th>Time</th>
                                     <th>Car Model</th>
                                     <th>Status</th>
                                 </tr>
@@ -78,45 +80,47 @@
                                     }
                                     else if (item.ServiceType == 3)
                                     {
-                                        ServiceName = "Return";
+                                        ServiceName = "Sale Visit";
                                     }
                                     String Status = "";
                                     String SClass = "";
                                     if (item.Status == 1)
                                     {
-                                        ServiceName = "New";
+                                        Status = "New";
                                         SClass = "label label-success";
                                     }
                                     else if (item.Status == 2)
                                     {
-                                        ServiceName = "Queue";
+                                        Status = "Queue";
                                         SClass = "label label-warning";
                                     }
                                     else if (item.Status == 3)
                                     {
-                                        ServiceName = "Delivered";
+                                        Status = "Delivered";
                                         SClass = "label label-primary";
                                     }
                                     else if (item.Status == 4)
                                     {
-                                        ServiceName = "Finish";
+                                        Status = "Finish";
                                         SClass = "label label-info";
                                     }
                                     else if (item.Status == 5)
                                     {
-                                        ServiceName = "Cancel";
+                                        Status = "Cancel";
                                         SClass = "label label-danger";
                                     }
 
                                   
                                         <tr>
-                                            <td><a href="/LMS/QueueDetail">@item.BookingID</a></td>
+                                            <td><a href="/LMS/BookingInfo?BID=@item.BookingID">@item.BookingID</a></td>
+                                            <td>@item.BookingDate.ToString("dd/MM/yyyy")</td>
                                             <td>@ServiceName</td>
                                             <td>@item.FromDetail</td>
                                             <td>@item.ToDetail</td>
-                                            <td>@item.Date</td>
+                                            <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.Time</td>
                                             <td>@item.CarModel</td>
-                                            <td><span class="@SClass">@ServiceName</span></td>
+                                            <td><span class="@SClass">@Status</span></td>
 
                                         </tr>
                                   
@@ -180,7 +184,7 @@
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
                     <a href="/LMS/Booking" class="btn btn-sm btn-info btn-flat pull-right">Place New Booking</a>
-                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-left">View All Booking</a>
+                    <a href="/LMS/ReportBooking" class="btn btn-sm btn-default btn-flat pull-left">View All Booking</a>
                 </div>
                 <!-- /.box-footer -->
             </div>
