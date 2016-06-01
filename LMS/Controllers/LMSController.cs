@@ -74,6 +74,7 @@ namespace LMS.Controllers
             else
             {
                 sUserType = "0";
+                return RedirectToAction("Booking", "LMS");
             }
 
              int UserType = 0;
@@ -99,16 +100,21 @@ namespace LMS.Controllers
          if (UserID.uAgentID == 0)
          {
               var sBookingList = (from b in db.LMS_Booking
-                                join v in db.LMS_Vehicle on b.CarID equals v.ID
+                                join c in db.LMS_Car on b.CarID equals c.ID               
+                                  where b.BookingDate.Value.Month == DateTime.Now.Month && b.BookingDate.Value.Year == DateTime.Now.Year
+                            //    where Convert.ToDateTime(b.BookingDate).Month == DateTime.Now.Month  
+                                orderby b.BookingID descending
                                 select new
                                 {
                                     BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
                                     BDate = b.Date,
+                                    BTime = b.Time,
                                     BService = b.ServiceType,
                                     BForm = b.FromDetail,
                                     BTo = b.ToDetail,
                                     CarID = b.CarID,
-                                    CarModel = v.Name,
+                                    CarModel = c.Model,
                                     BStatus = b.Status,
                                     AgentID = b.AgentID,
                                     UserID = b.UserID
@@ -118,7 +124,10 @@ namespace LMS.Controllers
               {
                   BookingList a = new BookingList();
                   a.BookingID = bl.BookingID.ToString();
+                  a.BookingDate = Convert.ToDateTime(bl.BookingDate);
                   a.Date = Convert.ToDateTime(bl.BDate);
+                  a.Time = bl.BTime.ToString();
+                  a.ServiceType = Convert.ToInt32(bl.BService.ToString());
                   a.FromDetail = bl.BForm.ToString();
                   a.ToDetail = bl.BTo.ToString();
                   a.CarModel = bl.CarModel.ToString();
@@ -220,7 +229,7 @@ namespace LMS.Controllers
          
            
             var dForm = (from p in db.LMS_From
-                         orderby p.Detail ascending
+                       //  orderby p.Detail ascending
                          select new
                     {
                         cDetail = p.Detail,
@@ -228,6 +237,7 @@ namespace LMS.Controllers
                     }
                     ).ToList();
             var dTo = (from t in db.LMS_TO
+                       where t.FromID == 1 
                        orderby t.Detail ascending
                          select new
                          {
@@ -340,67 +350,85 @@ namespace LMS.Controllers
         
             BookingDetail bkd = new BookingDetail();
 
-            bkd.ServiceType = Convert.ToInt32(Request["ServiceType"]);
+            bkd.ServiceType = Convert.ToInt32(Request.QueryString["ServiceType"]);
 
             if (bkd.ServiceType == 1)
             {
-                bkd.FromID = Convert.ToInt32(Request["From"]);
+                bkd.FromID = Convert.ToInt32(Request.QueryString["From"]);
             
            }else if (bkd.ServiceType == 3)
             {
-                bkd.FromID = Convert.ToInt32(Request["From3"]);
+                bkd.FromID = Convert.ToInt32(Request.QueryString["From3"]);
             }
           
             if (bkd.FromID != 0)
             {
-                bkd.ServiceType = Convert.ToInt32(Request["ServiceType"]);
-                bkd.AgentID = Convert.ToInt32(Request["SubAgent"]);
-                bkd.CustomerType = Convert.ToInt32(Request["CustomerType"]);
-                bkd.UserID = Convert.ToInt32(Request["UserType"]);
+                bkd.ServiceType = Convert.ToInt32(Request.QueryString["ServiceType"]);
+                bkd.AgentID = Convert.ToInt32(Request.QueryString["SubAgent"]);
+                bkd.CustomerType = Convert.ToInt32(Request.QueryString["CustomerType"]);
+                bkd.UserID = Convert.ToInt32(Request.QueryString["UserType"]);
                 bkd.Status = 1;
+
+                string sDate = "";
+
                 if (bkd.ServiceType == 1)
                 {
-                    bkd.VechileID = Convert.ToInt32(Request["CarModel"]);
+                    bkd.VechileID = Convert.ToInt32(Request.QueryString["CarModel"]);
 
-                    bkd.Date = Convert.ToDateTime(Request["Date"]);
+                    sDate = Request.QueryString["Date"];
 
+                    if (sDate == null || sDate == "")
+                    {
+                        sDate = DateTime.Now.ToString("yyyy-MM-dd");
+                    }
 
-                    bkd.FlightNo = Request["Flight"];
-                    bkd.FlightTime = Request["FlightTime"];
+                    bkd.Date = Convert.ToDateTime(sDate);
+                   
 
-                    bkd.ToID = Convert.ToInt32(Request["To"]);
-                    bkd.Luggage = Convert.ToInt32(Request["Luggage"]);
+                    bkd.FlightNo = Request.QueryString["Flight"];
+                    bkd.FlightTime = Request.QueryString["FlightTime"];
+
+                    bkd.ToID = Convert.ToInt32(Request.QueryString["To"]);
+                    bkd.Luggage = Convert.ToInt32(Request.QueryString["Luggage"]);
                   
                   
-                    bkd.Passenger = Convert.ToInt32(Request["Passenger"]);
+                    bkd.Passenger = Convert.ToInt32(Request.QueryString["Passenger"]);
 
                    
                     bkd.Time = Request["Time"];
                
-                    bkd.Vechile = Convert.ToInt32(Request["Vechile"]);
+                    bkd.Vechile = Convert.ToInt32(Request.QueryString["Vechile"]);
                     bkd.Currency = Request["Currency"];
 
                 }else if (bkd.ServiceType == 3)
                 {
-                    bkd.VechileID = Convert.ToInt32(Request["CarModel3"]);
+                    bkd.VechileID = Convert.ToInt32(Request.QueryString["CarModel3"]);
 
-                    bkd.Date = Convert.ToDateTime(Request["Date3"]);
+                    sDate = Request.QueryString["Date3"];
+
+                    if (sDate == null || sDate == "")
+                    {
+                        sDate = DateTime.Now.ToString("yyyy-MM-dd");
+                    }
 
 
-                    bkd.FlightNo = Request["Flight3"];
-                    bkd.FlightTime = Request["FlightTime3"];
+                    bkd.Date = Convert.ToDateTime(sDate);
 
-                    bkd.ToID = Convert.ToInt32(Request["To3"]);
-                    bkd.Luggage = Convert.ToInt32(Request["Luggage3"]);
+
+                    bkd.FlightNo = Request.QueryString["Flight3"];
+                    bkd.FlightTime = Request.QueryString["FlightTime3"];
+
+                    bkd.ToID = Convert.ToInt32(Request.QueryString["To3"]);
+                    bkd.Luggage = Convert.ToInt32(Request.QueryString["Luggage3"]);
      
-                    bkd.Passenger = Convert.ToInt32(Request["Passenger3"]);
+                    bkd.Passenger = Convert.ToInt32(Request.QueryString["Passenger3"]);
 
  
                  
-                    bkd.Time = Request["Time3"];
+                    bkd.Time = Request.QueryString["Time3"];
         
-                    bkd.Vechile = Convert.ToInt32(Request["Vechile3"]);
-                    bkd.Currency = Request["Currency3"];
+                    bkd.Vechile = Convert.ToInt32(Request.QueryString["Vechile3"]);
+                    bkd.Currency = Request.QueryString["Currency3"];
                 }
 
 
@@ -525,36 +553,43 @@ namespace LMS.Controllers
                 bkd.DLastName = Car.DLastName.ToString();
                 bkd.DMobile = Car.DMobile.ToString();
 
-                if (bkd.AgentID == 0)
+                if (bkd.CustomerType == 2)
                 {
-                    bkd.AgentEmail = "";
-                    bkd.DiscountP = 0;
-                    bkd.DiscountB = 0;
-                    bkd.Discount = 0;
-                    bkd.AgentName = "";
-                }else
-                {
-                    if (bkd.CustomerType == 2)
+                    if (bkd.AgentID == 0)
                     {
-                        if (bkd.Currency == "THB")
-                        {
-                            bkd.Price = Convert.ToDecimal(AgentPrice.aPriceTHB.ToString()) * bkd.Vechile;
+                        bkd.AgentEmail = "";
+                        bkd.DiscountP = 0;
+                        bkd.DiscountB = 0;
+                        bkd.Discount = 0;
+                        bkd.AgentName = "";
+                    }else
+                    {
+                   
+                            if (bkd.Currency == "THB")
+                            {
+                                bkd.Price = Convert.ToDecimal(AgentPrice.aPriceTHB.ToString()) * bkd.Vechile;
+                            }
+                            else if (bkd.Currency == "USD")
+                            {
+                                bkd.Price = Convert.ToDecimal(AgentPrice.aPriceUSD.ToString()) * bkd.Vechile;
+                            }
+                            else if (bkd.Currency == "EUR")
+                            {
+                                bkd.Price = Convert.ToDecimal(AgentPrice.aPriceEUR.ToString()) * bkd.Vechile;
+                            }
                         }
-                        else if (bkd.Currency == "USD")
-                        {
-                            bkd.Price = Convert.ToDecimal(AgentPrice.aPriceUSD.ToString()) * bkd.Vechile;
-                        }
-                        else if (bkd.Currency == "EUR")
-                        {
-                            bkd.Price = Convert.ToDecimal(AgentPrice.aPriceEUR.ToString()) * bkd.Vechile;
-                        }
-                    }
-                  
+
                     bkd.AgentEmail = AgentEmail.aEmail.ToString();
                     bkd.DiscountP = Convert.ToDecimal(AgentPrice.aDiscountP);
                     bkd.DiscountB = Convert.ToDecimal(AgentPrice.aDiscountB);
-                    bkd.Discount = (bkd.Price * (Convert.ToDecimal(AgentPrice.aDiscountP)/100)) + Convert.ToDecimal(AgentPrice.aDiscountB);
+                    bkd.Discount = (bkd.Price * (Convert.ToDecimal(AgentPrice.aDiscountP) / 100)) + Convert.ToDecimal(AgentPrice.aDiscountB);
                     bkd.AgentName = AgentEmail.aName.ToString();
+                  
+                    }
+                else
+                {
+                    bkd.AgentID = 0;
+  
                 }
               
                 Session["BookingDetail"] = bkd;
@@ -1192,8 +1227,15 @@ namespace LMS.Controllers
             }
             else
             {
-                BID = "";
+                if (Request.QueryString["BID"] != null)
+                {
+                    BID = Request.QueryString["BID"];
+                }
+                else{
+                      BID = "";
                 return RedirectToAction("Booking", "LMS");
+                }
+              
             }
             List<BookingInfo> model = new List<BookingInfo>();
             var sBookingInfo = (from b in db.LMS_Booking
@@ -1696,14 +1738,25 @@ namespace LMS.Controllers
         }
         public ActionResult ReportBooking()
         {
-            int UserType = 0;
+            string sUserType = "0";
             if (Session["LogedUserType"] != null)
             {
-                UserType = Convert.ToInt32(Session["LogedUserType"]);
+                sUserType = Session["LogedUserType"].ToString();
             }
             else
             {
+                sUserType = "0";
+                return RedirectToAction("Booking", "LMS");
+            }
+
+            int UserType = 0;
+            if (sUserType == "")
+            {
                 UserType = 0;
+            }
+            else
+            {
+                UserType = Convert.ToInt32(sUserType);
             }
 
 
@@ -1714,21 +1767,42 @@ namespace LMS.Controllers
                               uAgentID = u.AgentID
                           }
                    ).FirstOrDefault();
+
+            string aDate = Request.QueryString["sDate"];
+            string bDate = Request.QueryString["eDate"];
+
+            if (aDate == null || aDate == "")
+            {
+                aDate = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+            if (bDate == null || bDate == "")
+            {
+                bDate = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+
+
+            DateTime sDate = Convert.ToDateTime(aDate);
+            DateTime eDate = Convert.ToDateTime(bDate);
+
             List<BookingList> model = new List<BookingList>();
             if (UserID.uAgentID == 0)
             {
+                
                 var sBookingList = (from b in db.LMS_Booking
-                                    join v in db.LMS_Vehicle on b.CarID equals v.ID
+                                    join c in db.LMS_Car on b.CarID equals c.ID
+                                    where b.BookingDate >= sDate && b.BookingDate <= eDate 
                                     orderby b.BookingID descending
                                     select new
                                     {
                                         BookingID = b.BookingID,
+                                        BookingDate = b.BookingDate,
                                         BDate = b.Date,
+                                        BTime = b.Time,
                                         BService = b.ServiceType,
                                         BForm = b.FromDetail,
                                         BTo = b.ToDetail,
                                         CarID = b.CarID,
-                                        CarModel = v.Name,
+                                        CarModel = c.Model,
                                         BStatus = b.Status,
                                         AgentID = b.AgentID,
                                         UserID = b.UserID
@@ -1738,13 +1812,18 @@ namespace LMS.Controllers
                 {
                     BookingList a = new BookingList();
                     a.BookingID = bl.BookingID.ToString();
+                    a.BookingDate = Convert.ToDateTime(bl.BookingDate);
                     a.Date = Convert.ToDateTime(bl.BDate);
+                    a.Time = bl.BTime.ToString();
+                    a.ServiceType = Convert.ToInt32(bl.BService);
                     a.FromDetail = bl.BForm.ToString();
                     a.ToDetail = bl.BTo.ToString();
                     a.CarModel = bl.CarModel.ToString();
                     a.Status = Convert.ToInt32(bl.BStatus);
                     a.AgentID = Convert.ToInt32(bl.AgentID);
                     a.UserID = Convert.ToInt32(bl.UserID);
+                    a.sDate = sDate.ToString("dd/MM/yyyy");
+                    a.eDate = eDate.ToString("dd/MM/yyyy");
                     model.Add(a);
 
                 }

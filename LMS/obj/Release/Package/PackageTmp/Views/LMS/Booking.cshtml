@@ -53,7 +53,7 @@
     }
 @foreach (var item in Model)
 {
-    <form action="/LMS/BookingDetail" method="post" onsubmit="return chk_form()">
+    <form action="/LMS/BookingDetail" method="get" onsubmit="return chk_form()">
         <div class="row">
             <div class="col-md-12">
 
@@ -198,9 +198,10 @@
                                 <label>From</label>
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
                                 <select class="form-control" id="From" name="From" placeholder="-- Type pick-up location --" onchange="chk_To1();">
-                                    <option value="">-- Type pick-up location --</option>
+                                  @*  <option value="">-- Type pick-up location --</option>*@
                                     @foreach (var FItem in item.sFromModel)
                                     {
+
                                         <option value="@FItem.FId">@FItem.FDetail</option>
                                     }
                                 </select>
@@ -209,11 +210,11 @@
                                 <label>To</label>
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
                                 <select class="form-control" id="To" name="To" placeholder="-- Type drop-off location --" onchange="chk_ToOneWay();">
-                                    <option value="">-- Type drop-off location --</option>
-                                 @*   @foreach (var TItem in item.sToModel)
+                                 @*   <option value="">-- Type drop-off location --</option>*@
+                                    @foreach (var TItem in item.sToModel)
     {
         <option value="@TItem.TId">@TItem.TDetail</option>
-    }*@
+    }
                                 </select>
 
 
@@ -228,7 +229,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
-
+                                    @{DateTime tDate = DateTime.Now;}
                                     <input class="form-control" data-val="true" data-val-required="Date is required"
                                            id="Date" name="Date" type="date" value="1/11/1989" />
                                 </div>
@@ -237,7 +238,7 @@
                                 <label>Pick up time</label>
                                 <select class="form-control" id="Time" name="Time">
 
-                                    <option value="">-- Select Pick up Time --</option>
+                                 @*   <option value="">-- Select Pick up Time --</option>*@
                                     <option data-ng-value="00:00">00:00</option>
                                     <option data-ng-value="00:15">00:15</option>
                                     <option data-ng-value="00:30">00:30</option>
@@ -286,7 +287,7 @@
                                     <option data-ng-value="11:15">11:15</option>
                                     <option data-ng-value="11:30">11:30</option>
                                     <option data-ng-value="11:45">11:45</option>
-                                    <option data-ng-value="12:00">12:00</option>
+                                    <option selected data-ng-value="12:00">12:00</option>
                                     <option data-ng-value="12:15">12:15</option>
                                     <option data-ng-value="12:30">12:30</option>
                                     <option data-ng-value="12:45">12:45</option>
@@ -383,7 +384,7 @@
                                 <label>Car Model</label>
                                 <select class="form-control" id="CarModel" name="CarModel">
 
-                                    <option value="">-- Select Car Model --</option>
+                                  @*  <option value="">-- Select Car Model --</option>*@
                                     @foreach (var CItem in item.sCar)
                                     {
                                         <option value="@CItem.CId">@CItem.CModel</option>
@@ -449,7 +450,7 @@
                             <div class="col-md-6">
                                 <label>From</label>
                                 <select class="form-control" id="FromReturn1" name="FromReturn1" placeholder="-- Type pick-up location --" onchange="chk_ToReturn1();">
-                                    <option value="">-- Type pick-up location --</option>
+                                 @*   <option value="">-- Type pick-up location --</option>*@
                                     @foreach (var FItem in item.sFromModel)
                                     {
                                         <option value="@FItem.FId">@FItem.FDetail</option>
@@ -478,7 +479,7 @@
                                 <label>Pick up time</label>
                                 <select class="form-control">
 
-                                    <option value="? undefined:undefined ?"></option>
+                                 @*   <option value="? undefined:undefined ?"></option>*@
                                     <option data-ng-value="T0000">00:00</option>
                                     <option data-ng-value="T0015">00:15</option>
                                     <option data-ng-value="T0030">00:30</option>
@@ -527,7 +528,7 @@
                                     <option data-ng-value="T1115">11:15</option>
                                     <option data-ng-value="T1130">11:30</option>
                                     <option data-ng-value="T1145">11:45</option>
-                                    <option data-ng-value="T1200">12:00</option>
+                                    <option selected data-ng-value="T1200">12:00</option>
                                     <option data-ng-value="T1215">12:15</option>
                                     <option data-ng-value="T1230">12:30</option>
                                     <option data-ng-value="T1245">12:45</option>
@@ -651,7 +652,7 @@
                             <div class="col-md-6">
                                 <label>From</label>
                                 <select class="form-control" id="FromReturn2" name="FromReturn2" placeholder="-- Type pick-up location --" onchange="chk_ToReturn2();">
-                                    <option value="">-- Type pick-up location --</option>
+                                  @*  <option value="">-- Type pick-up location --</option>*@
                                     @foreach (var FItem in item.sFromModel)
                                     {
                                         <option value="@FItem.FId">@FItem.FDetail</option>
@@ -661,11 +662,11 @@
                             <div class="col-md-6">
                                 <label>To</label>
                                 <select class="form-control" id="ToReturn2" name="ToReturn2" placeholder="-- Type drop-off location --" onchange="chk_ToOneWay();">
-                                    <option value="">-- Type drop-off location --</option>
-                                    @*@foreach (var TItem in item.sToModel)
+                                   @* <option value="">-- Type drop-off location --</option>*@
+                                    @foreach (var TItem in item.sToModel)
             {
                 <option value="@TItem.TId">@TItem.TDetail</option>
-            }*@
+            }
                                 </select>
                             </div>
                         </div>
@@ -679,7 +680,7 @@
                                 <label>Pick up time</label>
                                 <select class="form-control">
 
-                                    <option value="? undefined:undefined ?"></option>
+                                  @*  <option value="? undefined:undefined ?"></option>*@
                                     <option data-ng-value="T0000">00:00</option>
                                     <option data-ng-value="T0015">00:15</option>
                                     <option data-ng-value="T0030">00:30</option>
@@ -728,7 +729,7 @@
                                     <option data-ng-value="T1115">11:15</option>
                                     <option data-ng-value="T1130">11:30</option>
                                     <option data-ng-value="T1145">11:45</option>
-                                    <option data-ng-value="T1200">12:00</option>
+                                    <option selected data-ng-value="T1200">12:00</option>
                                     <option data-ng-value="T1215">12:15</option>
                                     <option data-ng-value="T1230">12:30</option>
                                     <option data-ng-value="T1245">12:45</option>
@@ -885,7 +886,7 @@
                                 <label>From</label>
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
                                 <select class="form-control" id="From3" name="From3" placeholder="-- Type pick-up location --" onchange="chk_To3();">
-                                    <option value="">-- Type pick-up location --</option>
+                                  @*  <option value="">-- Type pick-up location --</option>*@
                                     @foreach (var FItem in item.sFromModel)
                                     {
                                         <option value="@FItem.FId">@FItem.FDetail</option>
@@ -896,11 +897,11 @@
                                 <label>To</label>
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
                                 <select class="form-control" id="To3" name="To3" placeholder="-- Type drop-off location --">
-                                    <option value="">-- Type drop-off location --</option>
-                                    @*@foreach (var TItem in item.sToModel)
+                                    @*<option value="">-- Type drop-off location --</option>*@
+                                    @foreach (var TItem in item.sToModel)
                                     {
                                         <option value="@TItem.TId">@TItem.TDetail</option>
-                                    }*@
+                                    }
                                 </select>
 
 
@@ -924,7 +925,7 @@
                                 <label>Pick up time</label>
                                 <select class="form-control" id="Time3" name="Time3">
 
-                                    <option value="">-- Select Pick up Time --</option>
+                                  @*  <option value="">-- Select Pick up Time --</option>*@
                                     <option data-ng-value="00:00">00:00</option>
                                     <option data-ng-value="00:15">00:15</option>
                                     <option data-ng-value="00:30">00:30</option>
@@ -973,7 +974,7 @@
                                     <option data-ng-value="11:15">11:15</option>
                                     <option data-ng-value="11:30">11:30</option>
                                     <option data-ng-value="11:45">11:45</option>
-                                    <option data-ng-value="12:00">12:00</option>
+                                    <option selected data-ng-value="12:00">12:00</option>
                                     <option data-ng-value="12:15">12:15</option>
                                     <option data-ng-value="12:30">12:30</option>
                                     <option data-ng-value="12:45">12:45</option>
@@ -1070,7 +1071,7 @@
                                 <label>Car Model</label>
                                 <select class="form-control" id="CarModel3" name="CarModel3">
 
-                                    <option value="">-- Select Car Model --</option>
+                                 @*   <option value="">-- Select Car Model --</option>*@
                                     @foreach (var CItem in item.sCar)
                                     {
                                         <option value="@CItem.CId">@CItem.CModel</option>
@@ -1260,7 +1261,7 @@
         $(".select2").select2();
 
         //Datemask dd/mm/yyyy
-        $("#datemask").inputmask("dd/mm/yyyy", { "placeholder": "dd/mm/yyyy" });
+        $("#datemask").inputmask("mm/dd/yyyy", { "placeholder": "mm/dd/yyyy" });
         //Datemask2 mm/dd/yyyy
         $("#datemask2").inputmask("mm/dd/yyyy", { "placeholder": "mm/dd/yyyy" });
         //Money Euro
@@ -1269,7 +1270,7 @@
         //Date range picker
         $('#reservation').daterangepicker();
         //Date range picker with time picker
-        $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' });
+       $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY' });
         //Date range as a button
         $('#daterange-btn').daterangepicker(
             {
@@ -1358,8 +1359,8 @@
                 //  data is your result from controller
                 if (data) {
 
-
-                    var items = '<option value="">-- Type  drop-off location --</option>';
+                    var items ='';
+                   // var items = '<option value="">-- Type  drop-off location --</option>';
                     $.each(data, function (i, state) {
                         items += "<option value='" + data[i].TId + "'>" + data[i].TDetail + "</option>";
 
@@ -1397,8 +1398,8 @@
                 //  data is your result from controller
                 if (data) {
 
-
-                    var items = '<option value="">-- Type  drop-off location --</option>';
+                    var items = '';
+                   // var items = '<option value="">-- Type  drop-off location --</option>';
                     $.each(data, function (i, state) {
                         items += "<option value='" + data[i].TId + "'>" + data[i].TDetail + "</option>";
 
@@ -1436,8 +1437,8 @@
                 //  data is your result from controller
                 if (data) {
 
-
-                    var items = '<option value="">-- Type  drop-off location --</option>';
+                    var items = '';
+                  //  var items = '<option value="">-- Type  drop-off location --</option>';
                     $.each(data, function (i, state) {
                         items += "<option value='" + data[i].TId + "'>" + data[i].TDetail + "</option>";
 
@@ -1475,8 +1476,8 @@
                 //  data is your result from controller
                 if (data) {
 
-
-                    var items = '<option value="">-- Type  drop-off location --</option>';
+                    var items = '';
+                   // var items = '<option value="">-- Type  drop-off location --</option>';
                     $.each(data, function (i, state) {
                         items += "<option value='" + data[i].TId + "'>" + data[i].TDetail + "</option>";
 

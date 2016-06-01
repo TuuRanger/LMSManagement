@@ -153,7 +153,9 @@ namespace LMS.Models
         public string ToDetail { get; set; }
         public int FromID { get; set; }
         public int ToID { get; set; }
+        public DateTime BookingDate { get; set; }
         public DateTime Date { get; set; }
+        public string Time { get; set; }
         public int CarID { get; set; }
         public string CarModel { get; set; }
         public int Status { get; set; }
@@ -161,6 +163,9 @@ namespace LMS.Models
         public int UserID { get; set; }
 
         public string Currency { get; set; }
+
+        public string sDate { get; set; }
+        public string eDate { get; set; }
     }
 
     public class WorkTime

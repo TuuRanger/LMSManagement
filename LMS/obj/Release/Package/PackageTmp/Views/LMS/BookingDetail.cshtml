@@ -46,27 +46,27 @@
                         </div>
                         <div class="form-group">
                             <label>First Name</label>
-                            <input id="FirstName" name="FirstName" type="text" class="form-control" placeholder="Enter ...">
+                            <input id="FirstName" name="FirstName" type="text" class="form-control" placeholder="Enter ..." required="required">
                         </div>
                         <div class="form-group">
                             <label>Last Name</label>
-                            <input id="LastName" name="LastName" type="text" class="form-control" placeholder="Enter ...">
+                            <input id="LastName" name="LastName" type="text" class="form-control" placeholder="Enter ..." required="required">
                         </div>
                         <div class="form-group">
                             <label>Address</label>
-                            <textarea id="Address" name="Address" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                            <textarea id="Address" name="Address" class="form-control" rows="3" placeholder="Enter ..." required="required"></textarea>
                         </div>
                         <div class="form-group">
                             <label>E-Mail</label>
-                            <input id="Email" name="Email" type="text" class="form-control" placeholder="Enter ...">
+                            <input id="Email" name="Email" type="text" class="form-control" placeholder="Enter ..." required="required">
                         </div>
                         <div class="form-group">
                             <label>Telephone</label>
-                            <input id="Telephone" name="Telephone" type="text" class="form-control" placeholder="Enter ...">
+                            <input id="Telephone" name="Telephone" type="text" class="form-control" placeholder="Enter ..." >
                         </div>
                         <div class="form-group">
                             <label>Moblie</label>
-                            <input id="Mobile" name="Mobile" type="text" class="form-control" placeholder="Enter ...">
+                            <input id="Mobile" name="Mobile" type="text" class="form-control" placeholder="Enter ..." required="required">
                         </div>
                         <div class="form-group">
                             <label>Remark</label>
@@ -138,7 +138,7 @@
                                 <b>To</b> <a class="pull-right">@Model.ToDetail</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Date of Service</b> <a class="pull-right">@Model.Date</a>
+                                <b>Date of Service</b> <a class="pull-right">@Model.Date.ToString("dd/MM/yyyy")</a>
                             </li>
                             <li class="list-group-item">
                                 <b>Pick up time</b> <a class="pull-right">@Model.Time</a>
