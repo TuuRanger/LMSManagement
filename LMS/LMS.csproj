@@ -1166,6 +1166,10 @@
     <Content Include="plugins\slimScroll\jquery.slimscroll.min.js" />
     <Content Include="plugins\sparkline\jquery.sparkline.js" />
     <Content Include="plugins\sparkline\jquery.sparkline.min.js" />
+    <Content Include="plugins\SuperTinyDatePicker\css\jquery.datepicker.css" />
+    <Content Include="plugins\SuperTinyDatePicker\index.html" />
+    <Content Include="plugins\SuperTinyDatePicker\js\jquery.datepicker.js" />
+    <Content Include="plugins\SuperTinyDatePicker\js\jquery.datepicker.min.js" />
     <Content Include="plugins\timepicker\bootstrap-timepicker.css" />
     <Content Include="plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="plugins\timepicker\bootstrap-timepicker.min.css" />
@@ -1312,6 +1316,7 @@
     <Content Include="font\angsaui.ttf" />
     <Content Include="font\angsauz.ttf" />
     <Content Include="font\angsaz.ttf" />
+    <Content Include="plugins\SuperTinyDatePicker\README.md" />
     <None Include="Properties\PublishProfiles\LMS.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

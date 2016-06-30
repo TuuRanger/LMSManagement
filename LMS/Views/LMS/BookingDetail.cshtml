@@ -131,12 +131,16 @@
                             <li class="list-group-item">
                                 <b>Service</b> <a class="pull-right">@ServiceName</a>
                             </li>
-                            <li class="list-group-item">
-                                <b>From</b> <a class="pull-right">@Model.FromDetail</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>To</b> <a class="pull-right">@Model.ToDetail</a>
-                            </li>
+                            @if (@Model.ServiceType != 3)
+                            {
+                                <li class="list-group-item">
+                                    <b>From</b> <a class="pull-right">@Model.FromDetail</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>To</b> <a class="pull-right">@Model.ToDetail</a>
+                                </li>
+                            }
+                            
                             <li class="list-group-item">
                                 <b>Date of Service</b> <a class="pull-right">@Model.Date.ToString("dd/MM/yyyy")</a>
                             </li>
@@ -168,6 +172,32 @@
 
 
                 </div>
+                @if (@Model.ServiceType == 3)
+                {
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Route Detail</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+
+                            <p class="text-muted">
+                                @Model.RouteDetail
+                            </p>
+
+                            <hr>
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                }
+               
                 <div class="box box-success">
                     <div class="box-header with-border">
                         <h3 class="box-title">Driver Detail</h3>

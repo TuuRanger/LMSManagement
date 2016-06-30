@@ -175,6 +175,9 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="PriceTHB" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceUSD" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="PriceEUR" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="LMS_WorkTime">
     <Key>
@@ -229,7 +232,7 @@
     <Property Name="FlightTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="FromDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="ToDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ProductID" Type="Int32" />
     <Property Name="CarID" Type="Int32" />
     <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
@@ -240,5 +243,6 @@
     <Property Name="DID" Type="Int32" />
     <Property Name="DriverID" Type="Int32" />
     <Property Name="Currency" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="RouteDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

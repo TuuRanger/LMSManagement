@@ -16,5 +16,8 @@ namespace LMS
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public Nullable<decimal> PriceTHB { get; set; }
+        public Nullable<decimal> PriceUSD { get; set; }
+        public Nullable<decimal> PriceEUR { get; set; }
     }
 }

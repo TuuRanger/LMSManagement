@@ -358,7 +358,7 @@ namespace LMS.Controllers
             
            }else if (bkd.ServiceType == 3)
             {
-                bkd.FromID = Convert.ToInt32(Request.QueryString["From3"]);
+                bkd.FromID = 1;
             }
           
             if (bkd.FromID != 0)
@@ -400,7 +400,8 @@ namespace LMS.Controllers
                     bkd.Vechile = Convert.ToInt32(Request.QueryString["Vechile"]);
                     bkd.Currency = Request["Currency"];
 
-                }else if (bkd.ServiceType == 3)
+                }
+                else if (bkd.ServiceType == 3)
                 {
                     bkd.VechileID = Convert.ToInt32(Request.QueryString["CarModel3"]);
 
@@ -418,11 +419,11 @@ namespace LMS.Controllers
                     bkd.FlightNo = Request.QueryString["Flight3"];
                     bkd.FlightTime = Request.QueryString["FlightTime3"];
 
-                    bkd.ToID = Convert.ToInt32(Request.QueryString["To3"]);
+                    bkd.ToID = 1;
                     bkd.Luggage = Convert.ToInt32(Request.QueryString["Luggage3"]);
      
                     bkd.Passenger = Convert.ToInt32(Request.QueryString["Passenger3"]);
-
+                    bkd.RouteDetail = Request.QueryString["RouteDetail"];
  
                  
                     bkd.Time = Request.QueryString["Time3"];
@@ -463,6 +464,17 @@ namespace LMS.Controllers
                                    PriceEUR = p.PriceEUR
                                }
                       ).First();
+
+                var SaleVisitPrice = (from p in db.LMS_Vehicle
+                                      where p.ID == bkd.VechileID
+                               select new
+                               {
+                                   ProductID = p.ID,
+                                   PriceTHB = p.PriceTHB,
+                                   PriceUSD = p.PriceUSD,
+                                   PriceEUR = p.PriceEUR
+                               }
+                    ).First();
 
                 string dTime = "";
                 dTime = bkd.Time.Substring(0, 2) + bkd.Time.Substring(3, 2);
@@ -529,18 +541,37 @@ namespace LMS.Controllers
               
                 bkd.ProductID = Convert.ToInt32(Product.ProductID.ToString());
 
-                if (bkd.Currency == "THB")
+                if (bkd.ServiceType == 3)
                 {
-                    bkd.Price = Convert.ToDecimal(Product.PriceTHB.ToString()) * bkd.Vechile;
+                    if (bkd.Currency == "THB")
+                    {
+                        bkd.Price = Convert.ToDecimal(SaleVisitPrice.PriceTHB.ToString()) * bkd.Vechile;
+                    }
+                    else if (bkd.Currency == "USD")
+                    {
+                        bkd.Price = Convert.ToDecimal(SaleVisitPrice.PriceUSD.ToString()) * bkd.Vechile;
+                    }
+                    else if (bkd.Currency == "EUR")
+                    {
+                        bkd.Price = Convert.ToDecimal(SaleVisitPrice.PriceEUR.ToString()) * bkd.Vechile;
+                    }
                 }
-                else if (bkd.Currency == "USD")
+                else
                 {
-                    bkd.Price = Convert.ToDecimal(Product.PriceUSD.ToString()) * bkd.Vechile;
+                    if (bkd.Currency == "THB")
+                    {
+                        bkd.Price = Convert.ToDecimal(Product.PriceTHB.ToString()) * bkd.Vechile;
+                    }
+                    else if (bkd.Currency == "USD")
+                    {
+                        bkd.Price = Convert.ToDecimal(Product.PriceUSD.ToString()) * bkd.Vechile;
+                    }
+                    else if (bkd.Currency == "EUR")
+                    {
+                        bkd.Price = Convert.ToDecimal(Product.PriceEUR.ToString()) * bkd.Vechile;
+                    }
                 }
-                else if (bkd.Currency == "EUR")
-                {
-                    bkd.Price = Convert.ToDecimal(Product.PriceEUR.ToString()) * bkd.Vechile;
-                }
+                
                
 
                 bkd.DID = Convert.ToInt32(Car.DID.ToString());
@@ -619,6 +650,7 @@ namespace LMS.Controllers
             bkd.Price = Convert.ToDecimal(Request["Price"]);
             bkd.Discount = Convert.ToDecimal(Request["Discount"]);
             bkd.TotalPrice = Convert.ToDecimal(Request["TotalPrice"]);
+            
 
             string bYM = DateTime.Today.Year.ToString().Substring(2,2) +  DateTime.Today.Month.ToString("00");
 
@@ -639,6 +671,16 @@ namespace LMS.Controllers
             {
                 RBID = BookingID.Substring(4,4);
                 BID = bYM + (Convert.ToInt32(RBID) + 1).ToString("0000");
+            }
+
+            if (bkd.ServiceType == 3)
+            {
+                bkd.ProductID = 0;
+                bkd.FromID = 0;
+                bkd.FromDetail = "";
+                bkd.ToID = 0;
+                bkd.ToDetail = "";
+
             }
 
             LMS_Booking AddBooking = new LMS_Booking();
@@ -668,6 +710,7 @@ namespace LMS.Controllers
             AddBooking.Price = bkd.Price;
             AddBooking.ProductID = bkd.ProductID;
             AddBooking.Remark = bkd.Remark;
+            AddBooking.RouteDetail = bkd.RouteDetail;
             AddBooking.ServiceType = bkd.ServiceType;
             AddBooking.Status = bkd.Status;
             AddBooking.Telephone = bkd.Telephone;
@@ -727,6 +770,7 @@ namespace LMS.Controllers
                                     FromDetail = b.FromDetail,
                                     ToDetail = b.ToDetail,
                                     Remark = b.Remark,
+                                    RouteDetail = b.RouteDetail,
                                     ProductID = b.ProductID,
                                     CarID = b.CarID,
                                     CModel = c.Model,
@@ -776,6 +820,7 @@ namespace LMS.Controllers
                   a.Passenger = Convert.ToInt32(bl.Passenger);
                   a.Price = Convert.ToDecimal(bl.Price);
                   a.Remark = bl.Remark.ToString();
+                  a.RouteDetail = bl.RouteDetail.ToString();
                   a.ServiceType = Convert.ToInt32(bl.ServiceType);
                   a.Status = Convert.ToInt32(bl.Status);
                   a.Telephone = bl.Telephone.ToString();
@@ -1062,14 +1107,25 @@ namespace LMS.Controllers
                   sb.Append("                        <td width=\"20%\"><b>Pick up time : &nbsp;</b> </td>");
                   sb.Append("                        <td>"+ a.Time +"<br></td>");
                   sb.Append("                    </tr>");
-                  sb.Append("                    <tr>");
-                  sb.Append("                        <td width=\"20%\"><b>From : &nbsp;</b> </td>");
-                  sb.Append("                        <td>"+ a.FromDetail +"<br></td>");
-                  sb.Append("                    </tr>");
-                  sb.Append("                    <tr>");
-                  sb.Append("                        <td width=\"20%\"><b>To : &nbsp;</b> </td>");
-                  sb.Append("                        <td>"+ a.ToDetail +"<br></td>");
-                  sb.Append("                    </tr>");
+                  if (a.ServiceType != 3)
+                  {
+                      sb.Append("                    <tr>");
+                      sb.Append("                        <td width=\"20%\"><b>From : &nbsp;</b> </td>");
+                      sb.Append("                        <td>" + a.FromDetail + "<br></td>");
+                      sb.Append("                    </tr>");
+                      sb.Append("                    <tr>");
+                      sb.Append("                        <td width=\"20%\"><b>To : &nbsp;</b> </td>");
+                      sb.Append("                        <td>" + a.ToDetail + "<br></td>");
+                      sb.Append("                    </tr>");
+                  }
+                  else
+                  {
+                      sb.Append("                    <tr>");
+                      sb.Append("                        <td width=\"20%\"><b>Route Detail : &nbsp;</b> </td>");
+                      sb.Append("                        <td>" + a.RouteDetail + "<br></td>");
+                      sb.Append("                    </tr>");
+                  }
+                 
                   sb.Append("                    <tr>");
                   sb.Append("                        <td width=\"20%\"><b>Meeting point : &nbsp;</b> </td>");
                   sb.Append("                        <td>The chauffeur will send SMS or call to re -confirmed 24 hours before your travel date. <br></td>");
@@ -1104,30 +1160,34 @@ namespace LMS.Controllers
                   sb.Append("                    </tr>");
                   sb.Append("                </table>");
                   sb.Append("                <br>");
-                  sb.Append("                <table>");
-                  sb.Append("                    <tr>");
-                  sb.Append("                        <td>");
-                  sb.Append("                            <b>Agent</b>");
-                  sb.Append("                            <br />");
-                  sb.Append("                        </td>");
-                  sb.Append("                    </tr>");
-                  sb.Append("                </table>");
-                  sb.Append("                <br />");
-                  sb.Append("                <table border=\"1\" width=\"100%\">");
-                  sb.Append("                    <tr>");
-                  sb.Append("                        <td width=\"20%\"><b>Agent Information : &nbsp;</b> </td>");
-                  sb.Append("                        <td>"+ a.AgentName +"<br></td>");
-                  sb.Append("                    </tr>");
-                  sb.Append("                    <tr>");
-                  sb.Append("                        <td width=\"20%\"><b>EMail : &nbsp;</b></td>");
-                  sb.Append("                        <td>"+ a.AgentEmail +"<br> </td>");
-                  sb.Append("                    </tr>");
-                  sb.Append("                    <tr>");
-                  sb.Append("                        <td width=\"20%\"><b>Contact Call : &nbsp;</b></td>");
-                  sb.Append("                        <td>"+ a.AgentMobile +"<br> </td>");
-                  sb.Append("                    </tr>     ");
-                  sb.Append("                </table>");
-                  sb.Append("                <br>");
+                  if (a.CustomerType == 2)
+                  {
+                      sb.Append("                <table>");
+                      sb.Append("                    <tr>");
+                      sb.Append("                        <td>");
+                      sb.Append("                            <b>Agent</b>");
+                      sb.Append("                            <br />");
+                      sb.Append("                        </td>");
+                      sb.Append("                    </tr>");
+                      sb.Append("                </table>");
+                      sb.Append("                <br />");
+                      sb.Append("                <table border=\"1\" width=\"100%\">");
+                      sb.Append("                    <tr>");
+                      sb.Append("                        <td width=\"20%\"><b>Agent Information : &nbsp;</b> </td>");
+                      sb.Append("                        <td>" + a.AgentName + "<br></td>");
+                      sb.Append("                    </tr>");
+                      sb.Append("                    <tr>");
+                      sb.Append("                        <td width=\"20%\"><b>EMail : &nbsp;</b></td>");
+                      sb.Append("                        <td>" + a.AgentEmail + "<br> </td>");
+                      sb.Append("                    </tr>");
+                      sb.Append("                    <tr>");
+                      sb.Append("                        <td width=\"20%\"><b>Contact Call : &nbsp;</b></td>");
+                      sb.Append("                        <td>" + a.AgentMobile + "<br> </td>");
+                      sb.Append("                    </tr>     ");
+                      sb.Append("                </table>");
+                      sb.Append("                <br>");
+                  }
+                
                   sb.Append("                <table>");
                   sb.Append("                    <tr>");
                   sb.Append("                        <td>");
@@ -1267,6 +1327,7 @@ namespace LMS.Controllers
                                     FromDetail = b.FromDetail,
                                     ToDetail = b.ToDetail,
                                     Remark = b.Remark,
+                                    RouteDetail = b.RouteDetail,
                                     ProductID = b.ProductID,
                                     CarID = b.CarID,
                                     CModel = c.Model,
@@ -1315,6 +1376,7 @@ namespace LMS.Controllers
                 a.Passenger = Convert.ToInt32(bl.Passenger);
                 a.Price = Convert.ToDecimal(bl.Price);
                 a.Remark = bl.Remark.ToString();
+                a.RouteDetail = bl.RouteDetail.ToString();
                 a.ServiceType = Convert.ToInt32(bl.ServiceType);
                 a.Status = Convert.ToInt32(bl.Status);
                 a.Telephone = bl.Telephone.ToString();

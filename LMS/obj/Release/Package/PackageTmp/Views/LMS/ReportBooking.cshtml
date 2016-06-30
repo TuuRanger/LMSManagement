@@ -63,31 +63,46 @@
                     </div>
                 </div>
                 <form action="/LMS/ReportBooking" method="get" onsubmit="return chk_form()">
-
+                    @{
+                        DateTime sDate = DateTime.Now;
+                        DateTime eDate = DateTime.Now;
+                    }
                     <div class="box-header with-border">
                         <div class="col-md-4">
                             <label>From Date</label>
                             <div class="input-group date">
-                                <div class="input-group-addon">
+                                <input type="text" class="form-control" name="sDate" id="sDate" data-select="datepicker"
+                                       data-val="true" data-val-required="Date is required" value="@sDate.ToString("dd/MM/yyyy")">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success" data-toggle="datepicker">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                @*<div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                @{
-                                    DateTime sDate = DateTime.Now;
-                                    DateTime eDate = DateTime.Now;
-                                }
+                              
                                 <input class="form-control" data-val="true" data-val-required="Date is required"
-                                       id="sDate" name="sDate" type="date" value="@sDate" />
+                                       id="sDate" name="sDate" type="date" value="@sDate" />*@
+
                             </div>
                         </div>
                         <div class="col-md-4">
                             <label>To Date</label>
                             <div class="input-group date">
-                                <div class="input-group-addon">
+                                <input type="text" class="form-control" name="eDate" id="eDate" data-select="datepicker"
+                                       data-val="true" data-val-required="Date is required" value="@eDate.ToString("dd/MM/yyyy")">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success" data-toggle="datepicker">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                @*<div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
 
                                 <input class="form-control" data-val="true" data-val-required="Date is required"
-                                       id="eDate" name="eDate" type="date" value="@eDate" />
+                                       id="eDate" name="eDate" type="date" value="@eDate" />*@
                             </div>
                         </div>
                         <div class="col-md-4">

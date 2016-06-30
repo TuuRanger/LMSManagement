@@ -54,7 +54,8 @@
     <Property Name="FlightTime" Type="nvarchar" MaxLength="10" />
     <Property Name="FromDetail" Type="nvarchar" MaxLength="255" />
     <Property Name="ToDetail" Type="nvarchar" MaxLength="255" />
-    <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+    <Property Name="RouteDetail" Type="nvarchar(max)" />
+    <Property Name="Remark" Type="nvarchar(max)" />
     <Property Name="ProductID" Type="int" />
     <Property Name="CarID" Type="int" />
     <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
@@ -212,6 +213,9 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="40" />
+    <Property Name="PriceTHB" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceUSD" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="PriceEUR" Type="decimal" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="LMS_WorkTime">
     <Key>

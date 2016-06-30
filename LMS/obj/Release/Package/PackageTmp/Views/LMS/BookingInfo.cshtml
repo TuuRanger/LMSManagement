@@ -110,14 +110,25 @@
                         <td width="20%"><b>Pick up time : &nbsp;</b> </td>
                         <td>@item.Time<br></td>
                     </tr>
-                    <tr>
-                        <td width="20%"><b>From : &nbsp;</b> </td>
-                        <td>@item.FromDetail<br></td>
-                    </tr>
-                    <tr>
-                        <td width="20%"><b>To : &nbsp;</b> </td>
-                        <td>@item.ToDetail<br></td>
-                    </tr>
+                    @if (@item.ServiceType != 3)
+                    {
+                        <tr>
+                            <td width="20%"><b>From : &nbsp;</b> </td>
+                            <td>@item.FromDetail<br></td>
+                        </tr>
+                        <tr>
+                            <td width="20%"><b>To : &nbsp;</b> </td>
+                            <td>@item.ToDetail<br></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td width="20%"><b>Route Detail : &nbsp;</b> </td>
+                            <td>@item.RouteDetail<br></td>
+                        </tr>
+                    }
+                    
                     <tr>
                         <td width="20%"><b>Meeting point : &nbsp;</b> </td>
                         <td>The chauffeur will send SMS or call to re -confirmed 24 hours before your travel date. <br></td>
@@ -153,30 +164,34 @@
 
                 </table>
                 <hr />
-                <table>
-                    <tr>
-                        <td>
-                            <b>Agent</b>
-                            <br />
-                        </td>
-                    </tr>
-                </table>
-                <br />
-                <table border="1" width="100%">
-                    <tr>
-                        <td width="20%"><b>Agent Information : &nbsp;</b> </td>
-                        <td>@item.AgentName<br></td>
-                    </tr>
-                    <tr>
-                        <td width="20%"><b>EMail : &nbsp;</b></td>
-                        <td>@item.AgentEmail<br> </td>
-                    </tr>
-                    <tr>
-                        <td width="20%"><b>Contact Call : &nbsp;</b></td>
-                        <td>@item.AgentMobile<br> </td>
-                    </tr>     
-                </table>
-                <hr />
+                @if (item.CustomerType == 2)
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                <b>Agent</b>
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <table border="1" width="100%">
+                        <tr>
+                            <td width="20%"><b>Agent Information : &nbsp;</b> </td>
+                            <td>@item.AgentName<br></td>
+                        </tr>
+                        <tr>
+                            <td width="20%"><b>EMail : &nbsp;</b></td>
+                            <td>@item.AgentEmail<br> </td>
+                        </tr>
+                        <tr>
+                            <td width="20%"><b>Contact Call : &nbsp;</b></td>
+                            <td>@item.AgentMobile<br> </td>
+                        </tr>
+                    </table>
+                    <hr />
+                }
+             
                 <table>
                     <tr>
                         <td>

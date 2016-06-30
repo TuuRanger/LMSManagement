@@ -142,7 +142,7 @@ namespace LMS.Models
          public string DMobile { get; set; }
 
          public string Currency { get; set; }
-    
+         public string RouteDetail { get; set; }
     }
 
     public class BookingList
@@ -247,6 +247,8 @@ namespace LMS.Models
         public string UEmail { get; set; }
 
         public string Currency { get; set; }
+
+        public string RouteDetail { get; set; }
 
     }
 }
