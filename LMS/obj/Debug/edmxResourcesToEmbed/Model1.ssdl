@@ -66,6 +66,8 @@
     <Property Name="DID" Type="int" />
     <Property Name="DriverID" Type="int" />
     <Property Name="Currency" Type="nvarchar" MaxLength="5" />
+    <Property Name="PaymentType" Type="int" />
+    <Property Name="PaymentStatus" Type="int" />
   </EntityType>
   <EntityType Name="LMS_Car">
     <Key>

@@ -244,5 +244,7 @@
     <Property Name="DriverID" Type="Int32" />
     <Property Name="Currency" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
     <Property Name="RouteDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PaymentType" Type="Int32" />
+    <Property Name="PaymentStatus" Type="Int32" />
   </EntityType>
 </Schema>

@@ -143,6 +143,10 @@ namespace LMS.Models
 
          public string Currency { get; set; }
          public string RouteDetail { get; set; }
+
+         public int PaymentType { get; set; }
+         public int PaymentStatus { get; set; }
+
     }
 
     public class BookingList
@@ -161,11 +165,17 @@ namespace LMS.Models
         public int Status { get; set; }
         public int AgentID { get; set; }
         public int UserID { get; set; }
+        public string RouteDetail { get; set; }
 
         public string Currency { get; set; }
 
         public string sDate { get; set; }
         public string eDate { get; set; }
+
+        public int DriverID { get; set; }
+        public string DTitle { get; set; }
+        public string DName { get; set; }
+        public string DLastName { get; set; }
     }
 
     public class WorkTime
@@ -249,6 +259,8 @@ namespace LMS.Models
         public string Currency { get; set; }
 
         public string RouteDetail { get; set; }
+        public int PaymentType { get; set;}
+        public int PaymentStatus { get; set; }
 
     }
 }

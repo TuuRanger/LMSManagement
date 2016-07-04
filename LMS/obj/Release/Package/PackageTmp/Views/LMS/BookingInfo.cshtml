@@ -48,16 +48,83 @@
                 <table>
                     <tr>
                       
-                        <td>
+                        <td valign="top">
                             <b>Dear</b> @item.Title &nbsp; @item.FirstName &nbsp; @item.LastName
                             <br />
                         Thank you for your reservation with Synergi.Your transfer service has been booked as follow<br>
                             Please check to ensure all details are correct.
                             <br />
-                  
+                            <br />
                         </td>
+                      
                     </tr>
-              
+                   
+                    <tr>
+
+                     
+                        @{string sPT = "";}
+                        @if (@item.PaymentType == 1)
+                        {
+                            sPT = "Cash";
+                            <td>
+                                <b>Payment Type : </b> &nbsp; @sPT
+                                <br />
+                                @if (item.PaymentStatus == 1)
+                                {
+                                    <b>Payment Status : ยังไม่ได้ชำระเงิน</b>
+                                }
+                                else
+                                {
+                                    <b>Payment Status : ชำระเงินเเล้ว</b>
+                                }
+                               
+                                <br />
+
+                            </td>
+                        }
+                        else
+                        {
+                            sPT = "PayPal";
+                            <td>
+                                <b>Payment Type : </b> &nbsp; @sPT
+                                <br />
+                                @if (item.PaymentStatus == 1)
+                                {
+                                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                        <input type="hidden" name="cmd" value="_s-xclick">
+                                        <input type="hidden" name="hosted_button_id" value="ZN5FQMYX2725U">
+                                        <table>
+                                            <tr><td><input type="hidden" name="on0" value="ประเภทบริการ">ประเภทบริการ</td></tr>
+                                            <tr>
+                                                <td>
+                                                    <select name="os0">
+                                                        <option value="Limousine Toyota Camry Airport to Bangkok/Suburb">Limousine Toyota Camry Airport to Bangkok/Suburb ฿1,600.00 THB</option>
+                                                        <option value="Limousine Hyundai H1 Airport to Bangkok/Suburb">Limousine Hyundai H1 Airport to Bangkok/Suburb ฿2,500.00 THB</option>
+                                                        <option value="Limousine Toyota Camry Airport to Upcountry">Limousine Toyota Camry Airport to Upcountry ฿2,500.00 THB</option>
+                                                        <option value="Limousine Hyundai H1 Airport to Upcountry">Limousine Hyundai H1 Airport to Upcountry ฿4,000.00 THB</option>
+                                                        <option value="Sales Visit One Day (Toyota Camry)">Sales Visit One Day (Toyota Camry) ฿3,500.00 THB</option>
+                                                        <option value="Sales Visit One Day (Hyundai H1)">Sales Visit One Day (Hyundai H1) ฿5,000.00 THB</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <br />
+                                        <input type="hidden" name="currency_code" value="THB">
+                                        <input type="image" src="https://www.paypalobjects.com/th_TH/TH/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - วิธีชำระเงินแบบออนไลน์ที่ปลอดภัยกว่าและง่ายกว่า!">
+                                        <img alt="" border="0" src="https://www.paypalobjects.com/th_TH/i/scr/pixel.gif" width="1" height="1">
+                                    </form>
+                                }
+                                else
+                                {
+                                    <b>Payment Status : ชำระเงินเเล้ว</b>
+                                }
+                             
+                                <br />
+
+                            </td>
+                        }
+                      
+                    </tr>
                 </table>
                 <hr />
                 <table>

@@ -1,0 +1,261 @@
+﻿@{
+    ViewBag.Title = "Job Order Management";
+}
+
+
+<section class="content-header">
+    <h1>
+        Job Order Management
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Reports</a></li>
+        <li class="active">Booking</li>
+    </ol>
+</section>
+<section class="content">
+    @{ string UserFullName = "";
+     string UserType = "0";
+     string UserTypeName = "";
+     string AgentID = "";
+     if (HttpContext.Current.Session["LogedUserFullname"] != null)
+     {
+         UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
+         AgentID = HttpContext.Current.Session["LogedAgentID"].ToString();
+         UserType = HttpContext.Current.Session["LogedUserType"].ToString();
+
+         if (UserType == "1")
+         {
+             UserTypeName = "Internal";
+         }
+         else if (UserType == "2")
+         {
+             UserTypeName = "Sub Agent";
+         }
+     }
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    @{string aDate = Request.QueryString["sDate"];
+                    string bDate = Request.QueryString["eDate"];
+
+                    if (aDate == null || aDate == "")
+                    {
+                        aDate = DateTime.Now.ToString("dd/MM/yyyy");
+                    }
+                    if (bDate == null || bDate == "")
+                    {
+                        bDate = DateTime.Now.ToString("dd/MM/yyyy");
+                    }
+                    }
+
+                    <h3 class="box-title">Booking</h3><br />
+                    (Search Between @aDate To @bDate)
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <form action="/LMS/JobOrder" method="get" onsubmit="return chk_form()">
+                    @{
+                        DateTime sDate = DateTime.Now;
+                        DateTime eDate = DateTime.Now;
+                    }
+                    <div class="box-header with-border">
+                        <div class="col-md-4">
+                            <label>From Date</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" name="sDate" id="sDate" data-select="datepicker"
+                                       data-val="true" data-val-required="Date is required" value="@sDate.ToString("dd/MM/yyyy")">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success" data-toggle="datepicker">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                @*<div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+
+                                    <input class="form-control" data-val="true" data-val-required="Date is required"
+                                           id="sDate" name="sDate" type="date" value="@sDate" />*@
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label>To Date</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" name="eDate" id="eDate" data-select="datepicker"
+                                       data-val="true" data-val-required="Date is required" value="@eDate.ToString("dd/MM/yyyy")">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success" data-toggle="datepicker">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                @*<div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+
+                                    <input class="form-control" data-val="true" data-val-required="Date is required"
+                                           id="eDate" name="eDate" type="date" value="@eDate" />*@
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-success btn-block" data-animation-type="bounce" data-animation-duration="1" style="animation-duration: 1s; visibility: visible;">SEARCH NOW</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Driver</th>
+                                    <th>Service</th>
+                                    <th>Route Detail</th>
+                                    <th>Car Model</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    String ServiceName = "";
+
+                                    if (item.ServiceType == 1)
+                                    {
+                                        ServiceName = "One Way";
+                                    }
+                                    else if (item.ServiceType == 2)
+                                    {
+                                        ServiceName = "Return";
+                                    }
+                                    else if (item.ServiceType == 3)
+                                    {
+                                        ServiceName = "Sale Visit";
+                                    }
+                                    String Status = "";
+                                    String SClass = "";
+                                    if (item.Status == 1)
+                                    {
+                                        Status = "New";
+                                        SClass = "label label-success";
+                                    }
+                                    else if (item.Status == 2)
+                                    {
+                                        Status = "Queue";
+                                        SClass = "label label-warning";
+                                    }
+                                    else if (item.Status == 3)
+                                    {
+                                        Status = "Delivered";
+                                        SClass = "label label-primary";
+                                    }
+                                    else if (item.Status == 4)
+                                    {
+                                        Status = "Finish";
+                                        SClass = "label label-info";
+                                    }
+                                    else if (item.Status == 5)
+                                    {
+                                        Status = "Cancel";
+                                        SClass = "label label-danger";
+                                    }
+
+
+                                    <tr>
+                                        <td><a href="/LMS/JobOrderInfo?BID=@item.BookingID">@item.BookingID</a></td>
+                                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.Time</td>
+                                        <td>@item.DTitle @item.DName &nbsp; @item.DLastName</td>
+                                        <td>@ServiceName</td>
+                                        @if (item.ServiceType == 3)
+                                        {
+                                            <td>@item.RouteDetail</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.FromDetail &nbsp; to &nbsp; @item.ToDetail</td>
+                                        }
+                                      
+                                        <td>@item.CarModel</td>
+                                    </tr>
+
+
+                                }
+
+                                @*<tr>
+                                        <td><a href="/LMS/QueueDetail">B00002</a></td>
+                                        <td>One Way</td>
+                                        <td>Rama 3</td>
+                                        <td>Siam</td>
+                                        <td>7/5/2016</td>
+                                        <td>Benz A500</td>
+                                        <td><span class="label label-warning">Queue</span></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00003</a></td>
+                                        <td>One Way</td>
+                                        <td>Rama 9</td>
+                                        <td>Central Word</td>
+                                        <td>7/9/2016</td>
+                                        <td>Honda Accrod</td>
+                                        <td><span class="label label-danger">Delivered</span></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00004</a></td>
+                                        <td>One Day</td>
+                                        <td>Rama 9</td>
+                                        <td></td>
+                                        <td>7/9/2016</td>
+                                        <td>Toyota Camry</td>
+                                        <td><span class="label label-info">Finish</span></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00005</a></td>
+                                        <td>One Day</td>
+                                        <td>Rama 9</td>
+                                        <td></td>
+                                        <td>17/12/2016</td>
+                                        <td>Toyota Camry</td>
+                                        <td><span class="label label-danger">Delivered</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="/LMS/QueueDetail">B00006</a></td>
+                                        <td>One Way</td>
+                                        <td>Rama 9</td>
+                                        <td>DMK Airport</td>
+                                        <td>17/12/2016</td>
+                                        <td>Toyota Camry</td>
+                                        <td><span class="label label-success">New</span></td>
+
+                                    </tr>*@
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                @*<div class="box-footer clearfix">
+                    <a href="/LMS/Booking" class="btn btn-sm btn-info btn-flat pull-right">Place New Booking</a>
+                    <a href="/LMS/ReportBooking" class="btn btn-sm btn-default btn-flat pull-left">View All Booking</a>
+                </div>*@
+                <!-- /.box-footer -->
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

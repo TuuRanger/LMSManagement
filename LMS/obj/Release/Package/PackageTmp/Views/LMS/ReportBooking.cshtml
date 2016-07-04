@@ -120,8 +120,8 @@
                                         <th>Booking ID</th>
                                         <th>Booking Date</th>
                                         <th>Service</th>
-                                        <th>From</th>
-                                        <th>To</th>
+                                        <th>Route Detail</th>
+                                        @*<th>To</th>*@
                                         <th>Date</th>
                                         <th>Time</th>
                                         <th>Car Model</th>
@@ -178,8 +178,16 @@
                                             <td><a href="/LMS/BookingInfo?BID=@item.BookingID">@item.BookingID</a></td>
                                             <td>@item.BookingDate.ToString("dd/MM/yyyy")</td>
                                             <td>@ServiceName</td>
-                                            <td>@item.FromDetail</td>
-                                            <td>@item.ToDetail</td>
+                                            @if (item.ServiceType == 3)
+                                            {
+                                                <td>@item.RouteDetail</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.FromDetail &nbsp; to &nbsp; @item.ToDetail</td>
+                                            }
+                                            @*<td>@item.FromDetail</td>
+                                            <td>@item.ToDetail</td>*@
                                             <td>@item.Date.ToString("dd/MM/yyyy")</td>
                                             <td>@item.Time</td>
                                             <td>@item.CarModel</td>

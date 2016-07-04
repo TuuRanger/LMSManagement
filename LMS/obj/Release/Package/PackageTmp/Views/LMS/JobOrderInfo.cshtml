@@ -1,0 +1,152 @@
+﻿@model List<LMS.Models.BookingInfo>
+@{
+    ViewBag.Title = "Job Order Info";
+}
+
+<section class="content-header">
+    @*<h1>
+            rTest
+        </h1>*@
+    @*<ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Dashboard</li>
+        </ol>*@
+</section>
+@foreach (var item in Model)
+{
+    string SType = "";
+    if (@item.ServiceType == 1)
+    {
+        SType = "One Way";
+    }
+    else if (@item.ServiceType == 2)
+    {
+        SType = "Return";
+    }
+    else if (@item.ServiceType == 3)
+    {
+        SType = "Sale Visit";
+    }
+
+
+    <section class="invoice">
+
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <table width="100%">
+                    <tr>
+                        <td width="70%">
+                            <img src="~/img/SYN-Logo-th-ol.jpg" width="15%"><b>บริษัท เซนเนอร์ยี่ 2016 จำกัด</b>
+                            <br />
+                            60/29 หมู่ 6 ถ.กิ่งแก้ว ต.ราชาเทวะ อ.บางพลี จ.สมุทรปราการ 10540
+                            <br />
+                            เลขประจำตัวผู้เสียภาษี 0105543092392 สำนักงานใหญ่
+                        </td>
+                        <td width="30%" align="right">
+                            <b>วันที่ / Date :</b> &nbsp; @item.Date.ToString("dd/MM/yyyy")
+                            <br />
+                            <b>เลขที่ / No : </b> &nbsp; IV &nbsp; @item.BookingID
+                            <br />
+                        </td>
+                    </tr>
+                </table>
+                <hr />
+                <table width="100%">
+                    <tr>
+                        <td width="100%" colspan="2" align="center" style="background-color:#b4adad">
+                            <h4>ใบสั่งงาน / Job Order</h4>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td width="50%" valign="top">
+                            <br />
+                            <b>ชื่อลูกค้า :</b>&nbsp; @item.Title &nbsp; @item.FirstName &nbsp; @item.LastName
+                            <br />
+                            <b>โทร :</b>&nbsp; @item.Mobile
+                            <br />
+                            <b>อีเมล์ :</b>&nbsp; @item.Email
+                            <br />
+                            <b>ที่อยู่ :</b>&nbsp; @item.Address
+                        </td>
+                        <td width="50%" valign="top">
+                            <br />
+                            <b>ประเภทงาน :</b>&nbsp; SType
+                            <br />
+                            @if (@item.ServiceType != 3)
+                            {
+                                <b>From : &nbsp;</b> @item.FromDetail
+                                <br />
+                                <b>To : &nbsp;</b>@item.ToDetail<br>
+                            }
+                            else
+                            {
+                                <b>Route Detail : &nbsp;</b>@item.RouteDetail<br>
+
+                            }
+                            <b>ลูกค้า :</b>&nbsp; @item.Passenger &nbsp;ท่าน
+                            <br />
+                            <b>เที่ยวบิน :</b>&nbsp;@item.FlightNo &nbsp; @item.FlightTime
+                            <br />
+                            <b>วันที่นัด :</b>&nbsp;@item.Date.ToString("dd/MM/yyyy")
+                            <br />
+                            <b>เวลานัด :</b>&nbsp;@item.Time
+                          
+                    </td>
+                            </tr>
+                   
+                        </table>
+                <hr />
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                            <b>Chauffeur Name : &nbsp;</b>@item.DTitle &nbsp; @item.DFirstName &nbsp; @item.DLastName<br>
+                            <b>Contact Call : &nbsp;</b>@item.DMobile<br>
+                        </td>
+                        <td width="50%">
+                            <b>Plate Number : &nbsp;</b>@item.VehicleRegis<br>
+                            <b>Type of vehicle : &nbsp;</b>@item.CarModel<br>
+                        </td>
+                    </tr>
+                   <tr>
+                       <td colspan="2">
+                           &nbsp;<br />
+                       </td>
+                   </tr>
+                </table>
+                
+                <table width="100%">
+                    <tr>
+                        <td width="30%" align="center">
+                            <br />
+                            ________________<br/>
+                            <b>Order by</b>
+                        </td>
+                        <td width="30%" align="center">
+                            <br />
+                            ________________<br />
+                            <b>Signature</b>
+                        </td>
+                        <td width="30%" align="center">
+                            <br />
+                            ________________<br />
+                            <b>Customer</b>
+                        </td>
+                    </tr>
+
+                </table>
+                <hr />
+            </div>
+            <!-- /.col -->
+        </div>
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <br />
+                <a href="/LMS/JobOrderPrint?BID=@item.BookingID" target="_blank" class="btn btn-success pull-right"><i class="fa fa-print"></i> Print Job Order</a>
+               
+            </div>
+        </div>
+    </section>
+}

@@ -208,6 +208,8 @@
     <EntitySetMapping Name="LMS_Booking">
       <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
         <MappingFragment StoreEntitySet="LMS_Booking">
+          <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+          <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
           <ScalarProperty Name="RouteDetail" ColumnName="RouteDetail" />
           <ScalarProperty Name="Currency" ColumnName="Currency" />
           <ScalarProperty Name="DriverID" ColumnName="DriverID" />

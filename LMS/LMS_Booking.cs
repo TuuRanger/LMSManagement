@@ -47,5 +47,7 @@ namespace LMS
         public Nullable<int> DriverID { get; set; }
         public string Currency { get; set; }
         public string RouteDetail { get; set; }
+        public Nullable<int> PaymentType { get; set; }
+        public Nullable<int> PaymentStatus { get; set; }
     }
 }
