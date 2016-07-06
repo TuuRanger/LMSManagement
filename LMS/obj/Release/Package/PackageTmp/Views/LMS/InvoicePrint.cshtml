@@ -1,0 +1,170 @@
+﻿@model List<LMS.Models.InvoiceList>
+@{
+    ViewBag.Title = "Invoice Info";
+    Layout = "";
+}
+
+<body onload="window.print();">
+    <div class="wrapper">
+        @foreach (var item in Model)
+        {
+            string SType = "";
+
+
+            <section class="invoice">
+                @foreach (var IInvoice in item.LInvoice)
+                {
+        <!-- title row -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table width="100%">
+                                <tr>
+                                    <td width="70%">
+                                        <img src="~/img/SYN-Logo-th-ol.jpg" width="15%"><b>บริษัท เซนเนอร์ยี่ 2016 จำกัด</b>
+                                        <br />
+                                        60/29 หมู่ 6 ถ.กิ่งแก้ว ต.ราชาเทวะ อ.บางพลี จ.สมุทรปราการ 10540
+                                        <br />
+                                        เลขประจำตัวผู้เสียภาษี 0105543092392 สำนักงานใหญ่
+                                    </td>
+                                    <td width="30%" align="right">
+                                        <b>วันที่ / Date :</b> &nbsp; @IInvoice.InvoiceDate.ToString("dd/MM/yyyy")
+                                        <br />
+                                        <b>เลขที่ / No : </b> &nbsp; IV &nbsp; @IInvoice.InvoiceNo
+                                        <br />
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr />
+                            <table width="100%">
+                                <tr>
+                                    <td width="100%" align="center" style="background-color:#b4adad">
+                                        <h4>ใบแจ้งหนี้ / Invoice</h4>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td width="100%" valign="top">
+                                        <br />
+                                        <b>Customer Name :</b>&nbsp; @IInvoice.SubName
+                                        <br />
+                                        <b>Address :</b>&nbsp; @IInvoice.SubAddress
+                                        <br />
+                                        <b>Telephone :</b>&nbsp; @IInvoice.SubTel
+                                        <br />
+                                        <b>เลขประจำตัวผู้เสียภาษี :</b>&nbsp; @IInvoice.SubTax
+                                        <br />
+                                        <b>เงื่อนไขการชำระเงิน :</b>&nbsp;Credit Term &nbsp; @IInvoice.CreditTerm
+                                        <br />
+                                        <b>กำหนดชำระเงิน :</b>&nbsp; @IInvoice.DueDate.ToString("dd/MM/yyyy")
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+                            <hr />
+                            <table width="100%">
+                                <tr>
+                                    <td width="10%">
+                                        <b>Booking ID</b>
+                                    </td>
+                                    <td width="10%">
+                                        <b>Date of Service</b>
+                                    </td>
+                                    <td width="10%">
+                                        <b>Service</b>
+                                    </td>
+                                    <td width="40%">
+                                        <b>Detail</b>
+                                    </td>
+                                    <td width="20%">
+                                        <b>Passenger</b>
+                                    </td>
+                                    <td width="10%">
+                                        <b>Amount</b>
+                                    </td>
+
+                                </tr>
+                                @foreach (var IBooking in item.LBooking)
+                                {
+                                    if (@IBooking.ServiceType == 1)
+                                    {
+                                        SType = "One Way";
+                                    }
+                                    else if (@IBooking.ServiceType == 2)
+                                    {
+                                        SType = "Return";
+                                    }
+                                    else if (@IBooking.ServiceType == 3)
+                                    {
+                                        SType = "Sale Visit";
+                                    }
+
+                                    <tr>
+                                        <td width="10%">
+                                            @IBooking.BookingID
+                                        </td>
+                                        <td width="10%">
+                                            @IBooking.Date.ToString("dd/MM/yyyy")
+                                        </td>
+                                        <td width="10%">
+                                            @SType
+                                        </td>
+                                        @if (IBooking.ServiceType == 3)
+                                        {
+                                            <td width="40%">@IBooking.RouteDetail</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@IBooking.FromDetail &nbsp; to &nbsp; @IBooking.ToDetail</td>
+                                        }
+                                        <td width="20%">@IBooking.Title @IBooking.FirstName &nbsp; @IBooking.LastName</td>
+                                        <td width="10%" align="right">@IBooking.TotalPrice.ToString("#,###.##") &nbsp; @IBooking.Currency</td>
+
+                                    </tr>
+
+                                }
+
+                            </table>
+                            <hr />
+                            <table width="100%">
+                                <tr>
+                                    <td width="100%" align="right">
+                                        <br />
+
+                                        <b>รวมเงินสุทธิ / Grand Total : &nbsp; @IInvoice.GrandTotal.ToString("#,###.##")</b>
+                                        <br />
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td width="100%" align="right">
+                                        <br />
+
+                                        <b>กรุณาขำระเงิน : สามารถชำระเงินได้ที่บัญชี Synergi 2016</b>
+                                        <br />
+                                        <b>เลขที่ 241-3-01402-4 ธนาคารกรุงเทพ</b>
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                            <hr />
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    @*<div class="row no-print">
+                            <div class="col-xs-12">
+                                <br />
+                                <a href="/LMS/InvoicePrint?InvoiceNo=@IInvoice.InvoiceNo" target="_blank" class="btn btn-success pull-right"><i class="fa fa-print"></i> Print Invoice</a>
+
+                            </div>
+                        </div>*@
+                }
+            </section>
+
+        }
+        </div>
+    </body>

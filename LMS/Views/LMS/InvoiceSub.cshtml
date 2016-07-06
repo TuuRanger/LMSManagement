@@ -1,0 +1,97 @@
+﻿@model List<LMS.Models.SubAgent>
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<section class="content-header">
+    <h1>
+        Invoice Management
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Forms</a></li>
+        <li class="active">Invoice</li>
+    </ol>
+</section>
+<section class="content">
+    @{ string UserFullName = "";
+     string UserType = "0";
+     string UserTypeName = "";
+     string AgentID = "";
+     if (HttpContext.Current.Session["LogedUserFullname"] != null)
+     {
+         UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
+         AgentID = HttpContext.Current.Session["LogedAgentID"].ToString();
+         UserType = HttpContext.Current.Session["LogedUserType"].ToString();
+
+         if (UserType == "1")
+         {
+             UserTypeName = "Internal";
+         }
+         else if (UserType == "2")
+         {
+             UserTypeName = "Sub Agent";
+         }
+     }
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Sub Agent</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th>Telephone</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+
+             
+
+                                    <tr>
+                                        <td><a href="/LMS/InvoiceNew?SubID=@item.AId">@item.AId</a></td>
+                                        <td>@item.AName</td>
+                                        <td>@item.Contact)</td>
+                                        <td>@item.Telephone</td>
+
+                                    </tr>
+
+
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                @*<div class="box-footer clearfix">
+                    <a href="/LMS/InvoiceSub" class="btn btn-sm btn-info btn-flat pull-right">Place New Invoice</a>
+                    <a href="/LMS/ReportInvoice" class="btn btn-sm btn-default btn-flat pull-left">View All Invoice</a>
+                </div>*@
+                <!-- /.box-footer -->
+            </div>
+
+        </div>
+
+    </div>
+</section>

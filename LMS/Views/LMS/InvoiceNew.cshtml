@@ -1,0 +1,379 @@
+﻿@model List<LMS.Models.InvoiceList>
+@{
+    ViewBag.Title = "Invoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="content-header">
+    <h1>
+        Invoice Management
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Forms</a></li>
+        <li class="active">Booking</li>
+    </ol>
+</section>
+<section class="content">
+   
+    @{ string UserFullName = "";
+     string UserType = "0";
+     string UserTypeName = "";
+     string AgentID = "";
+     if (HttpContext.Current.Session["LogedUserFullname"] != null)
+     {
+         UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
+         AgentID = HttpContext.Current.Session["LogedAgentID"].ToString();
+         UserType = HttpContext.Current.Session["LogedUserType"].ToString();
+
+         if (UserType == "1")
+         {
+             UserTypeName = "Internal";
+         }
+         else if (UserType == "2")
+         {
+             UserTypeName = "Sub Agent";
+         }
+     }
+
+    }
+    @foreach (var item in Model)
+    {
+
+        <form action="/LMS/InvoiceCommit" method="post" onsubmit="return chk_form()">
+            @{
+                DateTime nDate = DateTime.Now;
+                DateTime dDate = DateTime.Now;
+                int iRow = 1;
+                string sRow = "";
+              }
+            <div class="row">
+          
+
+                <div class="col-md-12" >
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Invoice</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                @*   <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                            <!-- text input -->
+                            @foreach (var iSub in item.LSubAgent)
+                            {
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>Invoice No</label>
+                                        <input type="text" id="InvoiceNo" name="InvoiceNo" class="form-control" placeholder="xxxxxxxx" disabled>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label>Sub Agent</label>
+                                        <input type="text" id="SubName" name="SubName" class="form-control" value="@iSub.AName" disabled>
+                                        <input type="hidden" id="SubID" name="SubID" class="form-control" value="@iSub.AId">
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>Address</label>
+                                        <input type="text" id="Address" name="Address" class="form-control" value="@iSub.Address" disabled>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label>Tax</label>
+                                        <input type="text" id="Tax" name="Tax" class="form-control" value="@iSub.Tax" disabled>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <label>Contact</label>
+                                        <input type="text" id="Contact" name="Contact" class="form-control" value="@iSub.Contact" disabled>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label>Telephone</label>
+                                        <input type="text" id="Telephone" name="Telephone" class="form-control" value="@iSub.Telephone" disabled>
+
+                                    </div>
+
+                                </div>
+    <div class="form-group">
+        <div class="col-md-6">
+            <label>Remark</label>
+            <input type="text" id="Remark" name="Remark" class="form-control" value="@iSub.Remark" disabled>
+
+        </div>
+
+        <div class="col-md-6">
+            <label>Credit Term</label>
+            <input type="text" id="CreditTerm" name="CreditTerm" class="form-control" value="@iSub.CreditTerm" onkeypress="return isNumberKey(event)">
+
+        </div>
+
+    </div>
+                            }
+                            &nbsp;
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label>Invoice Date</label>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" name="InvoiceDate" id="InvoiceDate" data-select="datepicker"
+                                               data-val="true" data-val-required="Date is required" value="@nDate.ToString("dd/MM/yyyy")">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success" data-toggle="datepicker">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Due Date</label>
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" name="DueDate" id="DueDate" data-select="datepicker"
+                                               data-val="true" data-val-required="Date is required" value="@dDate.ToString("05/MM/yyyy")">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success" data-toggle="datepicker">
+                                                <i class="fa fa-calendar"></i>
+                                            </button>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            &nbsp;
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table no-margin">
+                                            <thead>
+                                                <tr>
+                                                    <th align="center">Booking ID</th>
+                                                    <th align="center">Date</th>
+                                                    <th align="center">Service</th>
+                                                    <th align="center">Route Detail</th>
+                                                    <th align="center">Customer</th>
+                                                    <th align="center">Price</th>
+                                                    <th align="center">Currcney</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                @foreach (var iBooking in item.LBooking)
+                                                {
+                                                    String ServiceName = "";
+
+                                                    if (iBooking.ServiceType == 1)
+                                                    {
+                                                        ServiceName = "One Way";
+                                                    }
+                                                    else if (iBooking.ServiceType == 2)
+                                                    {
+                                                        ServiceName = "Return";
+                                                    }
+                                                    else if (iBooking.ServiceType == 3)
+                                                    {
+                                                        ServiceName = "Sale Visit";
+                                                    }
+                                                    String Status = "";
+                                                    String SClass = "";
+                                                    if (iBooking.Status == 1)
+                                                    {
+                                                        Status = "New";
+                                                        SClass = "label label-success";
+                                                    }
+                                                    else if (iBooking.Status == 2)
+                                                    {
+                                                        Status = "Queue";
+                                                        SClass = "label label-warning";
+                                                    }
+                                                    else if (iBooking.Status == 3)
+                                                    {
+                                                        Status = "Delivered";
+                                                        SClass = "label label-primary";
+                                                    }
+                                                    else if (iBooking.Status == 4)
+                                                    {
+                                                        Status = "Finish";
+                                                        SClass = "label label-info";
+                                                    }
+                                                    else if (iBooking.Status == 5)
+                                                    {
+                                                        Status = "Cancel";
+                                                        SClass = "label label-danger";
+                                                    }
+
+                                                    sRow = "Booking" + iRow;
+                                                    <tr>
+                                                        <td><input type="checkbox" id="@sRow" name="@sRow" value="@iBooking.BookingID" class="flat-red" checked>@iBooking.BookingID</td>
+                                                        @*<td><a href="/LMS/BookingInfo?BID=@iBooking.BookingID">@iBooking.BookingID</a></td>*@
+                                                        <td>@iBooking.Date.ToString("dd/MM/yyyy")</td>
+                                                        <td>@ServiceName</td>
+                                                        @if (iBooking.ServiceType == 3)
+                                                        {
+                                                            <td>@iBooking.RouteDetail</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>@iBooking.FromDetail &nbsp; to &nbsp; @iBooking.ToDetail</td>
+                                                        }
+                                                        <td>@iBooking.Title @iBooking.FirstName &nbsp; @iBooking.LastName</td>
+                                                        <td align="right">@iBooking.TotalPrice.ToString("#,###.##")</td>
+                                                        <td align="center">@iBooking.Currency</td>
+
+                                                    </tr>
+
+                                                    iRow = iRow + 1;
+                                                }
+
+         
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                </div>
+                            &nbsp;
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="box-footer clearfix">
+                                                @*  <a href="javascript:void(0)" class="btn btn-sm btn-success btn-flat pull-right">Search</a>*@
+                                                @*  <a href="/LMS/BookingDetail" class="btn btn-success btn-block"><b>Search</b></a>*@
+                                              
+                                                <input type="hidden" id="Row" name="Row" class="form-control" value="@iRow">
+                                                <button type="submit" class="btn btn-success btn-block" data-animation-type="bounce" data-animation-duration="1" style="animation-duration: 1s; visibility: visible;">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                        </div>
+
+                
+            </div>
+        </form>
+
+    }
+
+</section>
+
+
+<script language="JavaScript" type="text/javascript">
+       
+ 
+</script>
+<script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $(".select2").select2();
+
+        //Datemask dd/mm/yyyy
+        $("#datemask").inputmask("mm/dd/yyyy", { "placeholder": "mm/dd/yyyy" });
+        //Datemask2 mm/dd/yyyy
+        $("#datemask2").inputmask("mm/dd/yyyy", { "placeholder": "mm/dd/yyyy" });
+        //Money Euro
+        $("[data-mask]").inputmask();
+
+        //Date range picker
+        $('#reservation').daterangepicker();
+        //Date range picker with time picker
+       $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY' });
+        //Date range as a button
+        $('#daterange-btn').daterangepicker(
+            {
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function (start, end) {
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+        );
+
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        });
+        //Red color scheme for iCheck
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+            checkboxClass: 'icheckbox_minimal-red',
+            radioClass: 'iradio_minimal-red'
+        });
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        });
+
+        //Colorpicker
+        $(".my-colorpicker1").colorpicker();
+        //color picker with addon
+        $(".my-colorpicker2").colorpicker();
+
+        //Timepicker
+        $(".timepicker").timepicker({
+            showInputs: false
+        });
+    });
+</script>
+@Scripts.Render("~/bundles/jqueryui")
+@Styles.Render("~/Content/cssjqryUi")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input[type=datetime]').datepicker({
+            dateFormat: "dd/M/yy",
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-60:+0"
+        });
+
+    });
+    $(function () {
+        $(".datefield").datepicker();
+    });
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+
+</script>
+
+
+
+
+

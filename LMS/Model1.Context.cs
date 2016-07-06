@@ -41,5 +41,8 @@ namespace LMS
         public DbSet<LMS_Vehicle> LMS_Vehicle { get; set; }
         public DbSet<LMS_WorkTime> LMS_WorkTime { get; set; }
         public DbSet<LMS_Booking> LMS_Booking { get; set; }
+        public DbSet<LMS_Invoice> LMS_Invoice { get; set; }
+        public DbSet<LMS_InvoiceDetail> LMS_InvoiceDetail { get; set; }
+        public DbSet<LMS_Receipt> LMS_Receipt { get; set; }
     }
 }

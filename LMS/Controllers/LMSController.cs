@@ -2553,5 +2553,1820 @@ namespace LMS.Controllers
 
             return View(model);
         }
+
+        public ActionResult InvoiceList()
+        {
+            string sUserType = "0";
+            if (Session["LogedUserType"] != null)
+            {
+                sUserType = Session["LogedUserType"].ToString();
+            }
+            else
+            {
+                sUserType = "0";
+                return RedirectToAction("Booking", "LMS");
+            }
+
+            int UserType = 0;
+            if (sUserType == "")
+            {
+                UserType = 0;
+            }
+            else
+            {
+                UserType = Convert.ToInt32(sUserType);
+            }
+
+
+
+            List<Invoice> model = new List<Invoice>();
+           
+                var sInvoice = (from i in db.LMS_Invoice
+                                join s in db.LMS_SubAgent on i.SubID equals s.ID
+                                    where i.InvoiceDate.Value.Month == DateTime.Now.Month && i.InvoiceDate.Value.Year == DateTime.Now.Year
+                                    //    where Convert.ToDateTime(b.BookingDate).Month == DateTime.Now.Month  
+                                    orderby i.InvoiceNo descending
+                                    select new
+                                    {
+                                        InvoiceID = i.ID,
+                                        InvoiceNo = i.InvoiceNo,
+                                        InvoiceDate = i.InvoiceDate,
+                                        DueDate = i.DueDate,
+                                        GrandTotal = i.GrandTotal,
+                                        CreditTerm = i.CreditTerm,
+                                        Status = i.Status,
+                                        SubID = i.SubID,
+                                        SubName = s.Name
+                                      
+                                    }
+                 ).ToList();
+                foreach (var bl in sInvoice)
+                {
+                    Invoice a = new Invoice();
+                    a.CreditTerm = Convert.ToInt32(bl.CreditTerm);
+                    a.DueDate = Convert.ToDateTime(bl.DueDate);
+                    a.InvoiceDate = Convert.ToDateTime(bl.InvoiceDate);
+                    a.InvoiceID = Convert.ToInt32(bl.InvoiceID);
+                    a.InvoiceNo = bl.InvoiceNo;
+                    a.IStatus = Convert.ToInt32(bl.Status);
+                    a.SubName = bl.SubName;
+
+                    model.Add(a);
+
+                }
+           
+       
+            return View(model);
+        }
+        public ActionResult InvoiceSub()
+        {
+            string sUserType = "0";
+            if (Session["LogedUserType"] != null)
+            {
+                sUserType = Session["LogedUserType"].ToString();
+            }
+            else
+            {
+                sUserType = "0";
+                return RedirectToAction("Booking", "LMS");
+            }
+
+            int UserType = 0;
+            if (sUserType == "")
+            {
+                UserType = 0;
+            }
+            else
+            {
+                UserType = Convert.ToInt32(sUserType);
+            }
+
+
+
+            List<SubAgent> model = new List<SubAgent>();
+
+            var sSubAgent = (from s in db.LMS_SubAgent
+                            select new
+                            {
+                                SubID = s.ID,
+                                SubName = s.Name,
+                                SubContact = s.Contact,
+                                SubTel = s.Telephone
+
+                            }
+             ).ToList();
+            foreach (var bl in sSubAgent)
+            {
+                SubAgent a = new SubAgent();
+                a.AId = bl.SubID;
+                a.AName = bl.SubName;
+                a.Contact = bl.SubContact;
+                a.Telephone = bl.SubTel;
+                model.Add(a);
+
+            }
+
+            return View(model);
+        }
+        
+        public ActionResult InvoiceNew()
+        {
+            string sUserID = "0";
+            if (Session["LogedUserID"] != null)
+            {
+                sUserID = Session["LogedUserID"].ToString();
+            }
+            else
+            {
+                sUserID = "0";
+            }
+
+            int UserID = 0;
+            if (sUserID == "")
+            {
+                UserID = 0;
+            }
+            else
+            {
+                UserID = Convert.ToInt32(sUserID);
+            }
+
+            int SubID = 0;
+            if (Request.QueryString["SubID"] != null)
+            {
+                SubID = Convert.ToInt32(Request.QueryString["SubID"]);
+            }
+
+            var sSubAgent = (from s in db.LMS_SubAgent
+                             where s.ID == SubID
+                             select new
+                             {
+                                 SubID = s.ID,
+                                 SubName = s.Name,
+                                 SubContact = s.Contact,
+                                  SubTel = s.Telephone,
+                                 SubAddress = s.Address,
+                                 SubTax = s.Tax,
+                                 Remark = s.Remark,
+                                 CreditTerm = s.CreditTerm
+
+                             }
+                    ).ToList();
+
+
+            List<InvoiceList> model = new List<InvoiceList>();
+            List<BookingInfo> BModel = new List<BookingInfo>();
+            List<SubAgent> SModel = new List<SubAgent>();
+
+            foreach (var bs in sSubAgent)
+            {
+                SubAgent s = new SubAgent();
+                s.AName = bs.SubName;
+                s.AId = Convert.ToInt32(bs.SubID);
+                s.Contact = bs.SubContact;
+                s.Telephone = bs.SubTel;
+                s.Tax = bs.SubTax;
+                s.Address = bs.SubAddress;
+                s.CreditTerm = Convert.ToInt32(bs.CreditTerm);
+                s.Remark = bs.Remark;
+                SModel.Add(s);
+            }
+
+            var sBookingInfo = (from b in db.LMS_Booking
+                                join c in db.LMS_Car on b.CarID equals c.ID
+                                //join u in db.LMS_User on b.UserID equals u.UserID
+                                //join a in db.LMS_SubAgent on b.AgentID equals a.ID
+                                join d in db.LMS_Driver on b.DriverID equals d.ID
+                                where b.AgentID == SubID && b.PaymentStatus == 1
+                                select new
+                                {
+                                    BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
+                                    Title = b.Title,
+                                    FirstName = b.FirstName,
+                                    LastName = b.LastName,
+                                    Address = b.Address,
+                                    Telephone = b.Telephone,
+                                    Mobile = b.Mobile,
+                                    Email = b.Email,
+                                    //OrderBy = u.UserName,
+                                    CustomerType = b.CustomerType,
+                                    ServiceType = b.ServiceType,
+                                    bDate = b.Date,
+                                    bTime = b.Time,
+                                    Passenger = b.Passenger,
+                                    Luggage = b.Luggage,
+                                    FlightNo = b.FlightNo,
+                                    FlightTime = b.FlightTime,
+                                    FromDetail = b.FromDetail,
+                                    ToDetail = b.ToDetail,
+                                    Remark = b.Remark,
+                                    RouteDetail = b.RouteDetail,
+                                    ProductID = b.ProductID,
+                                    CarID = b.CarID,
+                                    CModel = c.Model,
+                                    Price = b.Price,
+                                    Discount = b.Discount,
+                                    TotalPrice = b.TotalPrice,
+                                    Status = b.Status,
+                                    //AgentName = a.Name,
+                                    DriverID = b.DriverID,
+                                    DTitle = d.Title,
+                                    DName = d.Name,
+                                    DLastName = d.LastName,
+                                    DMobile = d.Mobile,
+                                    VehicleRegis = c.VehicleRegis,
+                                    AgentID = b.AgentID,
+                                    UserID = b.UserID,
+                                    //AgentEmail = a.Email,
+                                    PaymentType = b.PaymentType,
+                                    PaymentStatus = b.PaymentStatus,
+                                    Currcney = b.Currency
+                                }
+                 ).ToList();
+            foreach (var bl in sBookingInfo)
+            {
+                BookingInfo a = new BookingInfo();
+                a.Address = bl.Address.ToString();
+                //a.AgentEmail = bl.AgentEmail.ToString();
+                //a.AgentName = bl.AgentName.ToString();
+                a.BookingDate = Convert.ToDateTime(bl.BookingDate);
+                a.BookingID = bl.BookingID.ToString();
+                a.CarID = Convert.ToInt32(bl.CarID);
+                a.CarModel = bl.CModel.ToString();
+                a.CustomerType = Convert.ToInt32(bl.CustomerType);
+                a.Date = Convert.ToDateTime(bl.bDate);
+                a.DFirstName = bl.DName.ToString();
+                a.DLastName = bl.DLastName.ToString();
+                a.DMobile = bl.DMobile.ToString();
+                a.DriverID = Convert.ToInt32(bl.DriverID);
+                a.DTitle = bl.DTitle.ToString();
+                a.Email = bl.Email.ToString();
+                a.FirstName = bl.FirstName.ToString();
+                a.FlightNo = bl.FlightNo.ToString();
+                a.FlightTime = bl.FlightTime.ToString();
+                a.FromDetail = bl.FromDetail.ToString();
+                a.LastName = bl.LastName.ToString();
+                a.Luggage = Convert.ToInt32(bl.Luggage);
+                a.Mobile = bl.Mobile.ToString();
+                //a.OrderBy = bl.OrderBy.ToString();
+                a.Passenger = Convert.ToInt32(bl.Passenger);
+                a.Price = Convert.ToDecimal(bl.Price);
+                a.Remark = bl.Remark.ToString();
+                a.RouteDetail = bl.RouteDetail;
+                a.ServiceType = Convert.ToInt32(bl.ServiceType);
+                a.Status = Convert.ToInt32(bl.Status);
+                a.Telephone = bl.Telephone.ToString();
+                a.Time = bl.bTime.ToString();
+                a.Title = bl.Title.ToString();
+                a.ToDetail = bl.ToDetail.ToString();
+                a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
+                a.VehicleRegis = bl.VehicleRegis.ToString();
+
+                if (bl.AgentID != 0)
+                {
+                    var sAgent = (from sg in db.LMS_SubAgent
+                                  where sg.ID == bl.AgentID
+                                  select new
+                                  {
+                                      AgentName = sg.Name,
+                                      AgentMobile = sg.Telephone,
+                                      AgentEMail = sg.Email
+                                  }
+                 ).FirstOrDefault();
+
+                    a.AgentEmail = sAgent.AgentEMail.ToString();
+                    a.AgentMobile = sAgent.AgentMobile.ToString();
+                    a.AgentName = sAgent.AgentName.ToString();
+
+                }
+                else
+                {
+
+                    a.AgentEmail = "";
+                    a.AgentMobile = "";
+                    a.AgentName = "";
+
+                }
+                if (bl.UserID != 0)
+                {
+                    var sUser = (from u in db.LMS_User
+                                 where u.UserID == bl.UserID
+                                 select new
+                                 {
+                                     UName = u.FullName,
+                                     UEmail = u.Email,
+                                     UTelephone = u.Telephone
+                                 }
+                 ).FirstOrDefault();
+
+                    a.UName = sUser.UName.ToString();
+                    a.UEmail = sUser.UEmail.ToString();
+                    a.UTelephone = sUser.UTelephone.ToString();
+
+                }
+                else
+                {
+
+                    a.UName = "";
+                    a.UEmail = "";
+                    a.UTelephone = "";
+
+                }
+
+                a.PaymentType = Convert.ToInt32(bl.PaymentType);
+                a.PaymentStatus = Convert.ToInt32(bl.PaymentStatus);
+                a.Currency = bl.Currcney;
+
+                BModel.Add(a);
+
+            }
+
+            InvoiceList IL = new InvoiceList();
+            IL.LBooking = BModel.ToList();
+            IL.LSubAgent = SModel.ToList();
+            model.Add(IL);
+
+      
+            return View(model);
+        }
+        public ActionResult InvoiceCommit(FormCollection form)
+        {
+           
+
+            string bYM = DateTime.Today.Year.ToString().Substring(2, 2) + DateTime.Today.Month.ToString("00");
+
+
+            var InvoiceID = (from b in db.LMS_Invoice
+                             where b.InvoiceNo.Substring(0, 4) == bYM
+                             orderby b.InvoiceNo descending
+                             select b.InvoiceNo
+                  ).FirstOrDefault();
+
+            string InvoiceNo = "";
+            string RBID = "";
+            if (InvoiceID == null)
+            {
+                InvoiceNo = bYM + "0001";
+            }
+            else
+            {
+                RBID = InvoiceID.Substring(4, 4);
+                InvoiceNo = bYM + (Convert.ToInt32(RBID) + 1).ToString("0000");
+            }
+
+
+            int iRow = 0;
+            string sRow = "";
+            string dRow = "";
+            decimal GrandTotal = 0;
+
+            if (form["Row"] != "")
+            {
+                iRow = Convert.ToInt32(form["Row"]) - 1;
+
+            }
+
+            for (var i = 1; i <= iRow; i++)
+             {
+                 sRow = "Booking" + i;
+                 dRow = Request.Form[sRow];
+
+                if (dRow != null)
+                {
+                    var BPrice = (from b in db.LMS_Booking
+                                  where b.BookingID == dRow
+                                  select b.TotalPrice
+             ).FirstOrDefault();
+
+                    GrandTotal += Convert.ToDecimal(BPrice);
+
+                    LMS_InvoiceDetail AddInvoiceD = new LMS_InvoiceDetail();
+                    AddInvoiceD.BookingID = dRow;
+                    AddInvoiceD.InvoiceNo = InvoiceNo;
+                    db.LMS_InvoiceDetail.Add(AddInvoiceD);
+                    db.SaveChanges();
+
+                    LMS_Booking UpdateB = new LMS_Booking();
+
+                    var BookingU = (from b in db.LMS_Booking
+                                    where b.BookingID == dRow
+                                    select b).Single();
+
+                    BookingU.PaymentStatus = 2;
+
+                    db.SaveChanges();
+                }
+               
+             }
+
+            LMS_Invoice AddInvoice = new LMS_Invoice();
+
+            AddInvoice.InvoiceNo = InvoiceNo;
+            AddInvoice.InvoiceDate = Convert.ToDateTime(form["InvoiceDate"]);
+            AddInvoice.DueDate = Convert.ToDateTime(form["DueDate"]);
+            AddInvoice.SubID = Convert.ToInt32(form["SubID"]);
+            AddInvoice.GrandTotal = GrandTotal;
+            AddInvoice.CreditTerm = Convert.ToInt32(form["CreditTerm"]);
+            AddInvoice.Status = 1;
+
+            db.LMS_Invoice.Add(AddInvoice);
+            db.SaveChanges();
+
+
+            Session["InvoiceNo"] = InvoiceNo;
+            return RedirectToAction("InvoiceInfo", "LMS");
+            //return View();
+        }
+        public ActionResult InvoiceInfo()
+        {
+            string InvoiceNo = "16070001";
+            if (Session["InvoiceNo"] != null)
+            {
+                InvoiceNo = Session["InvoiceNo"].ToString();
+            }
+            else
+            {
+                if (Request.QueryString["InvoiceNo"] != null)
+                {
+                    InvoiceNo = Request.QueryString["InvoiceNo"];
+                }
+                else
+                {
+                    InvoiceNo = "";
+                    return RedirectToAction("InvoiceList", "LMS");
+                }
+
+            }
+
+            List<InvoiceList> model = new List<InvoiceList>();
+            List<BookingInfo> BModel = new List<BookingInfo>();
+            List<Invoice> IModel = new List<Invoice>();
+
+            var sInvoiceInfo = (from i in db.LMS_Invoice
+                                join s in db.LMS_SubAgent on i.SubID equals s.ID
+                                where i.InvoiceNo == InvoiceNo
+                                select new
+                                {
+                                    InvoiceNo = i.InvoiceNo,
+                                    InvoiceDate = i.InvoiceDate,
+                                    DueDate = i.DueDate,
+                                    SubId = i.SubID,
+                                    CreditTerm = i.CreditTerm,
+                                    Status = i.Status,
+                                    GrandTotal = i.GrandTotal,
+                                    SubName = s.Name,
+                                    SubAddress = s.Address,
+                                    SubTel = s.Telephone,
+                                    SubTax = s.Tax
+                                }
+                                    ).ToList();
+
+
+            var sBookingInfo = (from id in db.LMS_InvoiceDetail
+                                join b in db.LMS_Booking on id.BookingID equals b.BookingID
+                                join c in db.LMS_Car on b.CarID equals c.ID
+                                //join u in db.LMS_User on b.UserID equals u.UserID
+                                //join a in db.LMS_SubAgent on b.AgentID equals a.ID
+                                join d in db.LMS_Driver on b.DriverID equals d.ID
+                                where id.InvoiceNo == InvoiceNo
+                                select new
+                                {
+                                    BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
+                                    Title = b.Title,
+                                    FirstName = b.FirstName,
+                                    LastName = b.LastName,
+                                    Address = b.Address,
+                                    Telephone = b.Telephone,
+                                    Mobile = b.Mobile,
+                                    Email = b.Email,
+                                    //OrderBy = u.UserName,
+                                    CustomerType = b.CustomerType,
+                                    ServiceType = b.ServiceType,
+                                    bDate = b.Date,
+                                    bTime = b.Time,
+                                    Passenger = b.Passenger,
+                                    Luggage = b.Luggage,
+                                    FlightNo = b.FlightNo,
+                                    FlightTime = b.FlightTime,
+                                    FromDetail = b.FromDetail,
+                                    ToDetail = b.ToDetail,
+                                    Remark = b.Remark,
+                                    RouteDetail = b.RouteDetail,
+                                    ProductID = b.ProductID,
+                                    CarID = b.CarID,
+                                    CModel = c.Model,
+                                    Price = b.Price,
+                                    Discount = b.Discount,
+                                    TotalPrice = b.TotalPrice,
+                                    Status = b.Status,
+                                    //AgentName = a.Name,
+                                    DriverID = b.DriverID,
+                                    DTitle = d.Title,
+                                    DName = d.Name,
+                                    DLastName = d.LastName,
+                                    DMobile = d.Mobile,
+                                    VehicleRegis = c.VehicleRegis,
+                                    AgentID = b.AgentID,
+                                    UserID = b.UserID,
+                                    //AgentEmail = a.Email,
+                                    PaymentType = b.PaymentType,
+                                    PaymentStatus = b.PaymentStatus
+                                }
+                 ).ToList();
+            foreach (var bl in sBookingInfo)
+            {
+                BookingInfo a = new BookingInfo();
+                a.Address = bl.Address.ToString();
+                //a.AgentEmail = bl.AgentEmail.ToString();
+                //a.AgentName = bl.AgentName.ToString();
+                a.BookingDate = Convert.ToDateTime(bl.BookingDate);
+                a.BookingID = bl.BookingID.ToString();
+                a.CarID = Convert.ToInt32(bl.CarID);
+                a.CarModel = bl.CModel.ToString();
+                a.CustomerType = Convert.ToInt32(bl.CustomerType);
+                a.Date = Convert.ToDateTime(bl.bDate);
+                a.DFirstName = bl.DName.ToString();
+                a.DLastName = bl.DLastName.ToString();
+                a.DMobile = bl.DMobile.ToString();
+                a.DriverID = Convert.ToInt32(bl.DriverID);
+                a.DTitle = bl.DTitle.ToString();
+                a.Email = bl.Email.ToString();
+                a.FirstName = bl.FirstName.ToString();
+                a.FlightNo = bl.FlightNo.ToString();
+                a.FlightTime = bl.FlightTime.ToString();
+                a.FromDetail = bl.FromDetail.ToString();
+                a.LastName = bl.LastName.ToString();
+                a.Luggage = Convert.ToInt32(bl.Luggage);
+                a.Mobile = bl.Mobile.ToString();
+                //a.OrderBy = bl.OrderBy.ToString();
+                a.Passenger = Convert.ToInt32(bl.Passenger);
+                a.Price = Convert.ToDecimal(bl.Price);
+                a.Remark = bl.Remark.ToString();
+                a.RouteDetail = bl.RouteDetail;
+                a.ServiceType = Convert.ToInt32(bl.ServiceType);
+                a.Status = Convert.ToInt32(bl.Status);
+                a.Telephone = bl.Telephone.ToString();
+                a.Time = bl.bTime.ToString();
+                a.Title = bl.Title.ToString();
+                a.ToDetail = bl.ToDetail.ToString();
+                a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
+                a.VehicleRegis = bl.VehicleRegis.ToString();
+
+                if (bl.AgentID != 0)
+                {
+                    var sAgent = (from sg in db.LMS_SubAgent
+                                  where sg.ID == bl.AgentID
+                                  select new
+                                  {
+                                      AgentName = sg.Name,
+                                      AgentMobile = sg.Telephone,
+                                      AgentEMail = sg.Email
+                                  }
+                 ).FirstOrDefault();
+
+                    a.AgentEmail = sAgent.AgentEMail.ToString();
+                    a.AgentMobile = sAgent.AgentMobile.ToString();
+                    a.AgentName = sAgent.AgentName.ToString();
+
+                }
+                else
+                {
+
+                    a.AgentEmail = "";
+                    a.AgentMobile = "";
+                    a.AgentName = "";
+
+                }
+                if (bl.UserID != 0)
+                {
+                    var sUser = (from u in db.LMS_User
+                                 where u.UserID == bl.UserID
+                                 select new
+                                 {
+                                     UName = u.FullName,
+                                     UEmail = u.Email,
+                                     UTelephone = u.Telephone
+                                 }
+                 ).FirstOrDefault();
+
+                    a.UName = sUser.UName.ToString();
+                    a.UEmail = sUser.UEmail.ToString();
+                    a.UTelephone = sUser.UTelephone.ToString();
+
+                }
+                else
+                {
+
+                    a.UName = "";
+                    a.UEmail = "";
+                    a.UTelephone = "";
+
+                }
+
+                a.PaymentType = Convert.ToInt32(bl.PaymentType);
+                a.PaymentStatus = Convert.ToInt32(bl.PaymentStatus);
+
+
+                BModel.Add(a);
+
+            }
+
+            foreach (var il in sInvoiceInfo)
+            {
+                Invoice a = new Invoice();
+                a.CreditTerm = Convert.ToInt32(il.CreditTerm);
+                a.DueDate = Convert.ToDateTime(il.DueDate);
+                a.InvoiceDate = Convert.ToDateTime(il.InvoiceDate);
+                a.InvoiceNo = il.InvoiceNo;
+                    a.IStatus = Convert.ToInt32(il.Status);
+                    a.GrandTotal = Convert.ToDecimal(il.GrandTotal);
+                    a.SubName = il.SubName;
+                    a.SubAddress = il.SubAddress;
+                    a.SubTel = il.SubTel;
+                    a.SubTax = il.SubTax;
+                    IModel.Add(a);
+               
+            }
+
+            InvoiceList IL = new InvoiceList();
+            IL.LBooking = BModel.ToList();
+            IL.LInvoice = IModel.ToList();
+            model.Add(IL);
+
+            return View(model);
+        }
+        public ActionResult InvoicePrint()
+        {
+            string InvoiceNo = "16070001";
+            if (Session["InvoiceNo"] != null)
+            {
+                InvoiceNo = Session["InvoiceNo"].ToString();
+            }
+            else
+            {
+                if (Request.QueryString["InvoiceNo"] != null)
+                {
+                    InvoiceNo = Request.QueryString["InvoiceNo"];
+                }
+                else
+                {
+                    InvoiceNo = "";
+                    return RedirectToAction("InvoiceList", "LMS");
+                }
+
+            }
+
+            List<InvoiceList> model = new List<InvoiceList>();
+            List<BookingInfo> BModel = new List<BookingInfo>();
+            List<Invoice> IModel = new List<Invoice>();
+
+            var sInvoiceInfo = (from i in db.LMS_Invoice
+                                join s in db.LMS_SubAgent on i.SubID equals s.ID
+                                where i.InvoiceNo == InvoiceNo
+                                select new
+                                {
+                                    InvoiceNo = i.InvoiceNo,
+                                    InvoiceDate = i.InvoiceDate,
+                                    DueDate = i.DueDate,
+                                    SubId = i.SubID,
+                                    CreditTerm = i.CreditTerm,
+                                    Status = i.Status,
+                                    GrandTotal = i.GrandTotal,
+                                    SubName = s.Name,
+                                    SubAddress = s.Address,
+                                    SubTel = s.Telephone,
+                                    SubTax = s.Tax
+                                }
+                                    ).ToList();
+
+
+            var sBookingInfo = (from id in db.LMS_InvoiceDetail
+                                join b in db.LMS_Booking on id.BookingID equals b.BookingID
+                                join c in db.LMS_Car on b.CarID equals c.ID
+                                //join u in db.LMS_User on b.UserID equals u.UserID
+                                //join a in db.LMS_SubAgent on b.AgentID equals a.ID
+                                join d in db.LMS_Driver on b.DriverID equals d.ID
+                                where id.InvoiceNo == InvoiceNo
+                                select new
+                                {
+                                    BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
+                                    Title = b.Title,
+                                    FirstName = b.FirstName,
+                                    LastName = b.LastName,
+                                    Address = b.Address,
+                                    Telephone = b.Telephone,
+                                    Mobile = b.Mobile,
+                                    Email = b.Email,
+                                    //OrderBy = u.UserName,
+                                    CustomerType = b.CustomerType,
+                                    ServiceType = b.ServiceType,
+                                    bDate = b.Date,
+                                    bTime = b.Time,
+                                    Passenger = b.Passenger,
+                                    Luggage = b.Luggage,
+                                    FlightNo = b.FlightNo,
+                                    FlightTime = b.FlightTime,
+                                    FromDetail = b.FromDetail,
+                                    ToDetail = b.ToDetail,
+                                    Remark = b.Remark,
+                                    RouteDetail = b.RouteDetail,
+                                    ProductID = b.ProductID,
+                                    CarID = b.CarID,
+                                    CModel = c.Model,
+                                    Price = b.Price,
+                                    Discount = b.Discount,
+                                    TotalPrice = b.TotalPrice,
+                                    Status = b.Status,
+                                    //AgentName = a.Name,
+                                    DriverID = b.DriverID,
+                                    DTitle = d.Title,
+                                    DName = d.Name,
+                                    DLastName = d.LastName,
+                                    DMobile = d.Mobile,
+                                    VehicleRegis = c.VehicleRegis,
+                                    AgentID = b.AgentID,
+                                    UserID = b.UserID,
+                                    //AgentEmail = a.Email,
+                                    PaymentType = b.PaymentType,
+                                    PaymentStatus = b.PaymentStatus
+                                }
+                 ).ToList();
+            foreach (var bl in sBookingInfo)
+            {
+                BookingInfo a = new BookingInfo();
+                a.Address = bl.Address.ToString();
+                //a.AgentEmail = bl.AgentEmail.ToString();
+                //a.AgentName = bl.AgentName.ToString();
+                a.BookingDate = Convert.ToDateTime(bl.BookingDate);
+                a.BookingID = bl.BookingID.ToString();
+                a.CarID = Convert.ToInt32(bl.CarID);
+                a.CarModel = bl.CModel.ToString();
+                a.CustomerType = Convert.ToInt32(bl.CustomerType);
+                a.Date = Convert.ToDateTime(bl.bDate);
+                a.DFirstName = bl.DName.ToString();
+                a.DLastName = bl.DLastName.ToString();
+                a.DMobile = bl.DMobile.ToString();
+                a.DriverID = Convert.ToInt32(bl.DriverID);
+                a.DTitle = bl.DTitle.ToString();
+                a.Email = bl.Email.ToString();
+                a.FirstName = bl.FirstName.ToString();
+                a.FlightNo = bl.FlightNo.ToString();
+                a.FlightTime = bl.FlightTime.ToString();
+                a.FromDetail = bl.FromDetail.ToString();
+                a.LastName = bl.LastName.ToString();
+                a.Luggage = Convert.ToInt32(bl.Luggage);
+                a.Mobile = bl.Mobile.ToString();
+                //a.OrderBy = bl.OrderBy.ToString();
+                a.Passenger = Convert.ToInt32(bl.Passenger);
+                a.Price = Convert.ToDecimal(bl.Price);
+                a.Remark = bl.Remark.ToString();
+                a.RouteDetail = bl.RouteDetail;
+                a.ServiceType = Convert.ToInt32(bl.ServiceType);
+                a.Status = Convert.ToInt32(bl.Status);
+                a.Telephone = bl.Telephone.ToString();
+                a.Time = bl.bTime.ToString();
+                a.Title = bl.Title.ToString();
+                a.ToDetail = bl.ToDetail.ToString();
+                a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
+                a.VehicleRegis = bl.VehicleRegis.ToString();
+
+                if (bl.AgentID != 0)
+                {
+                    var sAgent = (from sg in db.LMS_SubAgent
+                                  where sg.ID == bl.AgentID
+                                  select new
+                                  {
+                                      AgentName = sg.Name,
+                                      AgentMobile = sg.Telephone,
+                                      AgentEMail = sg.Email
+                                  }
+                 ).FirstOrDefault();
+
+                    a.AgentEmail = sAgent.AgentEMail.ToString();
+                    a.AgentMobile = sAgent.AgentMobile.ToString();
+                    a.AgentName = sAgent.AgentName.ToString();
+
+                }
+                else
+                {
+
+                    a.AgentEmail = "";
+                    a.AgentMobile = "";
+                    a.AgentName = "";
+
+                }
+                if (bl.UserID != 0)
+                {
+                    var sUser = (from u in db.LMS_User
+                                 where u.UserID == bl.UserID
+                                 select new
+                                 {
+                                     UName = u.FullName,
+                                     UEmail = u.Email,
+                                     UTelephone = u.Telephone
+                                 }
+                 ).FirstOrDefault();
+
+                    a.UName = sUser.UName.ToString();
+                    a.UEmail = sUser.UEmail.ToString();
+                    a.UTelephone = sUser.UTelephone.ToString();
+
+                }
+                else
+                {
+
+                    a.UName = "";
+                    a.UEmail = "";
+                    a.UTelephone = "";
+
+                }
+
+                a.PaymentType = Convert.ToInt32(bl.PaymentType);
+                a.PaymentStatus = Convert.ToInt32(bl.PaymentStatus);
+
+
+                BModel.Add(a);
+
+            }
+
+            foreach (var il in sInvoiceInfo)
+            {
+                Invoice a = new Invoice();
+                a.CreditTerm = Convert.ToInt32(il.CreditTerm);
+                a.DueDate = Convert.ToDateTime(il.DueDate);
+                a.InvoiceDate = Convert.ToDateTime(il.InvoiceDate);
+                a.InvoiceNo = il.InvoiceNo;
+                a.IStatus = Convert.ToInt32(il.Status);
+                a.GrandTotal = Convert.ToDecimal(il.GrandTotal);
+                a.SubName = il.SubName;
+                a.SubAddress = il.SubAddress;
+                a.SubTel = il.SubTel;
+                a.SubTax = il.SubTax;
+                IModel.Add(a);
+
+            }
+
+            InvoiceList IL = new InvoiceList();
+            IL.LBooking = BModel.ToList();
+            IL.LInvoice = IModel.ToList();
+            model.Add(IL);
+
+            return View(model);
+        }
+
+        public ActionResult ReceiptList()
+        {
+            string sUserType = "0";
+            if (Session["LogedUserType"] != null)
+            {
+                sUserType = Session["LogedUserType"].ToString();
+            }
+            else
+            {
+                sUserType = "0";
+                return RedirectToAction("Booking", "LMS");
+            }
+
+            int UserType = 0;
+            if (sUserType == "")
+            {
+                UserType = 0;
+            }
+            else
+            {
+                UserType = Convert.ToInt32(sUserType);
+            }
+
+
+
+            List<Receipt> model = new List<Receipt>();
+
+            var sReceipt = (from r in db.LMS_Receipt
+                            join i in db.LMS_Invoice on r.InvoiceNo equals i.InvoiceNo
+                            join s in db.LMS_SubAgent on i.SubID equals s.ID
+                            where i.InvoiceDate.Value.Month == DateTime.Now.Month && i.InvoiceDate.Value.Year == DateTime.Now.Year
+                            //    where Convert.ToDateTime(b.BookingDate).Month == DateTime.Now.Month  
+                            orderby i.InvoiceNo descending
+                            select new
+                            {
+                                ReceiptNo = r.ReceiptNo,
+                                ReceiptDate = r.ReceiptDate,
+                                PaymentDate = r.PaymentDate,
+                                PaymentType = r.PaymentType,
+                                GrandTotal = r.GrandTotal,
+                                InvoiceID = i.ID,
+                                InvoiceNo = i.InvoiceNo,
+                                InvoiceDate = i.InvoiceDate,
+                                DueDate = i.DueDate,
+                                CreditTerm = i.CreditTerm,
+                                Status = i.Status,
+                                SubID = i.SubID,
+                                SubName = s.Name
+
+                            }
+             ).ToList();
+            foreach (var bl in sReceipt)
+            {
+                Receipt a = new Receipt();
+                a.GrandTotal = Convert.ToDecimal(bl.GrandTotal);
+                a.InvoiceNo = bl.InvoiceNo;
+                a.PaymentDate = Convert.ToDateTime(bl.PaymentDate);
+                a.PaymentType = Convert.ToInt32(bl.PaymentType);
+                a.ReceiptDate = Convert.ToDateTime(bl.PaymentDate);
+                a.ReceiptNo = bl.ReceiptNo;
+                a.Status = Convert.ToInt32(bl.Status);
+                a.SubName = bl.SubName;
+              
+
+                model.Add(a);
+
+            }
+
+
+            return View(model);
+        }
+        public ActionResult ReceiptInvoice()
+        {
+            string sUserType = "0";
+            if (Session["LogedUserType"] != null)
+            {
+                sUserType = Session["LogedUserType"].ToString();
+            }
+            else
+            {
+                sUserType = "0";
+                return RedirectToAction("Booking", "LMS");
+            }
+
+            int UserType = 0;
+            if (sUserType == "")
+            {
+                UserType = 0;
+            }
+            else
+            {
+                UserType = Convert.ToInt32(sUserType);
+            }
+
+
+
+            List<Invoice> model = new List<Invoice>();
+
+            var sInvoice = (from i in db.LMS_Invoice
+                            join s in db.LMS_SubAgent on i.SubID equals s.ID
+                            where i.Status == 1
+                           // where i.InvoiceDate.Value.Month == DateTime.Now.Month && i.InvoiceDate.Value.Year == DateTime.Now.Year
+                            //    where Convert.ToDateTime(b.BookingDate).Month == DateTime.Now.Month  
+                            orderby i.InvoiceNo descending
+                            select new
+                            {
+                                InvoiceID = i.ID,
+                                InvoiceNo = i.InvoiceNo,
+                                InvoiceDate = i.InvoiceDate,
+                                DueDate = i.DueDate,
+                                GrandTotal = i.GrandTotal,
+                                CreditTerm = i.CreditTerm,
+                                Status = i.Status,
+                                SubID = i.SubID,
+                                SubName = s.Name
+
+                            }
+             ).ToList();
+            foreach (var bl in sInvoice)
+            {
+                Invoice a = new Invoice();
+                a.CreditTerm = Convert.ToInt32(bl.CreditTerm);
+                a.DueDate = Convert.ToDateTime(bl.DueDate);
+                a.InvoiceDate = Convert.ToDateTime(bl.InvoiceDate);
+                a.InvoiceID = Convert.ToInt32(bl.InvoiceID);
+                a.InvoiceNo = bl.InvoiceNo;
+                a.IStatus = Convert.ToInt32(bl.Status);
+                a.SubName = bl.SubName;
+
+                model.Add(a);
+
+            }
+
+
+            return View(model);
+        }
+        public ActionResult ReceiptNew()
+        {
+            string InvoiceNo = "16070001";
+            if (Session["InvoiceNo"] != null)
+            {
+                InvoiceNo = Session["InvoiceNo"].ToString();
+            }
+            else
+            {
+                if (Request.QueryString["InvoiceNo"] != null)
+                {
+                    InvoiceNo = Request.QueryString["InvoiceNo"];
+                }
+                else
+                {
+                    InvoiceNo = "";
+                    return RedirectToAction("InvoiceList", "LMS");
+                }
+
+            }
+
+            List<ReceiptList> model = new List<ReceiptList>();
+            List<BookingInfo> BModel = new List<BookingInfo>();
+            List<Invoice> IModel = new List<Invoice>();
+
+            var sInvoiceInfo = (from i in db.LMS_Invoice
+                                join s in db.LMS_SubAgent on i.SubID equals s.ID
+                                where i.InvoiceNo == InvoiceNo
+                                select new
+                                {
+                                    InvoiceNo = i.InvoiceNo,
+                                    InvoiceDate = i.InvoiceDate,
+                                    DueDate = i.DueDate,
+                                    SubId = i.SubID,
+                                    CreditTerm = i.CreditTerm,
+                                    Status = i.Status,
+                                    GrandTotal = i.GrandTotal,
+                                    SubName = s.Name,
+                                    SubAddress = s.Address,
+                                    SubTel = s.Telephone,
+                                    SubTax = s.Tax
+                                }
+                                    ).ToList();
+
+
+            var sBookingInfo = (from id in db.LMS_InvoiceDetail
+                                join b in db.LMS_Booking on id.BookingID equals b.BookingID
+                                join c in db.LMS_Car on b.CarID equals c.ID
+                                //join u in db.LMS_User on b.UserID equals u.UserID
+                                //join a in db.LMS_SubAgent on b.AgentID equals a.ID
+                                join d in db.LMS_Driver on b.DriverID equals d.ID
+                                where id.InvoiceNo == InvoiceNo
+                                select new
+                                {
+                                    BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
+                                    Title = b.Title,
+                                    FirstName = b.FirstName,
+                                    LastName = b.LastName,
+                                    Address = b.Address,
+                                    Telephone = b.Telephone,
+                                    Mobile = b.Mobile,
+                                    Email = b.Email,
+                                    //OrderBy = u.UserName,
+                                    CustomerType = b.CustomerType,
+                                    ServiceType = b.ServiceType,
+                                    bDate = b.Date,
+                                    bTime = b.Time,
+                                    Passenger = b.Passenger,
+                                    Luggage = b.Luggage,
+                                    FlightNo = b.FlightNo,
+                                    FlightTime = b.FlightTime,
+                                    FromDetail = b.FromDetail,
+                                    ToDetail = b.ToDetail,
+                                    Remark = b.Remark,
+                                    RouteDetail = b.RouteDetail,
+                                    ProductID = b.ProductID,
+                                    CarID = b.CarID,
+                                    CModel = c.Model,
+                                    Price = b.Price,
+                                    Discount = b.Discount,
+                                    TotalPrice = b.TotalPrice,
+                                    Status = b.Status,
+                                    //AgentName = a.Name,
+                                    DriverID = b.DriverID,
+                                    DTitle = d.Title,
+                                    DName = d.Name,
+                                    DLastName = d.LastName,
+                                    DMobile = d.Mobile,
+                                    VehicleRegis = c.VehicleRegis,
+                                    AgentID = b.AgentID,
+                                    UserID = b.UserID,
+                                    //AgentEmail = a.Email,
+                                    PaymentType = b.PaymentType,
+                                    PaymentStatus = b.PaymentStatus
+                                }
+                 ).ToList();
+            foreach (var bl in sBookingInfo)
+            {
+                BookingInfo a = new BookingInfo();
+                a.Address = bl.Address.ToString();
+                //a.AgentEmail = bl.AgentEmail.ToString();
+                //a.AgentName = bl.AgentName.ToString();
+                a.BookingDate = Convert.ToDateTime(bl.BookingDate);
+                a.BookingID = bl.BookingID.ToString();
+                a.CarID = Convert.ToInt32(bl.CarID);
+                a.CarModel = bl.CModel.ToString();
+                a.CustomerType = Convert.ToInt32(bl.CustomerType);
+                a.Date = Convert.ToDateTime(bl.bDate);
+                a.DFirstName = bl.DName.ToString();
+                a.DLastName = bl.DLastName.ToString();
+                a.DMobile = bl.DMobile.ToString();
+                a.DriverID = Convert.ToInt32(bl.DriverID);
+                a.DTitle = bl.DTitle.ToString();
+                a.Email = bl.Email.ToString();
+                a.FirstName = bl.FirstName.ToString();
+                a.FlightNo = bl.FlightNo.ToString();
+                a.FlightTime = bl.FlightTime.ToString();
+                a.FromDetail = bl.FromDetail.ToString();
+                a.LastName = bl.LastName.ToString();
+                a.Luggage = Convert.ToInt32(bl.Luggage);
+                a.Mobile = bl.Mobile.ToString();
+                //a.OrderBy = bl.OrderBy.ToString();
+                a.Passenger = Convert.ToInt32(bl.Passenger);
+                a.Price = Convert.ToDecimal(bl.Price);
+                a.Remark = bl.Remark.ToString();
+                a.RouteDetail = bl.RouteDetail;
+                a.ServiceType = Convert.ToInt32(bl.ServiceType);
+                a.Status = Convert.ToInt32(bl.Status);
+                a.Telephone = bl.Telephone.ToString();
+                a.Time = bl.bTime.ToString();
+                a.Title = bl.Title.ToString();
+                a.ToDetail = bl.ToDetail.ToString();
+                a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
+                a.VehicleRegis = bl.VehicleRegis.ToString();
+
+                if (bl.AgentID != 0)
+                {
+                    var sAgent = (from sg in db.LMS_SubAgent
+                                  where sg.ID == bl.AgentID
+                                  select new
+                                  {
+                                      AgentName = sg.Name,
+                                      AgentMobile = sg.Telephone,
+                                      AgentEMail = sg.Email
+                                  }
+                 ).FirstOrDefault();
+
+                    a.AgentEmail = sAgent.AgentEMail.ToString();
+                    a.AgentMobile = sAgent.AgentMobile.ToString();
+                    a.AgentName = sAgent.AgentName.ToString();
+
+                }
+                else
+                {
+
+                    a.AgentEmail = "";
+                    a.AgentMobile = "";
+                    a.AgentName = "";
+
+                }
+                if (bl.UserID != 0)
+                {
+                    var sUser = (from u in db.LMS_User
+                                 where u.UserID == bl.UserID
+                                 select new
+                                 {
+                                     UName = u.FullName,
+                                     UEmail = u.Email,
+                                     UTelephone = u.Telephone
+                                 }
+                 ).FirstOrDefault();
+
+                    a.UName = sUser.UName.ToString();
+                    a.UEmail = sUser.UEmail.ToString();
+                    a.UTelephone = sUser.UTelephone.ToString();
+
+                }
+                else
+                {
+
+                    a.UName = "";
+                    a.UEmail = "";
+                    a.UTelephone = "";
+
+                }
+
+                a.PaymentType = Convert.ToInt32(bl.PaymentType);
+                a.PaymentStatus = Convert.ToInt32(bl.PaymentStatus);
+
+
+                BModel.Add(a);
+
+            }
+
+            foreach (var il in sInvoiceInfo)
+            {
+                Invoice a = new Invoice();
+                a.CreditTerm = Convert.ToInt32(il.CreditTerm);
+                a.DueDate = Convert.ToDateTime(il.DueDate);
+                a.InvoiceDate = Convert.ToDateTime(il.InvoiceDate);
+                a.InvoiceNo = il.InvoiceNo;
+                a.IStatus = Convert.ToInt32(il.Status);
+                a.GrandTotal = Convert.ToDecimal(il.GrandTotal);
+                a.SubName = il.SubName;
+                a.SubAddress = il.SubAddress;
+                a.SubTel = il.SubTel;
+                a.SubTax = il.SubTax;
+                IModel.Add(a);
+
+            }
+
+            ReceiptList RL = new ReceiptList();
+            RL.LBooking = BModel.ToList();
+            RL.LInvoice = IModel.ToList();
+            model.Add(RL);
+
+            return View(model);
+        }
+
+        public ActionResult ReceiptCommit(FormCollection form)
+        {
+
+
+            string bYM = DateTime.Today.Year.ToString().Substring(2, 2) + DateTime.Today.Month.ToString("00");
+
+
+            var ReceiptID = (from b in db.LMS_Receipt
+                             where b.ReceiptNo.Substring(0, 4) == bYM
+                             orderby b.ReceiptNo descending
+                             select b.ReceiptNo
+                  ).FirstOrDefault();
+
+            string ReceiptNo = "";
+            string RBID = "";
+            if (ReceiptID == null)
+            {
+                ReceiptNo = bYM + "0001";
+            }
+            else
+            {
+                RBID = ReceiptID.Substring(4, 4);
+                ReceiptNo = bYM + (Convert.ToInt32(RBID) + 1).ToString("0000");
+            }
+
+
+          
+            decimal GrandTotal = 0;
+            string InvoiceNo = form["InvoiceNo"];
+
+            if (form["GrandTotal"] != "")
+            {
+                GrandTotal = Convert.ToDecimal(form["GrandTotal"]);
+            }
+
+
+
+            LMS_Receipt Addreceipt = new LMS_Receipt();
+            Addreceipt.ReceiptNo = ReceiptNo;
+            Addreceipt.ReceiptDate = Convert.ToDateTime(form["ReceiptDate"]);
+            Addreceipt.InvoiceNo = InvoiceNo;
+            Addreceipt.PaymentDate = Convert.ToDateTime(form["PaymentDate"]);
+            Addreceipt.GrandTotal = GrandTotal;
+            Addreceipt.PaymentType = Convert.ToInt32(form["PaymentType"]);
+            Addreceipt.Status = 1;
+
+            db.LMS_Receipt.Add(Addreceipt);
+            db.SaveChanges();
+
+            LMS_Invoice UpdateI = new LMS_Invoice();
+
+            var InvoiceU = (from b in db.LMS_Invoice
+                            where b.InvoiceNo == InvoiceNo
+                            select b).Single();
+
+            InvoiceU.Status = 2;
+
+            db.SaveChanges();
+
+          
+            var sBookingInfo = (from b in db.LMS_Booking
+                            join i in db.LMS_InvoiceDetail on b.BookingID equals i.BookingID
+                                where i.InvoiceNo == InvoiceNo
+                            select new
+                                {
+                                    BookingID = b.BookingID
+                                }
+                                ).ToList();
+
+            foreach (var bl in sBookingInfo)
+            {
+                LMS_Booking UpdateB = new LMS_Booking();
+
+                var BookingU = (from b in db.LMS_Booking
+                                where b.BookingID == bl.BookingID
+                                select b).Single();
+
+                BookingU.PaymentStatus = 3;
+                BookingU.PaymentType = Convert.ToInt32(form["PaymentType"]);
+                db.SaveChanges();
+            }
+
+            Session["ReceiptNo"] = ReceiptNo;
+            return RedirectToAction("ReceiptInfo", "LMS");
+            //return View();
+        }
+
+        public ActionResult ReceiptInfo()
+        {
+            string ReceiptNo = "16070001";
+            if (Session["ReceiptNo"] != null)
+            {
+                ReceiptNo = Session["ReceiptNo"].ToString();
+            }
+            else
+            {
+                if (Request.QueryString["ReceiptNo"] != null)
+                {
+                    ReceiptNo = Request.QueryString["ReceiptNo"];
+                }
+                else
+                {
+                    ReceiptNo = "";
+                    return RedirectToAction("ReceiptList", "LMS");
+                }
+
+            }
+
+            List<ReceiptList> model = new List<ReceiptList>();
+            List<BookingInfo> BModel = new List<BookingInfo>();
+            List<Invoice> IModel = new List<Invoice>();
+            List<Receipt> RModel = new List<Receipt>();
+
+            var sReceiptInfo = (from r in db.LMS_Receipt 
+                                where r.ReceiptNo == ReceiptNo
+                                select new
+                                {
+                                    ReceiptNo = r.ReceiptNo,
+                                    ReceiptDate = r.ReceiptDate,
+                                    InvoiceNo = r.InvoiceNo,
+                                    PaymentDate = r.PaymentDate,
+                                    GrandTotal = r.GrandTotal,
+                                    PaymentType = r.PaymentType,
+                                    Status = r.Status
+                                  
+                                }
+                                ).ToList();
+
+            var sInvoiceInfo = (from i in db.LMS_Invoice
+                                join r in db.LMS_Receipt on i.InvoiceNo equals r.InvoiceNo
+                                join s in db.LMS_SubAgent on i.SubID equals s.ID
+                                where r.ReceiptNo == ReceiptNo
+                                select new
+                                {
+                                    InvoiceNo = i.InvoiceNo,
+                                    InvoiceDate = i.InvoiceDate,
+                                    DueDate = i.DueDate,
+                                    SubId = i.SubID,
+                                    CreditTerm = i.CreditTerm,
+                                    Status = i.Status,
+                                    GrandTotal = i.GrandTotal,
+                                    SubName = s.Name,
+                                    SubAddress = s.Address,
+                                    SubTel = s.Telephone,
+                                    SubTax = s.Tax
+                                }
+                                    ).ToList();
+
+
+            var sBookingInfo = (from id in db.LMS_InvoiceDetail
+                                join r in db.LMS_Receipt on id.InvoiceNo equals r.InvoiceNo
+                                join b in db.LMS_Booking on id.BookingID equals b.BookingID
+                                join c in db.LMS_Car on b.CarID equals c.ID
+                                //join u in db.LMS_User on b.UserID equals u.UserID
+                                //join a in db.LMS_SubAgent on b.AgentID equals a.ID
+                                join d in db.LMS_Driver on b.DriverID equals d.ID
+                                where r.ReceiptNo == ReceiptNo
+                                select new
+                                {
+                                    BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
+                                    Title = b.Title,
+                                    FirstName = b.FirstName,
+                                    LastName = b.LastName,
+                                    Address = b.Address,
+                                    Telephone = b.Telephone,
+                                    Mobile = b.Mobile,
+                                    Email = b.Email,
+                                    //OrderBy = u.UserName,
+                                    CustomerType = b.CustomerType,
+                                    ServiceType = b.ServiceType,
+                                    bDate = b.Date,
+                                    bTime = b.Time,
+                                    Passenger = b.Passenger,
+                                    Luggage = b.Luggage,
+                                    FlightNo = b.FlightNo,
+                                    FlightTime = b.FlightTime,
+                                    FromDetail = b.FromDetail,
+                                    ToDetail = b.ToDetail,
+                                    Remark = b.Remark,
+                                    RouteDetail = b.RouteDetail,
+                                    ProductID = b.ProductID,
+                                    CarID = b.CarID,
+                                    CModel = c.Model,
+                                    Price = b.Price,
+                                    Discount = b.Discount,
+                                    TotalPrice = b.TotalPrice,
+                                    Status = b.Status,
+                                    //AgentName = a.Name,
+                                    DriverID = b.DriverID,
+                                    DTitle = d.Title,
+                                    DName = d.Name,
+                                    DLastName = d.LastName,
+                                    DMobile = d.Mobile,
+                                    VehicleRegis = c.VehicleRegis,
+                                    AgentID = b.AgentID,
+                                    UserID = b.UserID,
+                                    //AgentEmail = a.Email,
+                                    PaymentType = b.PaymentType,
+                                    PaymentStatus = b.PaymentStatus
+                                }
+                 ).ToList();
+            foreach (var bl in sBookingInfo)
+            {
+                BookingInfo a = new BookingInfo();
+                a.Address = bl.Address.ToString();
+                //a.AgentEmail = bl.AgentEmail.ToString();
+                //a.AgentName = bl.AgentName.ToString();
+                a.BookingDate = Convert.ToDateTime(bl.BookingDate);
+                a.BookingID = bl.BookingID.ToString();
+                a.CarID = Convert.ToInt32(bl.CarID);
+                a.CarModel = bl.CModel.ToString();
+                a.CustomerType = Convert.ToInt32(bl.CustomerType);
+                a.Date = Convert.ToDateTime(bl.bDate);
+                a.DFirstName = bl.DName.ToString();
+                a.DLastName = bl.DLastName.ToString();
+                a.DMobile = bl.DMobile.ToString();
+                a.DriverID = Convert.ToInt32(bl.DriverID);
+                a.DTitle = bl.DTitle.ToString();
+                a.Email = bl.Email.ToString();
+                a.FirstName = bl.FirstName.ToString();
+                a.FlightNo = bl.FlightNo.ToString();
+                a.FlightTime = bl.FlightTime.ToString();
+                a.FromDetail = bl.FromDetail.ToString();
+                a.LastName = bl.LastName.ToString();
+                a.Luggage = Convert.ToInt32(bl.Luggage);
+                a.Mobile = bl.Mobile.ToString();
+                //a.OrderBy = bl.OrderBy.ToString();
+                a.Passenger = Convert.ToInt32(bl.Passenger);
+                a.Price = Convert.ToDecimal(bl.Price);
+                a.Remark = bl.Remark.ToString();
+                a.RouteDetail = bl.RouteDetail;
+                a.ServiceType = Convert.ToInt32(bl.ServiceType);
+                a.Status = Convert.ToInt32(bl.Status);
+                a.Telephone = bl.Telephone.ToString();
+                a.Time = bl.bTime.ToString();
+                a.Title = bl.Title.ToString();
+                a.ToDetail = bl.ToDetail.ToString();
+                a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
+                a.VehicleRegis = bl.VehicleRegis.ToString();
+
+                if (bl.AgentID != 0)
+                {
+                    var sAgent = (from sg in db.LMS_SubAgent
+                                  where sg.ID == bl.AgentID
+                                  select new
+                                  {
+                                      AgentName = sg.Name,
+                                      AgentMobile = sg.Telephone,
+                                      AgentEMail = sg.Email
+                                  }
+                 ).FirstOrDefault();
+
+                    a.AgentEmail = sAgent.AgentEMail.ToString();
+                    a.AgentMobile = sAgent.AgentMobile.ToString();
+                    a.AgentName = sAgent.AgentName.ToString();
+
+                }
+                else
+                {
+
+                    a.AgentEmail = "";
+                    a.AgentMobile = "";
+                    a.AgentName = "";
+
+                }
+                if (bl.UserID != 0)
+                {
+                    var sUser = (from u in db.LMS_User
+                                 where u.UserID == bl.UserID
+                                 select new
+                                 {
+                                     UName = u.FullName,
+                                     UEmail = u.Email,
+                                     UTelephone = u.Telephone
+                                 }
+                 ).FirstOrDefault();
+
+                    a.UName = sUser.UName.ToString();
+                    a.UEmail = sUser.UEmail.ToString();
+                    a.UTelephone = sUser.UTelephone.ToString();
+
+                }
+                else
+                {
+
+                    a.UName = "";
+                    a.UEmail = "";
+                    a.UTelephone = "";
+
+                }
+
+                a.PaymentType = Convert.ToInt32(bl.PaymentType);
+                a.PaymentStatus = Convert.ToInt32(bl.PaymentStatus);
+
+
+                BModel.Add(a);
+
+            }
+
+            foreach (var il in sInvoiceInfo)
+            {
+                Invoice a = new Invoice();
+                a.CreditTerm = Convert.ToInt32(il.CreditTerm);
+                a.DueDate = Convert.ToDateTime(il.DueDate);
+                a.InvoiceDate = Convert.ToDateTime(il.InvoiceDate);
+                a.InvoiceNo = il.InvoiceNo;
+                a.IStatus = Convert.ToInt32(il.Status);
+                a.GrandTotal = Convert.ToDecimal(il.GrandTotal);
+                a.SubName = il.SubName;
+                a.SubAddress = il.SubAddress;
+                a.SubTel = il.SubTel;
+                a.SubTax = il.SubTax;
+                IModel.Add(a);
+
+            }
+
+            foreach (var il in sReceiptInfo)
+            {
+                Receipt a = new Receipt();
+                a.InvoiceNo = il.InvoiceNo;
+                a.GrandTotal = Convert.ToDecimal(il.GrandTotal);
+                a.InvoiceNo = il.InvoiceNo;
+                a.ReceiptNo = il.ReceiptNo;
+                a.ReceiptDate = Convert.ToDateTime(il.ReceiptDate);
+                a.PaymentDate = Convert.ToDateTime(il.PaymentDate);
+                a.PaymentType = Convert.ToInt32(il.PaymentType);
+                a.Status = Convert.ToInt32(il.Status);
+
+                RModel.Add(a);
+
+            }
+
+            ReceiptList IL = new ReceiptList();
+            IL.LBooking = BModel.ToList();
+            IL.LInvoice = IModel.ToList();
+            IL.LReceipt = RModel.ToList();
+            model.Add(IL);
+
+            return View(model);
+        }
+        public ActionResult ReceiptPrint()
+        {
+            string ReceiptNo = "16070001";
+            if (Session["ReceiptNo"] != null)
+            {
+                ReceiptNo = Session["ReceiptNo"].ToString();
+            }
+            else
+            {
+                if (Request.QueryString["ReceiptNo"] != null)
+                {
+                    ReceiptNo = Request.QueryString["ReceiptNo"];
+                }
+                else
+                {
+                    ReceiptNo = "";
+                    return RedirectToAction("ReceiptList", "LMS");
+                }
+
+            }
+
+            List<ReceiptList> model = new List<ReceiptList>();
+            List<BookingInfo> BModel = new List<BookingInfo>();
+            List<Invoice> IModel = new List<Invoice>();
+            List<Receipt> RModel = new List<Receipt>();
+
+            var sReceiptInfo = (from r in db.LMS_Receipt
+                                where r.ReceiptNo == ReceiptNo
+                                select new
+                                {
+                                    ReceiptNo = r.ReceiptNo,
+                                    ReceiptDate = r.ReceiptDate,
+                                    InvoiceNo = r.InvoiceNo,
+                                    PaymentDate = r.PaymentDate,
+                                    GrandTotal = r.GrandTotal,
+                                    PaymentType = r.PaymentType,
+                                    Status = r.Status
+
+                                }
+                                ).ToList();
+
+            var sInvoiceInfo = (from i in db.LMS_Invoice
+                                join r in db.LMS_Receipt on i.InvoiceNo equals r.InvoiceNo
+                                join s in db.LMS_SubAgent on i.SubID equals s.ID
+                                where r.ReceiptNo == ReceiptNo
+                                select new
+                                {
+                                    InvoiceNo = i.InvoiceNo,
+                                    InvoiceDate = i.InvoiceDate,
+                                    DueDate = i.DueDate,
+                                    SubId = i.SubID,
+                                    CreditTerm = i.CreditTerm,
+                                    Status = i.Status,
+                                    GrandTotal = i.GrandTotal,
+                                    SubName = s.Name,
+                                    SubAddress = s.Address,
+                                    SubTel = s.Telephone,
+                                    SubTax = s.Tax
+                                }
+                                    ).ToList();
+
+
+            var sBookingInfo = (from id in db.LMS_InvoiceDetail
+                                join r in db.LMS_Receipt on id.InvoiceNo equals r.InvoiceNo
+                                join b in db.LMS_Booking on id.BookingID equals b.BookingID
+                                join c in db.LMS_Car on b.CarID equals c.ID
+                                //join u in db.LMS_User on b.UserID equals u.UserID
+                                //join a in db.LMS_SubAgent on b.AgentID equals a.ID
+                                join d in db.LMS_Driver on b.DriverID equals d.ID
+                                where r.ReceiptNo == ReceiptNo
+                                select new
+                                {
+                                    BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
+                                    Title = b.Title,
+                                    FirstName = b.FirstName,
+                                    LastName = b.LastName,
+                                    Address = b.Address,
+                                    Telephone = b.Telephone,
+                                    Mobile = b.Mobile,
+                                    Email = b.Email,
+                                    //OrderBy = u.UserName,
+                                    CustomerType = b.CustomerType,
+                                    ServiceType = b.ServiceType,
+                                    bDate = b.Date,
+                                    bTime = b.Time,
+                                    Passenger = b.Passenger,
+                                    Luggage = b.Luggage,
+                                    FlightNo = b.FlightNo,
+                                    FlightTime = b.FlightTime,
+                                    FromDetail = b.FromDetail,
+                                    ToDetail = b.ToDetail,
+                                    Remark = b.Remark,
+                                    RouteDetail = b.RouteDetail,
+                                    ProductID = b.ProductID,
+                                    CarID = b.CarID,
+                                    CModel = c.Model,
+                                    Price = b.Price,
+                                    Discount = b.Discount,
+                                    TotalPrice = b.TotalPrice,
+                                    Status = b.Status,
+                                    //AgentName = a.Name,
+                                    DriverID = b.DriverID,
+                                    DTitle = d.Title,
+                                    DName = d.Name,
+                                    DLastName = d.LastName,
+                                    DMobile = d.Mobile,
+                                    VehicleRegis = c.VehicleRegis,
+                                    AgentID = b.AgentID,
+                                    UserID = b.UserID,
+                                    //AgentEmail = a.Email,
+                                    PaymentType = b.PaymentType,
+                                    PaymentStatus = b.PaymentStatus
+                                }
+                 ).ToList();
+            foreach (var bl in sBookingInfo)
+            {
+                BookingInfo a = new BookingInfo();
+                a.Address = bl.Address.ToString();
+                //a.AgentEmail = bl.AgentEmail.ToString();
+                //a.AgentName = bl.AgentName.ToString();
+                a.BookingDate = Convert.ToDateTime(bl.BookingDate);
+                a.BookingID = bl.BookingID.ToString();
+                a.CarID = Convert.ToInt32(bl.CarID);
+                a.CarModel = bl.CModel.ToString();
+                a.CustomerType = Convert.ToInt32(bl.CustomerType);
+                a.Date = Convert.ToDateTime(bl.bDate);
+                a.DFirstName = bl.DName.ToString();
+                a.DLastName = bl.DLastName.ToString();
+                a.DMobile = bl.DMobile.ToString();
+                a.DriverID = Convert.ToInt32(bl.DriverID);
+                a.DTitle = bl.DTitle.ToString();
+                a.Email = bl.Email.ToString();
+                a.FirstName = bl.FirstName.ToString();
+                a.FlightNo = bl.FlightNo.ToString();
+                a.FlightTime = bl.FlightTime.ToString();
+                a.FromDetail = bl.FromDetail.ToString();
+                a.LastName = bl.LastName.ToString();
+                a.Luggage = Convert.ToInt32(bl.Luggage);
+                a.Mobile = bl.Mobile.ToString();
+                //a.OrderBy = bl.OrderBy.ToString();
+                a.Passenger = Convert.ToInt32(bl.Passenger);
+                a.Price = Convert.ToDecimal(bl.Price);
+                a.Remark = bl.Remark.ToString();
+                a.RouteDetail = bl.RouteDetail;
+                a.ServiceType = Convert.ToInt32(bl.ServiceType);
+                a.Status = Convert.ToInt32(bl.Status);
+                a.Telephone = bl.Telephone.ToString();
+                a.Time = bl.bTime.ToString();
+                a.Title = bl.Title.ToString();
+                a.ToDetail = bl.ToDetail.ToString();
+                a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
+                a.VehicleRegis = bl.VehicleRegis.ToString();
+
+                if (bl.AgentID != 0)
+                {
+                    var sAgent = (from sg in db.LMS_SubAgent
+                                  where sg.ID == bl.AgentID
+                                  select new
+                                  {
+                                      AgentName = sg.Name,
+                                      AgentMobile = sg.Telephone,
+                                      AgentEMail = sg.Email
+                                  }
+                 ).FirstOrDefault();
+
+                    a.AgentEmail = sAgent.AgentEMail.ToString();
+                    a.AgentMobile = sAgent.AgentMobile.ToString();
+                    a.AgentName = sAgent.AgentName.ToString();
+
+                }
+                else
+                {
+
+                    a.AgentEmail = "";
+                    a.AgentMobile = "";
+                    a.AgentName = "";
+
+                }
+                if (bl.UserID != 0)
+                {
+                    var sUser = (from u in db.LMS_User
+                                 where u.UserID == bl.UserID
+                                 select new
+                                 {
+                                     UName = u.FullName,
+                                     UEmail = u.Email,
+                                     UTelephone = u.Telephone
+                                 }
+                 ).FirstOrDefault();
+
+                    a.UName = sUser.UName.ToString();
+                    a.UEmail = sUser.UEmail.ToString();
+                    a.UTelephone = sUser.UTelephone.ToString();
+
+                }
+                else
+                {
+
+                    a.UName = "";
+                    a.UEmail = "";
+                    a.UTelephone = "";
+
+                }
+
+                a.PaymentType = Convert.ToInt32(bl.PaymentType);
+                a.PaymentStatus = Convert.ToInt32(bl.PaymentStatus);
+
+
+                BModel.Add(a);
+
+            }
+
+            foreach (var il in sInvoiceInfo)
+            {
+                Invoice a = new Invoice();
+                a.CreditTerm = Convert.ToInt32(il.CreditTerm);
+                a.DueDate = Convert.ToDateTime(il.DueDate);
+                a.InvoiceDate = Convert.ToDateTime(il.InvoiceDate);
+                a.InvoiceNo = il.InvoiceNo;
+                a.IStatus = Convert.ToInt32(il.Status);
+                a.GrandTotal = Convert.ToDecimal(il.GrandTotal);
+                a.SubName = il.SubName;
+                a.SubAddress = il.SubAddress;
+                a.SubTel = il.SubTel;
+                a.SubTax = il.SubTax;
+                IModel.Add(a);
+
+            }
+
+            foreach (var il in sReceiptInfo)
+            {
+                Receipt a = new Receipt();
+                a.InvoiceNo = il.InvoiceNo;
+                a.GrandTotal = Convert.ToDecimal(il.GrandTotal);
+                a.InvoiceNo = il.InvoiceNo;
+                a.ReceiptNo = il.ReceiptNo;
+                a.ReceiptDate = Convert.ToDateTime(il.ReceiptDate);
+                a.PaymentDate = Convert.ToDateTime(il.PaymentDate);
+                a.PaymentType = Convert.ToInt32(il.PaymentType);
+                a.Status = Convert.ToInt32(il.Status);
+
+                RModel.Add(a);
+
+            }
+
+            ReceiptList IL = new ReceiptList();
+            IL.LBooking = BModel.ToList();
+            IL.LInvoice = IModel.ToList();
+            IL.LReceipt = RModel.ToList();
+            model.Add(IL);
+
+            return View(model);
+        }
     }
 }

@@ -162,6 +162,12 @@
     <Compile Include="LMS_From.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="LMS_Invoice.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_InvoiceDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="LMS_Job.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -169,6 +175,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="LMS_Product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LMS_Receipt.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="LMS_Route.cs">
@@ -1383,6 +1392,17 @@
     <Content Include="Views\LMS\JobOrder.cshtml" />
     <Content Include="Views\LMS\JobOrderInfo.cshtml" />
     <Content Include="Views\LMS\JobOrderPrint.cshtml" />
+    <Content Include="Views\LMS\InvoiceSub.cshtml" />
+    <Content Include="Views\LMS\InvoiceList.cshtml" />
+    <Content Include="Views\LMS\InvoiceInfo.cshtml" />
+    <Content Include="Views\LMS\InvoicePrint.cshtml" />
+    <Content Include="Views\LMS\InvoiceNew.cshtml" />
+    <Content Include="Views\LMS\InvoiceCommit.cshtml" />
+    <Content Include="Views\LMS\ReceiptList.cshtml" />
+    <Content Include="Views\LMS\ReceiptInvoice.cshtml" />
+    <Content Include="Views\LMS\ReceiptNew.cshtml" />
+    <Content Include="Views\LMS\ReceiptInfo.cshtml" />
+    <Content Include="Views\LMS\ReceiptPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -25,7 +25,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2016 14:53:15</publishTime>
     </File>
     <File Include="bin/LMS.dll">
-      <publishTime>07/05/2016 01:58:54</publishTime>
+      <publishTime>07/06/2016 12:57:28</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>04/25/2016 14:01:04</publishTime>
@@ -886,7 +886,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/03/2016 21:05:51</publishTime>
     </File>
     <File Include="Model1.edmx.diagram">
-      <publishTime>05/29/2016 21:35:48</publishTime>
+      <publishTime>07/06/2016 11:02:40</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>05/02/2016 17:31:36</publishTime>
@@ -3574,7 +3574,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/04/2016 22:39:26</publishTime>
     </File>
     <File Include="Views/LMS/BookingInfo.cshtml">
-      <publishTime>07/04/2016 23:28:26</publishTime>
+      <publishTime>07/06/2016 10:55:03</publishTime>
     </File>
     <File Include="Views/LMS/Car.cshtml">
       <publishTime>05/26/2016 00:38:02</publishTime>
@@ -3596,6 +3596,24 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/LMS/Index.cshtml">
       <publishTime>06/02/2016 02:56:59</publishTime>
+    </File>
+    <File Include="Views/LMS/InvoiceCommit.cshtml">
+      <publishTime>06/07/2016 01:21:03</publishTime>
+    </File>
+    <File Include="Views/LMS/InvoiceInfo.cshtml">
+      <publishTime>07/06/2016 12:32:56</publishTime>
+    </File>
+    <File Include="Views/LMS/InvoiceList.cshtml">
+      <publishTime>07/06/2016 11:08:36</publishTime>
+    </File>
+    <File Include="Views/LMS/InvoiceNew.cshtml">
+      <publishTime>06/07/2016 02:33:56</publishTime>
+    </File>
+    <File Include="Views/LMS/InvoicePrint.cshtml">
+      <publishTime>06/07/2016 03:29:37</publishTime>
+    </File>
+    <File Include="Views/LMS/InvoiceSub.cshtml">
+      <publishTime>06/07/2016 00:07:23</publishTime>
     </File>
     <File Include="Views/LMS/JobOrder.cshtml">
       <publishTime>07/05/2016 00:33:32</publishTime>
@@ -3630,6 +3648,21 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/LMS/QueueList.cshtml">
       <publishTime>05/30/2016 00:05:58</publishTime>
     </File>
+    <File Include="Views/LMS/ReceiptInfo.cshtml">
+      <publishTime>07/06/2016 12:52:58</publishTime>
+    </File>
+    <File Include="Views/LMS/ReceiptInvoice.cshtml">
+      <publishTime>07/06/2016 11:40:01</publishTime>
+    </File>
+    <File Include="Views/LMS/ReceiptList.cshtml">
+      <publishTime>07/06/2016 11:18:31</publishTime>
+    </File>
+    <File Include="Views/LMS/ReceiptNew.cshtml">
+      <publishTime>07/06/2016 12:23:35</publishTime>
+    </File>
+    <File Include="Views/LMS/ReceiptPrint.cshtml">
+      <publishTime>07/06/2016 12:55:03</publishTime>
+    </File>
     <File Include="Views/LMS/ReportBooking.cshtml">
       <publishTime>07/04/2016 23:55:52</publishTime>
     </File>
@@ -3643,7 +3676,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2016 14:00:55</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/04/2016 23:39:42</publishTime>
+      <publishTime>07/06/2016 11:34:30</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutLogIn.cshtml">
       <publishTime>04/25/2016 23:44:59</publishTime>

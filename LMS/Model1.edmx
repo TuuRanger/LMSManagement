@@ -131,6 +131,27 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Detail" Type="varchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="LMS_Invoice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="InvoiceDate" Type="date" />
+          <Property Name="DueDate" Type="date" />
+          <Property Name="SubID" Type="int" />
+          <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CreditTerm" Type="int" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="LMS_InvoiceDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="BookingID" Type="nvarchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="LMS_Job">
           <Key>
             <PropertyRef Name="ID" />
@@ -165,6 +186,19 @@
           <Property Name="PriceTHB" Type="decimal" Precision="18" Scale="0" />
           <Property Name="PriceUSD" Type="decimal" Precision="18" Scale="0" />
           <Property Name="PriceEUR" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="LMS_Receipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="ReceiptDate" Type="date" />
+          <Property Name="InvoiceNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="PaymentDate" Type="date" />
+          <Property Name="GrandTotal" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PaymentType" Type="int" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="LMS_Route">
           <Key>
@@ -242,9 +276,12 @@
           <EntitySet Name="LMS_Driver" EntityType="Self.LMS_Driver" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LMS_DriverOfCar" EntityType="Self.LMS_DriverOfCar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LMS_From" EntityType="Self.LMS_From" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Invoice" EntityType="Self.LMS_Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_InvoiceDetail" EntityType="Self.LMS_InvoiceDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LMS_Job" EntityType="Self.LMS_Job" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LMS_Passenger" EntityType="Self.LMS_Passenger" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LMS_Product" EntityType="Self.LMS_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Receipt" EntityType="Self.LMS_Receipt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LMS_Route" EntityType="Self.LMS_Route" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LMS_SubAgent" EntityType="Self.LMS_SubAgent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LMS_TO" EntityType="Self.LMS_TO" Schema="dbo" store:Type="Tables" />
@@ -462,6 +499,9 @@
           <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" />
           <EntitySet Name="LMS_WorkTime" EntityType="Self.LMS_WorkTime" />
           <EntitySet Name="LMS_Booking" EntityType="synergilimoModel.LMS_Booking" />
+          <EntitySet Name="LMS_Invoice" EntityType="synergilimoModel.LMS_Invoice" />
+          <EntitySet Name="LMS_InvoiceDetail" EntityType="synergilimoModel.LMS_InvoiceDetail" />
+          <EntitySet Name="LMS_Receipt" EntityType="synergilimoModel.LMS_Receipt" />
         </EntityContainer>
         <EntityType Name="LMS_Booking">
           <Key>
@@ -502,6 +542,40 @@
           <Property Name="RouteDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PaymentType" Type="Int32" />
           <Property Name="PaymentStatus" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LMS_Invoice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+          <Property Name="DueDate" Type="DateTime" Precision="0" />
+          <Property Name="SubID" Type="Int32" />
+          <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CreditTerm" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+        </EntityType>
+        <EntityType Name="LMS_InvoiceDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="BookingID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LMS_Receipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReceiptNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptDate" Type="DateTime" Precision="0" />
+          <Property Name="InvoiceNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+          <Property Name="PaymentType" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -750,6 +824,43 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
                 <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Invoice">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Invoice">
+              <MappingFragment StoreEntitySet="LMS_Invoice">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreditTerm" ColumnName="CreditTerm" />
+                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_InvoiceDetail">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_InvoiceDetail">
+              <MappingFragment StoreEntitySet="LMS_InvoiceDetail">
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Receipt">
+            <EntityTypeMapping TypeName="synergilimoModel.LMS_Receipt">
+              <MappingFragment StoreEntitySet="LMS_Receipt">
+                <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="ReceiptNo" ColumnName="ReceiptNo" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -1,0 +1,119 @@
+﻿@model List<LMS.Models.Invoice>
+@{
+    ViewBag.Title = "Invoice";
+}
+
+<section class="content-header">
+    <h1>
+        Receipt Management
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i>Forms</a></li>
+        <li class="active">Receipt</li>
+    </ol>
+</section>
+<section class="content">
+    @{ string UserFullName = "";
+     string UserType = "0";
+     string UserTypeName = "";
+     string AgentID = "";
+     if (HttpContext.Current.Session["LogedUserFullname"] != null)
+     {
+         UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
+         AgentID = HttpContext.Current.Session["LogedAgentID"].ToString();
+         UserType = HttpContext.Current.Session["LogedUserType"].ToString();
+
+         if (UserType == "1")
+         {
+             UserTypeName = "Internal";
+         }
+         else if (UserType == "2")
+         {
+             UserTypeName = "Sub Agent";
+         }
+     }
+
+    }
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Invoice List</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table no-margin">
+                            <thead>
+                                <tr>
+                                    <th>Invoice No</th>
+                                    <th>Invoice Date</th>
+                                    <th>Due Date</th>
+                                    <th>Sub Agent</th>
+                                    <th>Credit Term</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+
+                                    String Status = "";
+                                    String SClass = "";
+                                    if (item.IStatus == 1)
+                                    {
+                                        Status = "ยังไม่ได้ชำระเงิน";
+                                        SClass = "label label-success";
+                                    }
+                                    else if (item.IStatus == 2)
+                                    {
+                                        Status = "ชำระเงินเเล้ว";
+                                        SClass = "label label-primary";
+                                    }
+                                    else if (item.IStatus == 3)
+                                    {
+                                        Status = "ยกเลิก";
+                                        SClass = "label label-warning";
+                                    }
+
+
+
+                                    <tr>
+                                        <td><a href="/LMS/ReceiptNew?InvoiceNo=@item.InvoiceNo">@item.InvoiceNo</a></td>
+                                        <td>@item.InvoiceDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.DueDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.SubName</td>
+                                        <td>@item.CreditTerm</td>
+                                        <td><span class="@SClass">@Status</span></td>
+
+                                    </tr>
+
+
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                @*<div class="box-footer clearfix">
+                    <a href="/LMS/InvoiceSub" class="btn btn-sm btn-info btn-flat pull-right">Place New Invoice</a>
+                    <a href="/LMS/ReportInvoice" class="btn btn-sm btn-default btn-flat pull-left">View All Invoice</a>
+                </div>*@
+                <!-- /.box-footer -->
+            </div>
+
+        </div>
+
+    </div>
+</section>

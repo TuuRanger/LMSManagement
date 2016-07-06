@@ -73,16 +73,19 @@
                                 {
                                     <b>Payment Status : ยังไม่ได้ชำระเงิน</b>
                                 }
-                                else
+                                else if (item.PaymentStatus == 2)
+                                {
+                                    <b>Payment Status : มีใบแจ้งหนี้</b>
+                                }
+                                else if (item.PaymentStatus == 3)
                                 {
                                     <b>Payment Status : ชำระเงินเเล้ว</b>
                                 }
-                               
                                 <br />
 
                             </td>
                         }
-                        else
+                        else if (@item.PaymentType == 2)
                         {
                             sPT = "PayPal";
                             <td>
@@ -114,7 +117,11 @@
                                         <img alt="" border="0" src="https://www.paypalobjects.com/th_TH/i/scr/pixel.gif" width="1" height="1">
                                     </form>
                                 }
-                                else
+                                else if (item.PaymentStatus == 2)
+                                {
+                                    <b>Payment Status : มีใบแจ้งหนี้</b>
+                                }
+                                else if (item.PaymentStatus == 3)
                                 {
                                     <b>Payment Status : ชำระเงินเเล้ว</b>
                                 }
@@ -123,6 +130,20 @@
 
                             </td>
                         }
+                        else if (@item.PaymentType == 3)
+                        {
+                            sPT = "Credit";
+                        }
+                        else if (@item.PaymentType == 4)
+                        {
+                            sPT = "Cheque";
+                        }
+                        else if (@item.PaymentType == 5)
+                        {
+                            sPT = "Transfer";
+                        }
+
+
                       
                     </tr>
                 </table>

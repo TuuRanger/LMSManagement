@@ -21,6 +21,9 @@
         <EntityTypeShape EntityType="synergilimoModel.LMS_Vehicle" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="synergilimoModel.LMS_WorkTime" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="synergilimoModel.LMS_Booking" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="synergilimoModel.LMS_Invoice" Width="1.5" PointX="11.375" PointY="9.75" />
+        <EntityTypeShape EntityType="synergilimoModel.LMS_InvoiceDetail" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="synergilimoModel.LMS_Receipt" Width="1.5" PointX="0.75" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

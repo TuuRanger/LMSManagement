@@ -206,6 +206,9 @@
     <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" />
     <EntitySet Name="LMS_WorkTime" EntityType="Self.LMS_WorkTime" />
     <EntitySet Name="LMS_Booking" EntityType="synergilimoModel.LMS_Booking" />
+    <EntitySet Name="LMS_Invoice" EntityType="synergilimoModel.LMS_Invoice" />
+    <EntitySet Name="LMS_InvoiceDetail" EntityType="synergilimoModel.LMS_InvoiceDetail" />
+    <EntitySet Name="LMS_Receipt" EntityType="synergilimoModel.LMS_Receipt" />
   </EntityContainer>
   <EntityType Name="LMS_Booking">
     <Key>
@@ -246,5 +249,39 @@
     <Property Name="RouteDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="PaymentType" Type="Int32" />
     <Property Name="PaymentStatus" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LMS_Invoice">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+    <Property Name="DueDate" Type="DateTime" Precision="0" />
+    <Property Name="SubID" Type="Int32" />
+    <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="CreditTerm" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LMS_InvoiceDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BookingID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="LMS_Receipt">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReceiptNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="ReceiptDate" Type="DateTime" Precision="0" />
+    <Property Name="InvoiceNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+    <Property Name="PaymentType" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
 </Schema>

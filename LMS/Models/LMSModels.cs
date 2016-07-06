@@ -33,6 +33,15 @@ namespace LMS.Models
         public string AName { get; set; }
         public int UserID { get; set; }
 
+        public string Address { get; set; }
+        public string Telephone { get; set; }
+        public string Email { get; set; }
+        public string Contact { get; set; }
+        public int CreditTerm { get; set; }
+        public string Tax { get; set; }
+        public string Remark { get; set; }
+
+
     }
     public class FromModel
     {
@@ -261,6 +270,69 @@ namespace LMS.Models
         public string RouteDetail { get; set; }
         public int PaymentType { get; set;}
         public int PaymentStatus { get; set; }
+
+    }
+
+
+    public class Invoice
+    {
+        public int InvoiceID { get; set; }
+        public string InvoiceNo { get; set; }
+        public DateTime InvoiceDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public int SudID { get; set; }
+        public string SubName { get; set; }
+        public string SubAddress { get; set; }
+        public string SubTel { get; set; }
+        public string SubTax { get; set; }
+        public int NumOfBooking { get; set; }
+        public int CreditTerm { get; set; }
+        public int IStatus { get; set; }
+        public decimal GrandTotal { get; set; }
+
+    }
+
+    public class InvoiceDetail
+    {
+        public int InvoideDID { get; set; }
+        public string InvoiceNo { get; set; }
+        public string Booking { get; set; }
+    }
+
+    public class InvoiceList
+    {
+        public List<Invoice> LInvoice { get; set; }
+        public List<InvoiceDetail> LInvoiceDetail { get; set; }
+        public List<BookingInfo> LBooking { get; set; }
+        public List<SubAgent> LSubAgent { get; set; }
+
+    }
+
+    public class Receipt
+    {
+        public int RID { get; set; }
+        public string ReceiptNo { get; set; }
+        public DateTime ReceiptDate { get; set; }
+        public string InvoiceNo { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public int PaymentType { get; set; }
+        public decimal GrandTotal { get; set; }
+        public int Status { get; set; }
+
+        public string SubName { get; set; }
+        public string SubAddress { get; set; }
+        public string SubTel { get; set; }
+        public string SubTax { get; set; }
+
+    }
+
+    public class ReceiptList
+    {
+        public List<Receipt> LReceipt { get; set; }
+        public List<Invoice> LInvoice { get; set; }
+        public List<InvoiceDetail> LInvoiceDetail { get; set; }
+        public List<BookingInfo> LBooking { get; set; }
+        public List<SubAgent> LSubAgent { get; set; }
 
     }
 }
