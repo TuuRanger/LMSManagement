@@ -44,5 +44,6 @@ namespace LMS
         public DbSet<LMS_Invoice> LMS_Invoice { get; set; }
         public DbSet<LMS_InvoiceDetail> LMS_InvoiceDetail { get; set; }
         public DbSet<LMS_Receipt> LMS_Receipt { get; set; }
+        public DbSet<LMS_UserSub> LMS_UserSub { get; set; }
     }
 }

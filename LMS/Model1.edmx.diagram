@@ -24,6 +24,7 @@
         <EntityTypeShape EntityType="synergilimoModel.LMS_Invoice" Width="1.5" PointX="11.375" PointY="9.75" />
         <EntityTypeShape EntityType="synergilimoModel.LMS_InvoiceDetail" Width="1.5" PointX="13.375" PointY="0.75" />
         <EntityTypeShape EntityType="synergilimoModel.LMS_Receipt" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="synergilimoModel.LMS_UserSub" Width="1.5" PointX="13.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

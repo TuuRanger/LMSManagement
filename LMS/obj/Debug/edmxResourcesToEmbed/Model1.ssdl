@@ -243,6 +243,14 @@
     <Property Name="Email" Type="nvarchar" MaxLength="200" />
     <Property Name="AgentID" Type="int" />
   </EntityType>
+  <EntityType Name="LMS_UserSub">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="SubID" Type="int" />
+  </EntityType>
   <EntityType Name="LMS_Vehicle">
     <Key>
       <PropertyRef Name="ID" />
@@ -281,6 +289,7 @@
     <EntitySet Name="LMS_SubAgent" EntityType="Self.LMS_SubAgent" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_TO" EntityType="Self.LMS_TO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_User" EntityType="Self.LMS_User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_UserSub" EntityType="Self.LMS_UserSub" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Vehicle" EntityType="Self.LMS_Vehicle" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_WorkTime" EntityType="Self.LMS_WorkTime" Schema="dbo" store:Type="Tables" />
   </EntityContainer>

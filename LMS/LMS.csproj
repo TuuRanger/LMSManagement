@@ -192,6 +192,9 @@
     <Compile Include="LMS_User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="LMS_UserSub.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="LMS_Vehicle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

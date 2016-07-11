@@ -58,7 +58,7 @@
                                     <th>Booking Date</th>
                                     <th>Service</th>
                                     <th>Route Detail</th>
-                                 
+                                    @*<th>To</th>*@
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Car Model</th>
@@ -123,11 +123,12 @@
                                             {
                                                 <td>@item.FromDetail &nbsp; to &nbsp; @item.ToDetail</td>
                                             }
+                                            @*<td>@item.FromDetail</td>
+        <td>@item.ToDetail</td>*@
                                             <td>@item.Date.ToString("dd/MM/yyyy")</td>
                                             <td>@item.Time</td>
                                             <td>@item.CarModel</td>
                                             <td><span class="@SClass">@Status</span></td>
-
                                         </tr>
                                   
 

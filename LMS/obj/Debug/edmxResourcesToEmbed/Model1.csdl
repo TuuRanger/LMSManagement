@@ -209,6 +209,7 @@
     <EntitySet Name="LMS_Invoice" EntityType="synergilimoModel.LMS_Invoice" />
     <EntitySet Name="LMS_InvoiceDetail" EntityType="synergilimoModel.LMS_InvoiceDetail" />
     <EntitySet Name="LMS_Receipt" EntityType="synergilimoModel.LMS_Receipt" />
+    <EntitySet Name="LMS_UserSub" EntityType="synergilimoModel.LMS_UserSub" />
   </EntityContainer>
   <EntityType Name="LMS_Booking">
     <Key>
@@ -283,5 +284,13 @@
     <Property Name="PaymentType" Type="Int32" />
     <Property Name="Status" Type="Int32" />
     <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="LMS_UserSub">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="SubID" Type="Int32" />
   </EntityType>
 </Schema>

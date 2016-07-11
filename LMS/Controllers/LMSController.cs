@@ -287,7 +287,8 @@ namespace LMS.Controllers
             else
             {
                 var dSubAgent = (from c in db.LMS_SubAgent
-                                 where c.UserID == UserID
+                                 join u in db.LMS_UserSub on c.ID equals u.SubID
+                                 where u.UserID == UserID
                                  select new
                                  {
                                      tName = c.Name,
@@ -799,42 +800,42 @@ namespace LMS.Controllers
               foreach (var bl in sBookingInfo)
               {
                   BookingInfo a = new BookingInfo();
-                  a.Address = bl.Address.ToString();
+                  a.Address = bl.Address;
                   //a.AgentEmail = bl.AgentEmail.ToString();
                   //a.AgentName = bl.AgentName.ToString();
                   a.BookingDate = Convert.ToDateTime(bl.BookingDate);
-                  a.BookingID = bl.BookingID.ToString();
+                  a.BookingID = bl.BookingID;
                   a.CarID = Convert.ToInt32(bl.CarID);
-                  a.CarModel = bl.CModel.ToString();
+                  a.CarModel = bl.CModel;
                   a.CustomerType = Convert.ToInt32(bl.CustomerType);
                   a.Date = Convert.ToDateTime(bl.bDate);
-                  a.DFirstName = bl.DName.ToString();
-                  a.DLastName = bl.DLastName.ToString();
-                  a.DMobile = bl.DMobile.ToString();
+                  a.DFirstName = bl.DName;
+                  a.DLastName = bl.DLastName;
+                  a.DMobile = bl.DMobile;
                   a.DriverID = Convert.ToInt32(bl.DriverID);
-                  a.DTitle = bl.DTitle.ToString();
-                  a.Email = bl.Email.ToString();
-                  a.FirstName = bl.FirstName.ToString();
-                  a.FlightNo = bl.FlightNo.ToString();
-                  a.FlightTime = bl.FlightTime.ToString();
-                  a.FromDetail = bl.FromDetail.ToString();
-                  a.LastName = bl.LastName.ToString();
+                  a.DTitle = bl.DTitle;
+                  a.Email = bl.Email;
+                  a.FirstName = bl.FirstName;
+                  a.FlightNo = bl.FlightNo;
+                  a.FlightTime = bl.FlightTime;
+                  a.FromDetail = bl.FromDetail;
+                  a.LastName = bl.LastName;
                   a.Luggage = Convert.ToInt32(bl.Luggage);
-                  a.Mobile = bl.Mobile.ToString();
+                  a.Mobile = bl.Mobile;
                   //a.OrderBy = bl.OrderBy.ToString();
                   a.Passenger = Convert.ToInt32(bl.Passenger);
                   a.Price = Convert.ToDecimal(bl.Price);
-                  a.Remark = bl.Remark.ToString();
-                  a.RouteDetail = bl.RouteDetail.ToString();
+                  a.Remark = bl.Remark;
+                  a.RouteDetail = bl.RouteDetail;
                   a.ServiceType = Convert.ToInt32(bl.ServiceType);
                   a.Status = Convert.ToInt32(bl.Status);
-                  a.Telephone = bl.Telephone.ToString();
-                  a.Time = bl.bTime.ToString();
-                  a.Title = bl.Title.ToString();
-                  a.ToDetail = bl.ToDetail.ToString();
+                  a.Telephone = bl.Telephone;
+                  a.Time = bl.bTime;
+                  a.Title = bl.Title;
+                  a.ToDetail = bl.ToDetail;
                   a.TotalPrice = Convert.ToDecimal(bl.TotalPrice);
-                  a.VehicleRegis = bl.VehicleRegis.ToString();
-                  a.Currency = bl.sCurrency.ToString();
+                  a.VehicleRegis = bl.VehicleRegis;
+                  a.Currency = bl.sCurrency;
 
                   if (bl.AgentID != 0)
                   {
@@ -848,9 +849,9 @@ namespace LMS.Controllers
                                     }
                    ).FirstOrDefault();
 
-                      a.AgentEmail = sAgent.AgentEMail.ToString();
-                      a.AgentMobile = sAgent.AgentMobile.ToString();
-                      a.AgentName = sAgent.AgentName.ToString();
+                      a.AgentEmail = sAgent.AgentEMail;
+                      a.AgentMobile = sAgent.AgentMobile;
+                      a.AgentName = sAgent.AgentName;
 
                   }
                   else
@@ -873,9 +874,9 @@ namespace LMS.Controllers
                                    }
                    ).FirstOrDefault();
 
-                      a.UName = sUser.UName.ToString();
-                      a.UEmail = sUser.UEmail.ToString();
-                      a.UTelephone = sUser.UTelephone.ToString();
+                      a.UName = sUser.UName;
+                      a.UEmail = sUser.UEmail;
+                      a.UTelephone = sUser.UTelephone;
 
                   }
                   else
@@ -1278,30 +1279,31 @@ namespace LMS.Controllers
                         //EMail
 
                     }
-                    Session["BookingID"] = BID;
-                    return RedirectToAction("BookingInfo", "LMS");
+                  //  Session["BookingID"] = BID;
+                  //  return RedirectToAction("BookingInfo", "LMS");
+                    return RedirectToAction("BookingInfo", "LMS", new { BID = BID });
             //return View();
         }
 
         public ActionResult BookingInfo()
         {
             string BID = "16050049";
-            if (Session["BookingID"] != null)
-            {
-                BID = Session["BookingID"].ToString();
-            }
-            else
-            {
-                if (Request.QueryString["BID"] != null)
-                {
-                    BID = Request.QueryString["BID"];
-                }
-                else{
-                      BID = "";
-                return RedirectToAction("Booking", "LMS");
-                }
+            //if (Session["BookingID"] != null)
+            //{
+            //    BID = Session["BookingID"].ToString();
+            //}
+            //else
+            //{
+            //    if (Request.QueryString["BID"] != null)
+            //    {
+                   BID = Request.QueryString["BID"];
+            //    }
+            //    else{
+            //          BID = "";
+            //    return RedirectToAction("Booking", "LMS");
+            //    }
               
-            }
+            //}
             List<BookingInfo> model = new List<BookingInfo>();
             var sBookingInfo = (from b in db.LMS_Booking
                                    join c in db.LMS_Car on b.CarID equals c.ID
@@ -2974,30 +2976,31 @@ namespace LMS.Controllers
             db.SaveChanges();
 
 
-            Session["InvoiceNo"] = InvoiceNo;
-            return RedirectToAction("InvoiceInfo", "LMS");
+         //   Session["InvoiceNo"] = InvoiceNo;
+        //    return RedirectToAction("InvoiceInfo", "LMS");
+            return RedirectToAction("InvoiceInfo", "LMS", new { InvoiceNo = InvoiceNo });
             //return View();
         }
         public ActionResult InvoiceInfo()
         {
             string InvoiceNo = "16070001";
-            if (Session["InvoiceNo"] != null)
-            {
-                InvoiceNo = Session["InvoiceNo"].ToString();
-            }
-            else
-            {
-                if (Request.QueryString["InvoiceNo"] != null)
-                {
-                    InvoiceNo = Request.QueryString["InvoiceNo"];
-                }
-                else
-                {
-                    InvoiceNo = "";
-                    return RedirectToAction("InvoiceList", "LMS");
-                }
+            //if (Session["InvoiceNo"] != null)
+            //{
+            //    InvoiceNo = Session["InvoiceNo"].ToString();
+            //}
+            //else
+            //{
+            //    if (Request.QueryString["InvoiceNo"] != null)
+            //    {
+                   InvoiceNo = Request.QueryString["InvoiceNo"];
+            //    }
+            //    else
+            //    {
+            //        InvoiceNo = "";
+            //        return RedirectToAction("InvoiceList", "LMS");
+            //    }
 
-            }
+            //}
 
             List<InvoiceList> model = new List<InvoiceList>();
             List<BookingInfo> BModel = new List<BookingInfo>();
@@ -3855,31 +3858,32 @@ namespace LMS.Controllers
                 db.SaveChanges();
             }
 
-            Session["ReceiptNo"] = ReceiptNo;
-            return RedirectToAction("ReceiptInfo", "LMS");
+          //  Session["ReceiptNo"] = ReceiptNo;
+          //  return RedirectToAction("ReceiptInfo", "LMS");
+            return RedirectToAction("ReceiptInfo", "LMS", new { ReceiptNo = ReceiptNo });
             //return View();
         }
 
         public ActionResult ReceiptInfo()
         {
             string ReceiptNo = "16070001";
-            if (Session["ReceiptNo"] != null)
-            {
-                ReceiptNo = Session["ReceiptNo"].ToString();
-            }
-            else
-            {
-                if (Request.QueryString["ReceiptNo"] != null)
-                {
-                    ReceiptNo = Request.QueryString["ReceiptNo"];
-                }
-                else
-                {
-                    ReceiptNo = "";
-                    return RedirectToAction("ReceiptList", "LMS");
-                }
+            //if (Session["ReceiptNo"] != null)
+            //{
+            //    ReceiptNo = Session["ReceiptNo"].ToString();
+            //}
+            //else
+            //{
+            //    if (Request.QueryString["ReceiptNo"] != null)
+            //    {
+                   ReceiptNo = Request.QueryString["ReceiptNo"];
+            //    }
+            //    else
+            //    {
+            //        ReceiptNo = "";
+            //        return RedirectToAction("ReceiptList", "LMS");
+            //    }
 
-            }
+            //}
 
             List<ReceiptList> model = new List<ReceiptList>();
             List<BookingInfo> BModel = new List<BookingInfo>();
