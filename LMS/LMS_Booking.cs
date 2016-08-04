@@ -49,5 +49,7 @@ namespace LMS
         public string RouteDetail { get; set; }
         public Nullable<int> PaymentType { get; set; }
         public Nullable<int> PaymentStatus { get; set; }
+        public Nullable<int> FromID { get; set; }
+        public Nullable<int> ToID { get; set; }
     }
 }

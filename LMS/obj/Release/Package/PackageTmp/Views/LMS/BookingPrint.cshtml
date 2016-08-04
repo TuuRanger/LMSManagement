@@ -1,0 +1,396 @@
+﻿@*@model List<LMS.Models.BookingInfo>*@
+@model Tuple<List<LMS.Models.BookingInfo>, List<LMS.Models.SaleVistDetail>>
+@{
+    ViewBag.Title = "Booking Info";
+    Layout = "";
+}
+<body onload="window.print();">
+    <div class="wrapper">
+        <section class="content-header">
+            @*<h1>
+                rTest
+                </h1>*@
+            @*<ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Dashboard</li>
+                </ol>*@
+        </section>
+        @foreach (var item in Model.Item1)
+        {
+
+            <section class="invoice">
+
+                <!-- title row -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2 class="page-header">
+                            <i class="fa fa-globe"></i>Booking Info
+                            <small class="pull-right">Booking Reference : IV &nbsp; @item.BookingID</small>
+                            <br />
+                        </h2>
+                    </div>
+
+                    <!-- /.col -->
+                </div>
+
+                <!-- info row -->
+                <div class="row invoice-info">
+
+                    @{string SType = "";
+                if (@item.ServiceType == 1)
+                {
+                SType = "One Way";
+                }
+                else if (@item.ServiceType == 2)
+                {
+                SType = "Return";
+                }
+                else if (@item.ServiceType == 3)
+                {
+                SType = "Sale Visit";
+                }
+                    }
+
+
+                    @{string sPT = "";}
+                    <div class="col-sm-12 invoice-col">
+                        <b>Dear &nbsp;&nbsp;</b> @item.Title &nbsp; @item.FirstName &nbsp; @item.LastName &nbsp; :
+                        <br /><br />
+                        Thank you for your reservation with Synergi. &nbsp; &nbsp;Your transfer service has been booked as follows.
+                        Please check to ensure all details are correct.
+                        <br />
+                        <br />
+
+                    </div>
+
+                    @if (item.PaymentStatus == 1)
+                {
+                <div class="col-sm-12 invoice-col">
+                    <label>Payment</label>
+                    <br />
+                    <label>
+                        <input type="radio" name="optPayment" id="optPayment1" value="1" onclick="showhidediv(this);" checked>
+                        Cash
+                    </label> &nbsp;&nbsp;
+                    <label>
+                        <input type="radio" name="optPayment" id="optPayment2" value="2" onclick="showhidediv(this);">
+                        PayPal
+                    </label>
+                </div>
+                <div class="col-sm-12 invoice-col" id="Paypal">
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="ZN5FQMYX2725U">
+                        <div class="col-sm-12 invoice-col">
+                            <input type="hidden" name="on0" value="ประเภทบริการ">ประเภทบริการ
+                        </div>
+                        <div class="col-sm-12 invoice-col">
+                            <select name="os0">
+                                @if (@item.TotalPrice == 1600)
+                                {
+                                <option selected value="Limousine Toyota Camry Airport to Bangkok/Suburb">Limousine Toyota Camry Airport to Bangkok/Suburb ฿1,600.00 THB</option>
+                                }
+                                else
+                                {
+                                <option value="Limousine Toyota Camry Airport to Bangkok/Suburb">Limousine Toyota Camry Airport to Bangkok/Suburb ฿1,600.00 THB</option>
+                                }
+
+                                @if (@item.TotalPrice == 2500 && @item.VechileID == 2)
+                                {
+                                <option selected value="Limousine Hyundai H1 Airport to Bangkok/Suburb">Limousine Hyundai H1 Airport to Bangkok/Suburb ฿2,500.00 THB</option>
+                                }
+                                else
+                                {
+                                <option value="Limousine Hyundai H1 Airport to Bangkok/Suburb">Limousine Hyundai H1 Airport to Bangkok/Suburb ฿2,500.00 THB</option>
+
+                                }
+
+                                @if (@item.TotalPrice == 2500 && @item.VechileID == 1)
+                                {
+
+                                <option selected value="Limousine Toyota Camry Airport to Upcountry">Limousine Toyota Camry Airport to Upcountry ฿2,500.00 THB</option>
+                                }
+                                else
+                                {
+                                <option value="Limousine Toyota Camry Airport to Upcountry">Limousine Toyota Camry Airport to Upcountry ฿2,500.00 THB</option>
+                                }
+
+                                @if (@item.TotalPrice == 4000)
+                                {
+                                <option selected value="Limousine Hyundai H1 Airport to Upcountry">Limousine Hyundai H1 Airport to Upcountry ฿4,000.00 THB</option>
+                                }
+                                else
+                                {
+                                <option value="Limousine Hyundai H1 Airport to Upcountry">Limousine Hyundai H1 Airport to Upcountry ฿4,000.00 THB</option>
+                                }
+                                @if (@item.TotalPrice == 3500)
+                                {
+                                <option selected value="Sales Visit One Day (Toyota Camry)">Sales Visit One Day (Toyota Camry) ฿3,500.00 THB</option>
+                                }
+                                else
+                                {
+                                <option value="Sales Visit One Day (Toyota Camry)">Sales Visit One Day (Toyota Camry) ฿3,500.00 THB</option>
+                                }
+                                @if (@item.TotalPrice == 5000)
+                                {
+                                <option selected value="Sales Visit One Day (Hyundai H1)">Sales Visit One Day (Hyundai H1) ฿5,000.00 THB</option>
+                                }
+                                else
+                                {
+                                <option value="Sales Visit One Day (Hyundai H1)">Sales Visit One Day (Hyundai H1) ฿5,000.00 THB</option>
+                                }
+                            </select>
+
+                        </div>
+                        <div class="col-sm-12 invoice-col">
+                            <br />
+                            <input type="hidden" name="currency_code" value="THB">
+                            <input type="image" src="https://www.paypalobjects.com/th_TH/TH/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - วิธีชำระเงินแบบออนไลน์ที่ปลอดภัยกว่าและง่ายกว่า!">
+                            <img alt="" border="0" src="https://www.paypalobjects.com/th_TH/i/scr/pixel.gif" width="1" height="1">
+                            <br />
+                        </div>
+
+                    </form>
+                </div>
+
+                }
+                else if (item.PaymentStatus == 2)
+                {
+                <div class="col-sm-12 invoice-col">
+                    <b>Payment Status : มีใบแจ้งหนี้</b>
+                </div>
+                }
+                else if (item.PaymentStatus == 3)
+                {
+                <div class="col-sm-12 invoice-col">
+                    <b>Payment Status : ชำระเงินเเล้ว</b>
+                </div>
+                }
+                    <hr />
+                    <div class="col-sm-12 invoice-col">
+                        <br />
+                        <b>Reservation Code :</b> IV @item.BookingID
+                        <br />
+                    </div>
+
+                    <br />
+                    <div class="col-sm-12 invoice-col">
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <table class="table table-striped" border="1" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Passengers Details</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td width="30%"><b>Passenger Name : &nbsp;</b></td>
+                                            <td width="70%">@item.Title &nbsp; @item.FirstName &nbsp; @item.LastName</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>Address : &nbsp;</b></td>
+                                            <td width="70%">@item.Address</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>EMail : &nbsp;</b> </td>
+                                            <td width="70%">@item.Email</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>Contact Call : &nbsp;</b></td>
+                                            <td width="70%">@item.Mobile</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>Type of Service  : &nbsp;</b></td>
+                                            <td width="70%">@SType</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>No. of Passengers  : &nbsp;</b></td>
+                                            <td width="70%">@item.Passenger</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>No. of Luggage : &nbsp;</b> </td>
+                                            <td width="70%">@item.Luggage</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>Flight Detail : &nbsp;</b> </td>
+                                            <td width="70%">@item.FlightNo</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>Pick up date : &nbsp;</b> </td>
+                                            <td width="70%">@item.Date.ToString("dd/MM/yyyy")</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>Pick up time : &nbsp;</b> </td>
+                                            <td width="70%">@item.Time</td>
+                                        </tr>
+                                        @if (@item.ServiceType != 3)
+                                    {
+                                    <tr>
+                                        <td width="30%"><b>From : &nbsp;</b></td>
+                                        <td width="70%">@item.FromDetail</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="30%"><b>Send To : &nbsp;</b></td>
+                                        <td width="70%">@item.ToDetail</td>
+                                    </tr>
+                                    }
+                                    else
+                                    {
+                                    <tr>
+                                        <td width="30%"><b>Route Detail : &nbsp;</b></td>
+                                        <td width="70%">
+                                            @{int dNum = 1;
+                                            }
+
+                                            @foreach (var itemS in Model.Item2)
+                                            {
+
+                                            string lNum = dNum + ".";
+                                            @lNum@itemS.RouteDetail<br />
+                                            dNum = dNum + 1;
+                                            }
+                                        </td>
+                                    </tr>
+
+                                    }
+                                        <tr>
+                                            <td width="30%"><b>Pick up point : &nbsp;</b></td>
+                                            <td width="70%">(Chauffeur will SMS you or call you 15 minutes after you landed to notify you of his arrival)<br>Emergency call : 091-234-0843</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <hr />
+                    </div>
+
+                    <div class="col-sm-12 invoice-col">
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <table class="table table-striped" border="1" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Chauffeur Details</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td width="30%"><b>Chauffeur Name : &nbsp;</b></td>
+                                            <td width="70%">Mr. &nbsp; @item.DFirstNameE &nbsp; @item.DLastNameE &nbsp; (@item.DNickNameE)</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>Contact Call : &nbsp;</b></td>
+                                            <td width="70%">@item.DMobile</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>Type of vehicle : &nbsp;</b></td>
+                                            <td width="70%">@item.CarModel</td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%"><b>Plate Number : &nbsp;</b></td>
+                                            <td width="70%">@item.VehicleRegis</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <hr />
+                    </div>
+
+
+                    @if (item.CustomerType == 2)
+                {
+                <div class="col-sm-12 invoice-col">
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12 table-responsive">
+                            <table class="table table-striped" border="1" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Agent Information</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="30%"><b>Agent : &nbsp;</b></td>
+                                        <td width="70%">@item.AgentName</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="30%"><b>EMail : &nbsp;</b></td>
+                                        <td width="70%">@item.AgentEmail</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="30%"><b>Contact Call : &nbsp;</b></td>
+                                        <td width="70%">@item.AgentMobile</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <hr />
+                </div>
+
+
+                }
+                    <div class="col-sm-12 invoice-col">
+                        <b>Term and Condition</b><br>
+                        <br />
+                        1.For any cancellation made more than 48 hours in advance, there is no charge.<br>
+                        2.For any cancellation made within 48 hours, there is a 50% charge.<br>
+                        3.For any cancellation made within 24 hours or no show , there is a 100% charge.<br><br>
+                        <b>Airport Transfer</b><br>
+                        1.If the passengers do no show up or are late more than 2 hours from appointed time,<br />
+                        we reserve the right to charge in full.<br>
+                        2.Maximum of passengers to be seated / Camry sedan 3 passengers / Hyundai Van 6 passengers.<br>
+                        <br><br>
+                        Synergi 2016  Co.,Ltd. should look forward to providing you our quality limousine service.<br>
+                        If you have any queries,please email us at booking@synergilimo.com<br><br>
+                        Best regards,<br>
+                        <hr />
+                    </div>
+
+
+                </div>
+
+                <!-- /.col -->
+                @*<div class="row no-print">
+                    <div class="col-sm-6 invoice-col">
+                        <br />
+                        <a href="" class="btn btn-danger pull-left">Cancel Invoice</a>&nbsp;&nbsp;&nbsp;
+                        <a href="" class="btn btn-warning pull-left">Edit Invoice</a>
+
+
+                    </div>
+                    <div class="col-sm-6 invoice-col">
+                        <br />
+
+                        <a href="/LMS/BookingPrint?BID=@item.BookingID" target="_blank" class="btn btn-success pull-right"><i class="fa fa-print"></i> Print Booking</a>
+
+                    </div>
+                </div>*@
+
+            </section>
+        }
+    </div>
+</body>
+<script language="JavaScript" type="text/javascript">
+    document.getElementById('Paypal').style.display = 'none';
+
+    function showhidediv(rad) {
+        var rads = document.getElementsByName(rad.name);
+        document.getElementById('Paypal').style.display = (rads[1].checked) ? 'block' : 'none';
+
+    }
+</script>

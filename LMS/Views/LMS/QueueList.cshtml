@@ -38,7 +38,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="box box-info">
+            <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Queue List</h3>
                     <div class="box-tools pull-right">
@@ -50,25 +50,24 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <table class="table no-margin">
+                    <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
                             <thead>
-                                <tr>
-                                  
-                                    <th>License Plate</th>
-                                    <th>Model</th>
-                                    <th>Driver Name</th>
-                                    <th>Last Booking</th>
-                                    <th>Last Job (Date)</th>
-                                    <th>Last Job (Time)</th>
-                                    <th>Status</th>
+                                <tr style="background-color:#27AE60">
+                                    <th align="center"><font color="#fff">License Plate</font></th>
+                                    <th align="center"><font color="#fff">Model</font></th>
+                                    <th align="center"><font color="#fff">Driver Name</font></th>
+                                    <th align="center"><font color="#fff">Last Booking</font></th>
+                                    <th align="center"><font color="#fff">Last Job (Date)</font></th>
+                                    <th align="center"><font color="#fff">>Last Job (Time)</font></th>
+                                    <th align="center"><font color="#fff">Status</font></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                  
-                                    <tr>
+
+                                    <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/Queue">@item.VehicleRegis</a></td>
                                         <td>@item.Model</td>
                                         <td>@item.DTitle &nbsp; @item.DFirstName &nbsp; @item.DLastName</td>
@@ -100,3 +99,15 @@
     </div>
 
 </section>
+<script type="text/javascript">
+
+    var TableBackgroundNormalColor = "#ffffff";
+    var TableBackgroundMouseoverColor = "#D5F5E3";
+
+    // These two functions need no customization.
+    function ChangeBackgroundColor(row) {
+        TableBackgroundNormalColor = row.style.backgroundColor;
+        row.style.backgroundColor = TableBackgroundMouseoverColor;
+    }
+    function RestoreBackgroundColor(row) { row.style.backgroundColor = TableBackgroundNormalColor; }
+</script>

@@ -158,22 +158,23 @@
                             &nbsp;
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table no-margin">
-                                            <thead>
-                                                <tr>
-                                                    <th align="center">Booking ID</th>
-                                                    <th align="center">Date</th>
-                                                    <th align="center">Service</th>
-                                                    <th align="center">Route Detail</th>
-                                                    <th align="center">Customer</th>
-                                                    <th align="center">Price</th>
-                                                    <th align="center">Currcney</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                
-                                                @foreach (var iBooking in item.LBooking)
+                                    <div class="box-body">
+                                        <div class="col-xs-12 table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr style="background-color:#27AE60">
+                                                        <th align="center" width="12%"><font color="#fff">Booking ID</font></th>
+                                                        <th align="center"><font color="#fff">Date</font></th>
+                                                        <th align="center"><font color="#fff">Service</font></th>
+                                                        <th align="center"><font color="#fff">Route Detail</font></th>
+                                                        <th align="center"><font color="#fff">Customer</font></th>
+                                                        <th align="center"><font color="#fff">Price</font></th>
+                                                        <th align="center"><font color="#fff">Currcney</font></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach (var iBooking in item.LBooking)
                                                 {
                                                     String ServiceName = "";
 
@@ -218,32 +219,33 @@
                                                     }
 
                                                     sRow = "Booking" + iRow;
-                                                    <tr>
-                                                        <td><input type="checkbox" id="@sRow" name="@sRow" value="@iBooking.BookingID" class="flat-red" checked>@iBooking.BookingID</td>
-                                                        @*<td><a href="/LMS/BookingInfo?BID=@iBooking.BookingID">@iBooking.BookingID</a></td>*@
-                                                        <td>@iBooking.Date.ToString("dd/MM/yyyy")</td>
-                                                        <td>@ServiceName</td>
-                                                        @if (iBooking.ServiceType == 3)
+                                                <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
+                                                    <td><input type="checkbox" id="@sRow" name="@sRow" value="@iBooking.BookingID" class="flat-red" checked>&nbsp; @iBooking.BookingID</td>
+                                                    @*<td><a href="/LMS/BookingInfo?BID=@iBooking.BookingID">@iBooking.BookingID</a></td>*@
+                                                    <td>@iBooking.Date.ToString("dd/MM/yyyy")</td>
+                                                    <td>@ServiceName</td>
+                                                    @if (iBooking.ServiceType == 3)
                                                         {
-                                                            <td>@iBooking.RouteDetail</td>
+                                                        <td>@iBooking.RouteDetail</td>
                                                         }
                                                         else
                                                         {
-                                                            <td>@iBooking.FromDetail &nbsp; to &nbsp; @iBooking.ToDetail</td>
+                                                        <td>@iBooking.FromDetail &nbsp; to &nbsp; @iBooking.ToDetail</td>
                                                         }
-                                                        <td>@iBooking.Title @iBooking.FirstName &nbsp; @iBooking.LastName</td>
-                                                        <td align="right">@iBooking.TotalPrice.ToString("#,###.##")</td>
-                                                        <td align="center">@iBooking.Currency</td>
+                                                    <td>@iBooking.Title @iBooking.FirstName &nbsp; @iBooking.LastName</td>
+                                                    <td align="right">@iBooking.TotalPrice.ToString("#,###.##")</td>
+                                                    <td align="center">@iBooking.Currency</td>
 
-                                                    </tr>
+                                                </tr>
 
-                                                    iRow = iRow + 1;
+                                                        iRow = iRow + 1;
                                                 }
 
-         
-                                            </tbody>
-                                        </table>
-                                    </div>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        </div>
                                     </div>
                                 </div>
                             &nbsp;
@@ -372,7 +374,18 @@
     }
 
 </script>
+<script type="text/javascript">
 
+    var TableBackgroundNormalColor = "#ffffff";
+    var TableBackgroundMouseoverColor = "#D5F5E3";
+
+    // These two functions need no customization.
+    function ChangeBackgroundColor(row) {
+        TableBackgroundNormalColor = row.style.backgroundColor;
+        row.style.backgroundColor = TableBackgroundMouseoverColor;
+    }
+    function RestoreBackgroundColor(row) { row.style.backgroundColor = TableBackgroundNormalColor; }
+</script>
 
 
 

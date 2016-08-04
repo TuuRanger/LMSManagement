@@ -38,7 +38,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="box box-info">
+            <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Invoice Last Month</h3>
                     <div class="box-tools pull-right">
@@ -50,22 +50,22 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <table class="table no-margin">
+                    <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>Invoice No</th>
-                                    <th>Invoice Date</th>
-                                    <th>Due Date</th>
-                                    <th>Sub Agent</th>
-                                    <th>Credit Term</th>
-                                    <th>Status</th>
+                                <tr style="background-color:#27AE60">
+                                    <th align="center"><font color="#fff">Invoice No</font></th>
+                                    <th align="center"><font color="#fff">Invoice Date</font></th>
+                                    <th align="center"><font color="#fff">Due Date</font></th>
+                                    <th align="center"><font color="#fff">Sub Agent</font></th>
+                                    <th align="center"><font color="#fff">Credit Term</font></th>
+                                    <th align="center"><font color="#fff">Status</font></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                  
+
                                     String Status = "";
                                     String SClass = "";
                                     if (item.IStatus == 1)
@@ -83,14 +83,14 @@
                                         Status = "ยกเลิก";
                                         SClass = "label label-warning";
                                     }
-                                   
 
 
-                                    <tr>
+
+                                    <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/InvoiceInfo?InvoiceNo=@item.InvoiceNo">@item.InvoiceNo</a></td>
                                         <td>@item.InvoiceDate.ToString("dd/MM/yyyy")</td>
                                         <td>@item.DueDate.ToString("dd/MM/yyyy")</td>
-                                        <td>@item.SubName</td>   
+                                        <td>@item.SubName</td>
                                         <td>@item.CreditTerm</td>
                                         <td><span class="@SClass">@Status</span></td>
 
@@ -99,7 +99,7 @@
 
                                 }
 
-                            
+
                             </tbody>
                         </table>
                     </div>
@@ -117,3 +117,15 @@
 
     </div>
 </section>
+<script type="text/javascript">
+
+    var TableBackgroundNormalColor = "#ffffff";
+    var TableBackgroundMouseoverColor = "#D5F5E3";
+
+    // These two functions need no customization.
+    function ChangeBackgroundColor(row) {
+        TableBackgroundNormalColor = row.style.backgroundColor;
+        row.style.backgroundColor = TableBackgroundMouseoverColor;
+    }
+    function RestoreBackgroundColor(row) { row.style.backgroundColor = TableBackgroundNormalColor; }
+</script>

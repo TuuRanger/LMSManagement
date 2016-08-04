@@ -48,6 +48,10 @@
     <EntitySetMapping Name="LMS_Driver">
       <EntityTypeMapping TypeName="synergilimoModel.LMS_Driver">
         <MappingFragment StoreEntitySet="LMS_Driver">
+          <ScalarProperty Name="LastNameE" ColumnName="LastNameE" />
+          <ScalarProperty Name="NameE" ColumnName="NameE" />
+          <ScalarProperty Name="NickNameE" ColumnName="NickNameE" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -208,6 +212,8 @@
     <EntitySetMapping Name="LMS_Booking">
       <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
         <MappingFragment StoreEntitySet="LMS_Booking">
+          <ScalarProperty Name="ToID" ColumnName="ToID" />
+          <ScalarProperty Name="FromID" ColumnName="FromID" />
           <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
           <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
           <ScalarProperty Name="RouteDetail" ColumnName="RouteDetail" />
@@ -288,6 +294,15 @@
         <MappingFragment StoreEntitySet="LMS_UserSub">
           <ScalarProperty Name="SubID" ColumnName="SubID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LMS_BookingDetail">
+      <EntityTypeMapping TypeName="synergilimoModel.LMS_BookingDetail">
+        <MappingFragment StoreEntitySet="LMS_BookingDetail">
+          <ScalarProperty Name="RouteDetail" ColumnName="RouteDetail" />
+          <ScalarProperty Name="BookingID" ColumnName="BookingID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

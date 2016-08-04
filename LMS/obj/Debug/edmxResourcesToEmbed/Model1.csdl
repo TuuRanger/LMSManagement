@@ -47,8 +47,8 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-    <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-    <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Birthday" Type="DateTime" Precision="0" />
     <Property Name="Mobile" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
     <Property Name="Emergency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -66,6 +66,10 @@
     <Property Name="Route" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="DriverLicense" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="YOS" Type="Int32" />
+    <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NickNameE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="LastNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="LMS_DriverOfCar">
     <Key>
@@ -210,6 +214,7 @@
     <EntitySet Name="LMS_InvoiceDetail" EntityType="synergilimoModel.LMS_InvoiceDetail" />
     <EntitySet Name="LMS_Receipt" EntityType="synergilimoModel.LMS_Receipt" />
     <EntitySet Name="LMS_UserSub" EntityType="synergilimoModel.LMS_UserSub" />
+    <EntitySet Name="LMS_BookingDetail" EntityType="synergilimoModel.LMS_BookingDetail" />
   </EntityContainer>
   <EntityType Name="LMS_Booking">
     <Key>
@@ -232,8 +237,8 @@
     <Property Name="Time" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Passenger" Type="Int32" />
     <Property Name="Luggage" Type="Int32" />
-    <Property Name="FlightNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="FlightTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="FlightNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FlightTime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="FromDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="ToDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -250,6 +255,8 @@
     <Property Name="RouteDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="PaymentType" Type="Int32" />
     <Property Name="PaymentStatus" Type="Int32" />
+    <Property Name="FromID" Type="Int32" />
+    <Property Name="ToID" Type="Int32" />
   </EntityType>
   <EntityType Name="LMS_Invoice">
     <Key>
@@ -292,5 +299,13 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="Int32" />
     <Property Name="SubID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LMS_BookingDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BookingID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="RouteDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

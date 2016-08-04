@@ -38,7 +38,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="box box-info">
+            <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Booking Last Month</h3>
                     <div class="box-tools pull-right">
@@ -50,19 +50,20 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <table class="table no-margin">
+                    <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>Booking ID</th>
-                                    <th>Booking Date</th>
-                                    <th>Service</th>
-                                    <th>Route Detail</th>
+                                <tr style="background-color:#27AE60">
+                                    <th align="center"><font color="#fff">Booking ID</font></th>
+                                    <th align="center"><font color="#fff">Booking Date</font></th>
+                                    <th align="center"><font color="#fff">Service</font></th>
+                                    <th align="center"><font color="#fff">Route Detail</font></th>
                                     @*<th>To</th>*@
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Car Model</th>
-                                    <th>Status</th>
+                                    <th align="center"><font color="#fff">Travel Date</font></th>
+                                    <th align="center"><font color="#fff">Time</font></th>
+                                    <th align="center"><font color="#fff">Passenger</font></th>
+                                    <th align="center"><font color="#fff">Car Model</font></th>
+                                    <th align="center"><font color="#fff">Status</font></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -110,79 +111,81 @@
                                         SClass = "label label-danger";
                                     }
 
-                                  
-                                        <tr>
-                                            <td><a href="/LMS/BookingInfo?BID=@item.BookingID">@item.BookingID</a></td>
-                                            <td>@item.BookingDate.ToString("dd/MM/yyyy")</td>
-                                            <td>@ServiceName</td>
-                                            @if (item.ServiceType == 3)
-                                            {
-                                                <td>@item.RouteDetail</td>
-                                            }
-                                            else
-                                            {
-                                                <td>@item.FromDetail &nbsp; to &nbsp; @item.ToDetail</td>
-                                            }
-                                            @*<td>@item.FromDetail</td>
-        <td>@item.ToDetail</td>*@
-                                            <td>@item.Date.ToString("dd/MM/yyyy")</td>
-                                            <td>@item.Time</td>
-                                            <td>@item.CarModel</td>
-                                            <td><span class="@SClass">@Status</span></td>
-                                        </tr>
-                                  
+
+                                    <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
+                                        <td><a href="/LMS/BookingInfo?BID=@item.BookingID">@item.BookingID</a></td>
+                                        <td>@item.BookingDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@ServiceName</td>
+                                        @if (item.ServiceType == 3)
+                                        {
+                                            <td>@item.RouteDetail</td>
+                                        }
+                                        else
+                                        {
+
+                                            <td>@item.FromDetail &nbsp; to &nbsp; @item.ToDetail</td>
+                                        }
+                                        @*<td>@item.FromDetail</td>
+                                <td>@item.ToDetail</td>*@
+                                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.Time</td>
+                                        <td>@item.DTitle @item.DName &nbsp;@item.DLastName</td>
+                                        <td>@item.CarModel</td>
+                                        <td><span class="@SClass">@Status</span></td>
+                                    </tr>
+
 
                                 }
-                              
+
                                 @*<tr>
-                                    <td><a href="/LMS/QueueDetail">B00002</a></td>
-                                    <td>One Way</td>
-                                    <td>Rama 3</td>
-                                    <td>Siam</td>
-                                    <td>7/5/2016</td>
-                                    <td>Benz A500</td>
-                                    <td><span class="label label-warning">Queue</span></td>
+                            <td><a href="/LMS/QueueDetail">B00002</a></td>
+                            <td>One Way</td>
+                            <td>Rama 3</td>
+                            <td>Siam</td>
+                            <td>7/5/2016</td>
+                            <td>Benz A500</td>
+                            <td><span class="label label-warning">Queue</span></td>
 
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00003</a></td>
-                                    <td>One Way</td>
-                                    <td>Rama 9</td>
-                                    <td>Central Word</td>
-                                    <td>7/9/2016</td>
-                                    <td>Honda Accrod</td>
-                                    <td><span class="label label-danger">Delivered</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/LMS/QueueDetail">B00003</a></td>
+                            <td>One Way</td>
+                            <td>Rama 9</td>
+                            <td>Central Word</td>
+                            <td>7/9/2016</td>
+                            <td>Honda Accrod</td>
+                            <td><span class="label label-danger">Delivered</span></td>
 
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00004</a></td>
-                                    <td>One Day</td>
-                                    <td>Rama 9</td>
-                                    <td></td>
-                                    <td>7/9/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-info">Finish</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/LMS/QueueDetail">B00004</a></td>
+                            <td>One Day</td>
+                            <td>Rama 9</td>
+                            <td></td>
+                            <td>7/9/2016</td>
+                            <td>Toyota Camry</td>
+                            <td><span class="label label-info">Finish</span></td>
 
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00005</a></td>
-                                    <td>One Day</td>
-                                    <td>Rama 9</td>
-                                    <td></td>
-                                    <td>17/12/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-danger">Delivered</span></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="/LMS/QueueDetail">B00006</a></td>
-                                    <td>One Way</td>
-                                    <td>Rama 9</td>
-                                    <td>DMK Airport</td>
-                                    <td>17/12/2016</td>
-                                    <td>Toyota Camry</td>
-                                    <td><span class="label label-success">New</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/LMS/QueueDetail">B00005</a></td>
+                            <td>One Day</td>
+                            <td>Rama 9</td>
+                            <td></td>
+                            <td>17/12/2016</td>
+                            <td>Toyota Camry</td>
+                            <td><span class="label label-danger">Delivered</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/LMS/QueueDetail">B00006</a></td>
+                            <td>One Way</td>
+                            <td>Rama 9</td>
+                            <td>DMK Airport</td>
+                            <td>17/12/2016</td>
+                            <td>Toyota Camry</td>
+                            <td><span class="label label-success">New</span></td>
 
-                                </tr>*@
+                        </tr>*@
                             </tbody>
                         </table>
                     </div>
@@ -200,3 +203,15 @@
 
     </div>
 </section>
+<script type="text/javascript">
+
+    var TableBackgroundNormalColor = "#ffffff";
+    var TableBackgroundMouseoverColor = "#D5F5E3";
+
+    // These two functions need no customization.
+    function ChangeBackgroundColor(row) {
+        TableBackgroundNormalColor = row.style.backgroundColor;
+        row.style.backgroundColor = TableBackgroundMouseoverColor;
+    }
+    function RestoreBackgroundColor(row) { row.style.backgroundColor = TableBackgroundNormalColor; }
+</script>

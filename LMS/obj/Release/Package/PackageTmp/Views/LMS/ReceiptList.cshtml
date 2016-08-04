@@ -38,7 +38,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="box box-info">
+            <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Receipt Last Month</h3>
                     <div class="box-tools pull-right">
@@ -50,16 +50,16 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <table class="table no-margin">
+                    <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>Receipt No</th>
-                                    <th>Receipt Date</th>
-                                    <th>Invoice No</th>
-                                    <th>วันที่ชำระเงิน</th>
-                                    <th>จำนวนเงิน</th>
-                                    <th>ประเภทการชำระเงิน</th>
+                                <tr style="background-color:#27AE60">
+                                    <th align="center"><font color="#fff">Receipt No</font></th>
+                                    <th align="center"><font color="#fff">Receipt Date</font></th>
+                                    <th align="center"><font color="#fff">Invoice No</font></th>
+                                    <th align="center"><font color="#fff">วันที่ชำระเงิน</font></th>
+                                    <th align="center"><font color="#fff">จำนวนเงิน</font></th>
+                                    <th align="center"><font color="#fff">ประเภทการชำระเงิน</font></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,7 +95,7 @@
                                     }
 
 
-                                    <tr>
+                                    <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/ReceiptInfo?ReceiptNo=@item.ReceiptNo">@item.ReceiptNo</a></td>
                                         <td>@item.ReceiptDate.ToString("dd/MM/yyyy")</td>
                                         <td>@item.InvoiceNo</td>
@@ -126,3 +126,15 @@
 
     </div>
 </section>
+<script type="text/javascript">
+
+    var TableBackgroundNormalColor = "#ffffff";
+    var TableBackgroundMouseoverColor = "#D5F5E3";
+
+    // These two functions need no customization.
+    function ChangeBackgroundColor(row) {
+        TableBackgroundNormalColor = row.style.backgroundColor;
+        row.style.backgroundColor = TableBackgroundMouseoverColor;
+    }
+    function RestoreBackgroundColor(row) { row.style.backgroundColor = TableBackgroundNormalColor; }
+</script>

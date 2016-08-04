@@ -28,13 +28,30 @@
                         <div class="col-xs-12">
                             <table width="100%">
                                 <tr>
-                                    <td width="70%">
-                                        <img src="~/img/SYN-Logo-th-ol.jpg" width="15%"><b>บริษัท เซนเนอร์ยี่ 2016 จำกัด</b>
-                                        <br />
-                                        60/29 หมู่ 6 ถ.กิ่งแก้ว ต.ราชาเทวะ อ.บางพลี จ.สมุทรปราการ 10540
-                                        <br />
-                                        เลขประจำตัวผู้เสียภาษี 0105543092392 สำนักงานใหญ่
+                                    <td width="100%">
+                                        <img src="~/img/TOP.jpg" width="100%">
+                                        @*<br />
+                        60/29 หมู่ 6 ถ.กิ่งแก้ว ต.ราชาเทวะ อ.บางพลี จ.สมุทรปราการ 10540
+                        <br />
+                        เลขประจำตัวผู้เสียภาษี 0105543092392 สำนักงานใหญ่*@
                                     </td>
+                                    @*<td width="30%" align="right">
+                        <b>วันที่ / Date :</b> &nbsp; @IInvoice.InvoiceDate.ToString("dd/MM/yyyy")
+                        <br />
+                        <b>เลขที่ / No : </b> &nbsp; IV &nbsp; @IInvoice.InvoiceNo
+                        <br />
+                    </td>*@
+                                </tr>
+                            </table>
+                            <br />
+                            <table width="100%">
+                                <tr>
+                                    <td width="100%" align="center" style="background-color:#b4adad">
+                                        <h4>ใบเสร็จรับเงิน / Receipt</h4>
+                                    </td>
+
+                                </tr>
+                                <tr>
                                     @foreach (var IReceipt in item.LReceipt)
                                     {
                                         string sPT = "";
@@ -58,7 +75,8 @@
                                         {
                                             sPT = "Transfer";
                                         }
-                                        <td width="30%" align="right">
+                                        <td width="100%" valign="top">
+                                            <br />
                                             <b>วันที่ออกใบเสร็จ / Receipt Date :</b> &nbsp; @IReceipt.ReceiptDate.ToString("dd/MM/yyyy")
                                             <br />
                                             <b>เลขที่ใบเสร็จ / Receipt No : </b> &nbsp; IV &nbsp; @IReceipt.ReceiptNo
@@ -70,16 +88,6 @@
                                         </td>
                                     }
                                 </tr>
-                            </table>
-                            <hr />
-                            <table width="100%">
-                                <tr>
-                                    <td width="100%" align="center" style="background-color:#b4adad">
-                                        <h4>ใบเสร็จรับเงิน / Receipt</h4>
-                                    </td>
-
-                                </tr>
-
                                 <tr>
                                     <td width="100%" valign="top">
                                         <br />
@@ -104,8 +112,8 @@
 
                             </table>
 
-                            <hr />
-                            <table width="100%">
+                            <br />
+                            <table class="table table-striped" width="100%">
                                 <tr>
                                     <td width="10%">
                                         <b>Booking ID</b>
@@ -181,18 +189,25 @@
 
                                 </tr>
                                 @*<tr>
-                                        <td width="100%" align="right">
-                                            <br />
+                    <td width="100%" align="right">
+                        <br />
 
-                                            <b>กรุณาขำระเงิน : สามารถชำระเงินได้ที่บัญชี Synergi 2016</b>
-                                            <br />
-                                            <b>เลขที่ 241-3-01402-4 ธนาคารกรุงเทพ</b>
-                                        </td>
+                        <b>กรุณาขำระเงิน : สามารถชำระเงินได้ที่บัญชี Synergi 2016</b>
+                        <br />
+                        <b>เลขที่ 241-3-01402-4 ธนาคารกรุงเทพ</b>
+                    </td>
 
-                                    </tr>*@
+                </tr>*@
 
                             </table>
-                            <hr />
+                            <br />
+                            <table width="100%">
+                                <tr>
+                                    <td width="100%">
+                                        <img src="~/img/Bottom.jpg" width="100%">
+
+                                </tr>
+                            </table>
                         </div>
                         <!-- /.col -->
                     </div>

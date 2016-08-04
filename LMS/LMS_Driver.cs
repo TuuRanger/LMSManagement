@@ -35,5 +35,9 @@ namespace LMS
         public string Route { get; set; }
         public string DriverLicense { get; set; }
         public Nullable<int> YOS { get; set; }
+        public string NickName { get; set; }
+        public string NickNameE { get; set; }
+        public string NameE { get; set; }
+        public string LastNameE { get; set; }
     }
 }

@@ -50,9 +50,11 @@
     <Property Name="Time" Type="nvarchar" MaxLength="10" />
     <Property Name="Passenger" Type="int" />
     <Property Name="Luggage" Type="int" />
-    <Property Name="FlightNo" Type="nvarchar" MaxLength="10" />
-    <Property Name="FlightTime" Type="nvarchar" MaxLength="10" />
+    <Property Name="FlightNo" Type="nvarchar(max)" />
+    <Property Name="FlightTime" Type="nvarchar" MaxLength="100" />
+    <Property Name="FromID" Type="int" />
     <Property Name="FromDetail" Type="nvarchar" MaxLength="255" />
+    <Property Name="ToID" Type="int" />
     <Property Name="ToDetail" Type="nvarchar" MaxLength="255" />
     <Property Name="RouteDetail" Type="nvarchar(max)" />
     <Property Name="Remark" Type="nvarchar(max)" />
@@ -68,6 +70,14 @@
     <Property Name="Currency" Type="nvarchar" MaxLength="5" />
     <Property Name="PaymentType" Type="int" />
     <Property Name="PaymentStatus" Type="int" />
+  </EntityType>
+  <EntityType Name="LMS_BookingDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookingID" Type="nvarchar" MaxLength="10" />
+    <Property Name="RouteDetail" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="LMS_Car">
     <Key>
@@ -87,8 +97,12 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="40" />
-    <Property Name="Name" Type="nvarchar" MaxLength="40" />
-    <Property Name="LastName" Type="nvarchar" MaxLength="40" />
+    <Property Name="NickName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+    <Property Name="NickNameE" Type="nvarchar" MaxLength="50" />
+    <Property Name="NameE" Type="nvarchar" MaxLength="100" />
+    <Property Name="LastNameE" Type="nvarchar" MaxLength="100" />
     <Property Name="Birthday" Type="date" />
     <Property Name="Mobile" Type="nvarchar" MaxLength="40" />
     <Property Name="Emergency" Type="nvarchar" MaxLength="50" />
@@ -275,6 +289,7 @@
     <EntitySet Name="LMS_Account" EntityType="Self.LMS_Account" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_AgentPrice" EntityType="Self.LMS_AgentPrice" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Booking" EntityType="Self.LMS_Booking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LMS_BookingDetail" EntityType="Self.LMS_BookingDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Car" EntityType="Self.LMS_Car" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_Driver" EntityType="Self.LMS_Driver" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LMS_DriverOfCar" EntityType="Self.LMS_DriverOfCar" Schema="dbo" store:Type="Tables" />

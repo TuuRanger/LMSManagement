@@ -37,7 +37,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="box box-info">
+            <div class="box box-success">
                 <div class="box-header with-border">
                     @{string aDate = Request.QueryString["sDate"];
                     string bDate = Request.QueryString["eDate"];
@@ -68,10 +68,10 @@
                     }
                     <div class="box-header with-border">
                         <div class="col-md-4">
-                            <label>From Date</label>
+                            <label>Travel Date Form</label>
                             <div class="input-group date">
                                 <input type="text" class="form-control" name="sDate" id="sDate" data-select="datepicker"
-                                       data-val="true" data-val-required="Date is required" value="@sDate.ToString("dd/MM/yyyy")">
+                                       data-val="true" data-val-required="Date is required" value="@aDate">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-success" data-toggle="datepicker">
                                         <i class="fa fa-calendar"></i>
@@ -87,10 +87,10 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <label>To Date</label>
+                            <label>Travel Date To</label>
                             <div class="input-group date">
                                 <input type="text" class="form-control" name="eDate" id="eDate" data-select="datepicker"
-                                       data-val="true" data-val-required="Date is required" value="@eDate.ToString("dd/MM/yyyy")">
+                                       data-val="true" data-val-required="Date is required" value="@bDate">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-success" data-toggle="datepicker">
                                         <i class="fa fa-calendar"></i>
@@ -112,17 +112,17 @@
                 </form>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <table class="table no-margin">
+                    <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>Booking ID</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Driver</th>
-                                    <th>Service</th>
-                                    <th>Route Detail</th>
-                                    <th>Car Model</th>
+                                <tr style="background-color:#27AE60">
+                                    <th align="center"><font color="#fff">Booking ID</font></th>
+                                    <th align="center"><font color="#fff">Travel Date</font></th>
+                                    <th align="center"><font color="#fff">Time</font></th>
+                                    <th align="center"><font color="#fff">Driver</font></th>
+                                    <th align="center"><font color="#fff">Service</font></th>
+                                    <th align="center"><font color="#fff">Route Detail</font></th>
+                                    <th align="center"><font color="#fff">Car Model</font></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -171,7 +171,7 @@
                                     }
 
 
-                                    <tr>
+                                    <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/JobOrderInfo?BID=@item.BookingID">@item.BookingID</a></td>
                                         <td>@item.Date.ToString("dd/MM/yyyy")</td>
                                         <td>@item.Time</td>
@@ -185,7 +185,7 @@
                                         {
                                             <td>@item.FromDetail &nbsp; to &nbsp; @item.ToDetail</td>
                                         }
-                                      
+
                                         <td>@item.CarModel</td>
                                     </tr>
 
@@ -193,54 +193,54 @@
                                 }
 
                                 @*<tr>
-                                        <td><a href="/LMS/QueueDetail">B00002</a></td>
-                                        <td>One Way</td>
-                                        <td>Rama 3</td>
-                                        <td>Siam</td>
-                                        <td>7/5/2016</td>
-                                        <td>Benz A500</td>
-                                        <td><span class="label label-warning">Queue</span></td>
+                            <td><a href="/LMS/QueueDetail">B00002</a></td>
+                            <td>One Way</td>
+                            <td>Rama 3</td>
+                            <td>Siam</td>
+                            <td>7/5/2016</td>
+                            <td>Benz A500</td>
+                            <td><span class="label label-warning">Queue</span></td>
 
-                                    </tr>
-                                    <tr>
-                                        <td><a href="/LMS/QueueDetail">B00003</a></td>
-                                        <td>One Way</td>
-                                        <td>Rama 9</td>
-                                        <td>Central Word</td>
-                                        <td>7/9/2016</td>
-                                        <td>Honda Accrod</td>
-                                        <td><span class="label label-danger">Delivered</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/LMS/QueueDetail">B00003</a></td>
+                            <td>One Way</td>
+                            <td>Rama 9</td>
+                            <td>Central Word</td>
+                            <td>7/9/2016</td>
+                            <td>Honda Accrod</td>
+                            <td><span class="label label-danger">Delivered</span></td>
 
-                                    </tr>
-                                    <tr>
-                                        <td><a href="/LMS/QueueDetail">B00004</a></td>
-                                        <td>One Day</td>
-                                        <td>Rama 9</td>
-                                        <td></td>
-                                        <td>7/9/2016</td>
-                                        <td>Toyota Camry</td>
-                                        <td><span class="label label-info">Finish</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/LMS/QueueDetail">B00004</a></td>
+                            <td>One Day</td>
+                            <td>Rama 9</td>
+                            <td></td>
+                            <td>7/9/2016</td>
+                            <td>Toyota Camry</td>
+                            <td><span class="label label-info">Finish</span></td>
 
-                                    </tr>
-                                    <tr>
-                                        <td><a href="/LMS/QueueDetail">B00005</a></td>
-                                        <td>One Day</td>
-                                        <td>Rama 9</td>
-                                        <td></td>
-                                        <td>17/12/2016</td>
-                                        <td>Toyota Camry</td>
-                                        <td><span class="label label-danger">Delivered</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="/LMS/QueueDetail">B00006</a></td>
-                                        <td>One Way</td>
-                                        <td>Rama 9</td>
-                                        <td>DMK Airport</td>
-                                        <td>17/12/2016</td>
-                                        <td>Toyota Camry</td>
-                                        <td><span class="label label-success">New</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/LMS/QueueDetail">B00005</a></td>
+                            <td>One Day</td>
+                            <td>Rama 9</td>
+                            <td></td>
+                            <td>17/12/2016</td>
+                            <td>Toyota Camry</td>
+                            <td><span class="label label-danger">Delivered</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/LMS/QueueDetail">B00006</a></td>
+                            <td>One Way</td>
+                            <td>Rama 9</td>
+                            <td>DMK Airport</td>
+                            <td>17/12/2016</td>
+                            <td>Toyota Camry</td>
+                            <td><span class="label label-success">New</span></td>
 
-                                    </tr>*@
+                        </tr>*@
                             </tbody>
                         </table>
                     </div>
@@ -259,3 +259,15 @@
     </div>
 
 </section>
+<script type="text/javascript">
+
+    var TableBackgroundNormalColor = "#ffffff";
+    var TableBackgroundMouseoverColor = "#D5F5E3";
+
+    // These two functions need no customization.
+    function ChangeBackgroundColor(row) {
+        TableBackgroundNormalColor = row.style.backgroundColor;
+        row.style.backgroundColor = TableBackgroundMouseoverColor;
+    }
+    function RestoreBackgroundColor(row) { row.style.backgroundColor = TableBackgroundNormalColor; }
+</script>

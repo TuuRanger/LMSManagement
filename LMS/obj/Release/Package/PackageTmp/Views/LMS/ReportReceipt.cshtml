@@ -40,7 +40,20 @@
 
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Receipt Last Month</h3>
+                    @{string aDate = Request.QueryString["sDate"];
+                    string bDate = Request.QueryString["eDate"];
+
+                    if (aDate == null || aDate == "")
+                    {
+                        aDate = DateTime.Now.ToString("dd/MM/yyyy");
+                    }
+                    if (bDate == null || bDate == "")
+                    {
+                        bDate = DateTime.Now.ToString("dd/MM/yyyy");
+                    }
+                    }
+                    <h3 class="box-title">Receipt</h3>
+                    (Search Between @aDate To @bDate)
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -48,6 +61,55 @@
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div>
+                <form action="/LMS/ReportReceipt" method="get" onsubmit="return chk_form()">
+                    @{
+                        DateTime sDate = DateTime.Now;
+                        DateTime eDate = DateTime.Now;
+                    }
+                    <div class="box-header with-border">
+                        <div class="col-md-4">
+                            <label>Receipt Date Form</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" name="sDate" id="sDate" data-select="datepicker"
+                                       data-val="true" data-val-required="Date is required" value="@aDate">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success" data-toggle="datepicker">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                @*<div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+
+                        <input class="form-control" data-val="true" data-val-required="Date is required"
+                               id="sDate" name="sDate" type="date" value="@sDate" />*@
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Receipt Date To</label>
+                            <div class="input-group date">
+                                <input type="text" class="form-control" name="eDate" id="eDate" data-select="datepicker"
+                                       data-val="true" data-val-required="Date is required" value="@bDate">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success" data-toggle="datepicker">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                                @*<div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+
+                        <input class="form-control" data-val="true" data-val-required="Date is required"
+                               id="eDate" name="eDate" type="date" value="@eDate" />*@
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-success btn-block" data-animation-type="bounce" data-animation-duration="1" style="animation-duration: 1s; visibility: visible;">SEARCH NOW</button>
+                        </div>
+                    </div>
+                </form>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="col-xs-12 table-responsive">

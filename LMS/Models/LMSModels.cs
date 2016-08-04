@@ -99,7 +99,7 @@ namespace LMS.Models
         public int YOS { get; set; }
     }
 
-    public class BookingDetail
+    public class dBookingDetail
     {
        
          public string BookingID { get; set; }
@@ -148,6 +148,10 @@ namespace LMS.Models
          public string DTitle { get; set; }
          public string DFirstName { get; set; }
          public string DLastName { get; set; }
+         public string DNickName { get; set; }
+         public string DLastNameE { get; set; }
+         public string DFirstNameE { get; set; }
+         public string DNickNameE { get; set; }
          public string DMobile { get; set; }
 
          public string Currency { get; set; }
@@ -157,7 +161,12 @@ namespace LMS.Models
          public int PaymentStatus { get; set; }
 
     }
-
+    public class SaleVistDetail
+    {
+        public string BookingID { get; set; }
+        public int ID { get; set; }
+        public string RouteDetail { get; set; }
+    }
     public class BookingList
     {
         public string BookingID { get; set; }
@@ -259,6 +268,10 @@ namespace LMS.Models
         public string DTitle { get; set; }
         public string DFirstName { get; set; }
         public string DLastName { get; set; }
+        public string DNickName { get; set; }
+        public string DLastNameE { get; set; }
+        public string DFirstNameE { get; set; }
+        public string DNickNameE { get; set; }
         public string DMobile { get; set; }
 
         public string UName { get; set; }
@@ -334,5 +347,12 @@ namespace LMS.Models
         public List<BookingInfo> LBooking { get; set; }
         public List<SubAgent> LSubAgent { get; set; }
 
+    }
+
+    public class DBookingList
+    {
+        public dBookingDetail dBookingDetail { get; set; }
+        public List<SaleVistDetail> dSaleVisit { get; set; }
+      
     }
 }

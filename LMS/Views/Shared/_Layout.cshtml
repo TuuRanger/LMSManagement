@@ -33,6 +33,236 @@
     @{ string UserFullName = "";
        string UserType = "";
        string UserTypeName = "";
+       string Menu = "";
+       string FMenu = "";
+       string FM = "active treeview";
+       string RM = "";
+       string DM = "";
+       string FT1 = "active";
+       string FT2 = "";
+       string FT3 = "";
+       string FT4 = "";
+       string FT5 = "";
+       
+       string RT1 = "";
+       string RT2 = "";
+       string RT3 = "";
+       string RT4 = "";
+       string RT5 = "";
+
+       string DT1 = "";
+       string DT2 = "";
+       string DT3 = "";
+       string DT4 = "";
+       string DT5 = "";
+       string DT6 = "";
+       
+       if (HttpContext.Current.Session["Menu"] != null)
+       {
+           Menu = HttpContext.Current.Session["Menu"].ToString();
+       }
+       
+       if (HttpContext.Current.Session["FMenu"] != null)
+       {
+           FMenu = HttpContext.Current.Session["FMenu"].ToString();
+       }
+       
+       if(FMenu == "F")
+       {
+           FM = "active treeview";
+           RM = "";
+           DM = "";
+           
+           if(Menu == "F1")
+           {
+               FT1 = "active";
+               FT2 = "";
+               FT3 = "";
+               FT4 = "";
+               FT5 = "";
+           }
+           else if (Menu == "F2")
+           {
+               FT1 = "";
+               FT2 = "active";
+               FT3 = "";
+               FT4 = "";
+               FT5 = "";
+           }
+           else if (Menu == "F3")
+           {
+               FT1 = "";
+               FT2 = "";
+               FT3 = "active";
+               FT4 = "";
+               FT5 = "";
+           }
+           else if (Menu == "F4")
+           {
+               FT1 = "";
+               FT2 = "";
+               FT3 = "";
+               FT4 = "active";
+               FT5 = "";
+           }
+           else if (Menu == "F5")
+           {
+               FT1 = "";
+               FT2 = "";
+               FT3 = "";
+               FT4 = "";
+               FT5 = "active";
+           }
+
+            RT1 = "";
+            RT2 = "";
+            RT3 = "";
+            RT4 = "";
+            RT5 = "";
+
+            DT1 = "";
+            DT2 = "";
+            DT3 = "";
+            DT4 = "";
+            DT5 = "";
+            DT6 = "";
+       }
+       else if (FMenu == "R")
+       {
+           FM = "";
+           RM = "active treeview";
+           DM = "";
+
+           if (Menu == "R1")
+           {
+               RT1 = "active";
+               RT2 = "";
+               RT3 = "";
+               RT4 = "";
+               RT5 = "";
+           }
+           else if (Menu == "R2")
+           {
+               RT1 = "";
+               RT2 = "active";
+               RT3 = "";
+               RT4 = "";
+               RT5 = "";
+           }
+           else if (Menu == "R3")
+           {
+               RT1 = "";
+               RT2 = "";
+               RT3 = "active";
+               RT4 = "";
+               RT5 = "";
+           }
+           else if (Menu == "R4")
+           {
+               RT1 = "";
+               RT2 = "";
+               RT3 = "";
+               RT4 = "active";
+               RT5 = "";
+           }
+           else if (Menu == "R5")
+           {
+               RT1 = "";
+               RT2 = "";
+               RT3 = "";
+               RT4 = "";
+               RT5 = "active";
+           }
+
+           FT1 = "";
+           FT2 = "";
+           FT3 = "";
+           FT4 = "";
+           FT5 = "";
+
+           DT1 = "";
+           DT2 = "";
+           DT3 = "";
+           DT4 = "";
+           DT5 = "";
+           DT6 = "";
+       }
+       else if (FMenu == "D")
+       {
+           FM = "";
+           RM = "";
+           DM = "active treeview";
+
+           if (Menu == "D1")
+           {
+               DT1 = "active";
+               DT2 = "";
+               DT3 = "";
+               DT4 = "";
+               DT5 = "";
+               DT6 = "";
+           }
+           else if (Menu == "D2")
+           {
+               DT1 = "";
+               DT2 = "active";
+               DT3 = "";
+               DT4 = "";
+               DT5 = "";
+               DT6 = "";
+           }
+           else if (Menu == "D3")
+           {
+               DT1 = "";
+               DT2 = "";
+               DT3 = "active";
+               DT4 = "";
+               DT5 = "";
+               DT6 = "";
+           }
+           else if (Menu == "D4")
+           {
+               DT1 = "";
+               DT2 = "";
+               DT3 = "";
+               DT4 = "active";
+               DT5 = "";
+               DT6 = "";
+           }
+           else if (Menu == "D5")
+           {
+               DT1 = "";
+               DT2 = "";
+               DT3 = "";
+               DT4 = "";
+               DT5 = "active";
+               DT6 = "";
+           }
+
+           else if (Menu == "D6")
+           {
+               DT1 = "";
+               DT2 = "";
+               DT3 = "";
+               DT4 = "";
+               DT5 = "";
+               DT6 = "active";
+           }
+           
+           RT1 = "";
+           RT2 = "";
+           RT3 = "";
+           RT4 = "";
+           RT5 = "";
+
+           FT1 = "";
+           FT2 = "";
+           FT3 = "";
+           FT4 = "";
+           FT5 = "";
+        
+       }
+       
         if (HttpContext.Current.Session["LogedUserFullname"] != null)
         {
             UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
@@ -363,66 +593,68 @@
 
                     </li>
                    }
-                    
-                  
-                    <li class="active treeview">
+                    <li class=@FM>
                         <a href="#">
                             <i class="fa fa-edit"></i> <span>Forms</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                        @if (UserFullName == "")
-                        {
-                            <li><a href="../../LMS/Booking"><i class="fa fa-circle-o"></i>Booking</a></li>
-                            <li><a href="../../LMS/PaymentSelect"><i class="fa fa-circle-o"></i>Payment</a></li>
-                        }
-                        else
-                        {
-                            <li><a href="../../LMS/Booking"><i class="fa fa-circle-o"></i>Booking</a></li>
-                            <li><a href="../../LMS/PaymentSelect"><i class="fa fa-circle-o"></i>Payment</a></li>
-                            @*<li><a href="../../LMS/Queue"><i class="fa fa-circle-o"></i>Queue</a></li>*@
-                            <li><a href="../../LMS/InvoiceList"><i class="fa fa-circle-o"></i>Invoice</a></li>
-                            <li><a href="../../LMS/ReceiptList"><i class="fa fa-circle-o"></i>Receipt</a></li>
-                            <li><a href="../../LMS/JobOrder"><i class="fa fa-circle-o"></i>Job Order</a></li>
-                        }
-                           
+                            @if (UserFullName == "")
+                            {
+                               
+                                <li class=@FT1><a href="../../LMS/Booking"><i class="fa fa-circle-o"></i>Booking</a></li>
+                                <li class=@FT2><a href="../../LMS/PaymentSelect"><i class="fa fa-circle-o"></i>Payment</a></li>
+                            }
+                            else
+                            {
+
+                                <li class=@FT1><a href="../../LMS/Booking"><i class="fa fa-circle-o"></i>Booking</a></li>
+                                <li class=@FT2><a href="../../LMS/PaymentSelect"><i class="fa fa-circle-o"></i>Payment</a></li>
+                                <li class=@FT3><a href="../../LMS/InvoiceList"><i class="fa fa-circle-o"></i>Invoice</a></li>
+                                <li class=@FT4><a href="../../LMS/ReceiptList"><i class="fa fa-circle-o"></i>Receipt</a></li>
+                                <li class=@FT5><a href="../../LMS/JobOrder"><i class="fa fa-circle-o"></i>Job Order</a></li>
+                            }
+
 
                         </ul>
                     </li>
+
+
+                
                 @if (UserFullName == "")
                                         {
                 
                                         }
                 else
                 {
-                    <li class="treeview">
+                    <li class=@RM>
                         <a href="#">
                             <i class="fa fa-book"></i> <span>Reports</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/LMS/ReportBooking"><i class="fa fa-circle-o"></i>Booking</a></li>
-                            <li><a href=""><i class="fa fa-circle-o"></i>Queue</a></li>
-                            <li><a href=""><i class="fa fa-circle-o"></i>Driver Profile</a></li>
-                            <li><a href=""><i class="fa fa-circle-o"></i>Invoice</a></li>
-                            <li><a href=""><i class="fa fa-circle-o"></i>Receipt</a></li>
+                            <li class=@RT1><a href="/LMS/ReportBooking"><i class="fa fa-circle-o"></i>Booking</a></li>
+                            <li class=@RT2><a href=""><i class="fa fa-circle-o"></i>Queue</a></li>
+                            <li class=@RT3><a href=""><i class="fa fa-circle-o"></i>Driver Profile</a></li>
+                            <li class=@RT4><a href="/LMS/ReportInvoice"><i class="fa fa-circle-o"></i>Invoice</a></li>
+                            <li class=@RT5><a href="/LMS/ReportReceipt"><i class="fa fa-circle-o"></i>Receipt</a></li>
 
                         </ul>
                     </li>
                     if (UserType == "1")
                     {
-                        <li>
+                        <li class=@DM>
                             <a href="/pages/widgets.html">
                                 <i class="fa fa-th"></i> <span>Data</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="/LMS/QueueList"><i class="fa fa-circle-o"></i>Queue</a></li>
-                                <li><a href="/LMS/DriverList"><i class="fa fa-circle-o"></i>Driver</a></li>
-                                <li><a href="/LMS/CarList"><i class="fa fa-circle-o"></i>Car</a></li>
-                                <li><a href=""><i class="fa fa-circle-o"></i>Route</a></li>
-                                <li><a href="/LMS/WorkTime"><i class="fa fa-circle-o"></i>เวลาเข้างาน</a></li>
-                                <li><a href=""><i class="fa fa-circle-o"></i>Sub Agent</a></li>
+                                <li class=@DT1><a href="/LMS/QueueList"><i class="fa fa-circle-o"></i>Queue</a></li>
+                                <li class=@DT2><a href="/LMS/DriverList"><i class="fa fa-circle-o"></i>Driver</a></li>
+                                <li class=@DT3><a href="/LMS/CarList"><i class="fa fa-circle-o"></i>Car</a></li>
+                                <li class=@DT4><a href=""><i class="fa fa-circle-o"></i>Route</a></li>
+                                <li class=@DT5><a href="/LMS/WorkTime"><i class="fa fa-circle-o"></i>เวลาเข้างาน</a></li>
+                                <li class=@DT6><a href=""><i class="fa fa-circle-o"></i>Sub Agent</a></li>
                             </ul>
                         </li>
                     }

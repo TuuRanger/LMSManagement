@@ -38,7 +38,7 @@
     <div class="row">
         <div class="col-md-12">
 
-            <div class="box box-info">
+            <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">Car List</h3>
                     <div class="box-tools pull-right">
@@ -50,15 +50,15 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <div class="table-responsive">
-                        <table class="table no-margin">
+                    <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>VehicleRegis</th>
-                                    <th>Model</th>
-                                    <th>SitNumber</th>
-                                    <th>Status</th>
+                                <tr style="background-color:#27AE60">
+                                    <th align="center"><font color="#fff">ID</font></th>
+                                    <th align="center"><font color="#fff">VehicleRegis</font></th>
+                                    <th align="center"><font color="#fff">Model</font></th>
+                                    <th align="center"><font color="#fff">SitNumber</font></th>
+                                    <th align="center"><font color="#fff">Status</font></th>
 
                                 </tr>
                             </thead>
@@ -78,8 +78,8 @@
                                         ServiceName = "Delivered";
                                         SClass = "label label-primary";
                                     }
-                                  
-                                    <tr>
+
+                                    <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/Car">@item.Id</a></td>
                                         <td>@item.VehicleRegis</td>
                                         <td>@item.Model</td>
@@ -110,3 +110,15 @@
     </div>
 
 </section>
+<script type="text/javascript">
+
+    var TableBackgroundNormalColor = "#ffffff";
+    var TableBackgroundMouseoverColor = "#D5F5E3";
+
+    // These two functions need no customization.
+    function ChangeBackgroundColor(row) {
+        TableBackgroundNormalColor = row.style.backgroundColor;
+        row.style.backgroundColor = TableBackgroundMouseoverColor;
+    }
+    function RestoreBackgroundColor(row) { row.style.backgroundColor = TableBackgroundNormalColor; }
+</script>
