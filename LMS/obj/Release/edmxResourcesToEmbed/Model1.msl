@@ -212,6 +212,8 @@
     <EntitySetMapping Name="LMS_Booking">
       <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
         <MappingFragment StoreEntitySet="LMS_Booking">
+          <ScalarProperty Name="ToRemark" ColumnName="ToRemark" />
+          <ScalarProperty Name="FromRemark" ColumnName="FromRemark" />
           <ScalarProperty Name="ToID" ColumnName="ToID" />
           <ScalarProperty Name="FromID" ColumnName="FromID" />
           <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />

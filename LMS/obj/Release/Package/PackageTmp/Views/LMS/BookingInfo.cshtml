@@ -13,6 +13,29 @@
                 <li class="active">Dashboard</li>
             </ol>*@
     </section>
+@{ string UserFullName = "";
+ string UserType = "0";
+ string UserID = "0";
+ string UserTypeName = "";
+ string AgentID = "";
+ if (HttpContext.Current.Session["LogedUserFullname"] != null)
+ {
+     UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
+     AgentID = HttpContext.Current.Session["LogedAgentID"].ToString();
+     UserType = HttpContext.Current.Session["LogedUserType"].ToString();
+     UserID = HttpContext.Current.Session["LogedUserID"].ToString();
+
+     if (UserType == "1")
+     {
+         UserTypeName = "Internal";
+     }
+     else if (UserType == "2")
+     {
+         UserTypeName = "Sub Agent";
+     }
+ }
+
+}
 @foreach (var item in Model.Item1)
 {
 
@@ -35,6 +58,11 @@
             <div class="row invoice-info">
               
                     @{string SType = "";
+
+                      String sDay = item.Date.Day.ToString("00");
+                      String sMonth = item.Date.Month.ToString("00");
+                      String sYear = item.Date.Year.ToString("0000");
+                      
                     if (@item.ServiceType == 1)
                     {
                         SType = "One Way";
@@ -184,6 +212,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
                                     <tr>
                                         <td width="30%"><b>Passenger Name : &nbsp;</b></td>
                                         <td width="70%">@item.Title &nbsp; @item.FirstName &nbsp; @item.LastName</td>
@@ -218,7 +247,7 @@
                                     </tr>  
                                     <tr>
                                         <td width="30%"><b>Pick up date : &nbsp;</b> </td>
-                                        <td width="70%">@item.Date.ToString("dd/MM/yyyy")</td>
+                                        <td width="70%">@sDay/@sMonth/@sYear</td>
                                     </tr>     
                                     <tr>
                                         <td width="30%"><b>Pick up time : &nbsp;</b> </td>
@@ -228,11 +257,11 @@
                                         {
                                             <tr>
                                                 <td width="30%"><b>From : &nbsp;</b></td>
-                                                <td width="70%">@item.FromDetail</td>
+                                                <td width="70%">@item.FromDetail <br>@item.FromRemark</td>
                                             </tr>
                                             <tr>
                                                 <td width="30%"><b>Send To : &nbsp;</b></td>
-                                                <td width="70%">@item.ToDetail</td>
+                                                <td width="70%">@item.ToDetail <br>@item.ToRemark</td>
                                             </tr>
                                         }
                                         else
@@ -366,9 +395,11 @@
                     <div class="row no-print">
                         <div class="col-sm-6 invoice-col">
                             <br />
-                            <a href="" class="btn btn-danger pull-left">Cancel Invoice</a>&nbsp;&nbsp;&nbsp;
-                            <a href="" class="btn btn-warning pull-left">Edit Invoice</a>
-                          
+                            @if(UserType == "1")
+                            { 
+                            <a href="" class="btn btn-danger pull-left">Cancel Booking &nbsp;&nbsp;&nbsp;</a>
+                            <a href="" class="btn btn-warning pull-left">Edit Booking</a>
+                            }
 
                         </div>
                         <div class="col-sm-6 invoice-col">

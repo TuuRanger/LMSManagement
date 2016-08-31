@@ -24,6 +24,13 @@ namespace LMS.Controllers
      
         public ActionResult Login(User u)
         {
+            Session["bSessionBookingD"] = null;
+            Session["bSessionBooking"] = null;
+            Session["bSaleVistDetail"] = null;
+
+            Session["SessionBookingD"] = null;
+            Session["SessionBooking"] = null;
+            Session["SaleVistDetail"] = null;
             // this action is for handle post (login)
             if (ModelState.IsValid) // this is check validity
             {
@@ -50,6 +57,15 @@ namespace LMS.Controllers
             Session["LogedUserFullname"] = "";
             Session["LogedUserType"] = "";
             Session["LogedAgentID"] = "";
+
+            Session["bSessionBookingD"] = null;
+            Session["bSessionBooking"] = null;
+            Session["bSaleVistDetail"] = null;
+
+            Session["SessionBookingD"] = null;
+            Session["SessionBooking"] = null;
+            Session["SaleVistDetail"] = null;
+
             return RedirectToAction("Booking");
         }
         public ActionResult AfterLogin()
@@ -154,6 +170,7 @@ namespace LMS.Controllers
                                 select new
                                 {
                                     BookingID = b.BookingID,
+                                    BookingDate = b.BookingDate,
                                     BDate = b.Date,
                                     BService = b.ServiceType,
                                     BForm = b.FromDetail,
@@ -169,6 +186,7 @@ namespace LMS.Controllers
              {
                  BookingList a = new BookingList();
                  a.BookingID = bl.BookingID;
+                 a.BookingDate = Convert.ToDateTime(bl.BookingDate);
                  a.Date = Convert.ToDateTime(bl.BDate);
                  a.FromDetail = bl.BForm;
                  a.ToDetail = bl.BTo;
@@ -212,9 +230,189 @@ namespace LMS.Controllers
           return Json(data, JsonRequestBehavior.AllowGet);
          }
 
+        public ActionResult CBooking()
+        {
+            //  var path = Path.Combine(Server.MapPath("~/DriverProfile/"));
+            string sUserType = "0";
+            if (Session["LogedUserType"] != null)
+            {
+                sUserType = Session["LogedUserType"].ToString();
+            }
+            else
+            {
+                sUserType = "0";
+                //  return RedirectToAction("Booking", "LMS");
+            }
+            int UserType = 0;
+            if (sUserType == "")
+            {
+                UserType = 0;
+            }
+            else
+            {
+                UserType = Convert.ToInt32(sUserType);
+            }
+            string sUserID = "0";
+            if (Session["LogedUserID"] != null)
+            {
+                sUserID = Session["LogedUserID"].ToString();
+            }
+            else
+            {
+                sUserID = "0";
+            }
+
+            int UserID = 0;
+            if (sUserID == "")
+            {
+                UserID = 0;
+            }
+            else
+            {
+                UserID = Convert.ToInt32(sUserID);
+            }
+
+            Session["FMenu"] = "F";
+            Session["Menu"] = "F1";
+
+            var dForm = (from p in db.LMS_From
+                         orderby p.Detail ascending
+                         select new
+                         {
+                             cDetail = p.Detail,
+                             cID = p.ID
+                         }
+                    ).ToList();
+            var dTo = (from t in db.LMS_TO
+                       where t.FromID == 1
+                       orderby t.Detail ascending
+                       select new
+                       {
+                           tDetail = t.Detail,
+                           tID = t.ID
+                       }
+                  ).ToList();
+
+            var dCar = (from c in db.LMS_Vehicle
+                        //   orderby c.Name ascending
+                        select new
+                        {
+                            tModel = c.Name,
+                            tID = c.ID
+                        }
+                ).ToList();
+
+
+
+            List<FromToModel> model = new List<FromToModel>();
+            List<FromModel> FModel = new List<FromModel>();
+            List<ToModel> TModel = new List<ToModel>();
+            List<Car> Car = new List<Car>();
+            List<SubAgent> SubAgent = new List<SubAgent>();
+
+            if (UserType == 1)
+            {
+                var dSubAgent = (from c in db.LMS_SubAgent
+                                 select new
+                                 {
+                                     tName = c.Name,
+                                     tID = c.ID,
+                                     tUserID = c.UserID
+                                 }
+              ).ToList();
+                foreach (var bs in dSubAgent)
+                {
+                    SubAgent s = new SubAgent();
+                    s.AName = bs.tName;
+                    s.AId = Convert.ToInt32(bs.tID);
+                    s.UserID = Convert.ToInt32(bs.tUserID);
+                    SubAgent.Add(s);
+                }
+            }
+            else
+            {
+                var dSubAgent = (from c in db.LMS_SubAgent
+                                 join u in db.LMS_UserSub on c.ID equals u.SubID
+                                 where u.UserID == UserID
+                                 select new
+                                 {
+                                     tName = c.Name,
+                                     tID = c.ID,
+                                     tUserID = c.UserID
+                                 }
+              ).ToList();
+                foreach (var bs in dSubAgent)
+                {
+                    SubAgent s = new SubAgent();
+                    s.AName = bs.tName;
+                    s.AId = Convert.ToInt32(bs.tID);
+                    s.UserID = Convert.ToInt32(bs.tUserID);
+                    SubAgent.Add(s);
+                }
+            }
+
+            foreach (var bf in dForm)
+            {
+                FromModel a = new FromModel();
+                a.FDetail = bf.cDetail;
+                a.FId = Convert.ToInt32(bf.cID);
+                FModel.Add(a);
+            }
+
+            foreach (var bt in dTo)
+            {
+                ToModel b = new ToModel();
+                b.TDetail = bt.tDetail;
+                b.TId = Convert.ToInt32(bt.tID);
+                TModel.Add(b);
+            }
+
+
+
+            foreach (var cc in dCar)
+            {
+                Car c = new Car();
+                c.CModel = cc.tModel;
+                c.CId = Convert.ToInt32(cc.tID);
+                Car.Add(c);
+            }
+
+
+            FromToModel FT = new FromToModel();
+            FT.sFromModel = FModel.ToList();
+            FT.sToModel = TModel.ToList();
+            FT.sCar = Car.ToList();
+            FT.sSubAgent = SubAgent.ToList();
+
+            model.Add(FT);
+
+            //  a.Id = 22;
+
+            return View(model);
+        }
+
         public ActionResult Booking ()
         {
          //  var path = Path.Combine(Server.MapPath("~/DriverProfile/"));
+            string sUserType = "0";
+            if (Session["LogedUserType"] != null)
+            {
+                sUserType = Session["LogedUserType"].ToString();
+            }
+            else
+            {
+                sUserType = "0";
+              //  return RedirectToAction("Booking", "LMS");
+            }
+            int UserType = 0;
+            if (sUserType == "")
+            {
+                UserType = 0;
+            }
+            else
+            {
+                UserType = Convert.ToInt32(sUserType);
+            }
             string sUserID = "0";
             if (Session["LogedUserID"] != null)
             {
@@ -273,7 +471,7 @@ namespace LMS.Controllers
             List<Car> Car = new List<Car>();
             List<SubAgent> SubAgent = new List<SubAgent>();
 
-            if (UserID == 1)
+            if (UserType == 1)
             {
                 var dSubAgent = (from c in db.LMS_SubAgent
                                  select new
@@ -340,26 +538,74 @@ namespace LMS.Controllers
                 Car.Add(c);
             }
 
-           
+            dBookingDetail sbkd = new dBookingDetail();
+            SessionBookingD sbd = new SessionBookingD();
+            List<SaleVistDetail> svd = new List<SaleVistDetail>();
+
+            sbkd = (dBookingDetail)Session["bSessionBooking"];
+            sbd = (SessionBookingD)Session["bSessionBookingD"];
+            svd = (List<SaleVistDetail>)Session["bSaleVistDetail"];
+        
+
             FromToModel FT = new FromToModel();
             FT.sFromModel = FModel.ToList();
             FT.sToModel = TModel.ToList();
             FT.sCar = Car.ToList();
             FT.sSubAgent = SubAgent.ToList();
+           
+
+            if(sbkd != null)
+            {
+                FT.dBooking = sbkd;
+            }
+           
+            if(sbd != null)
+            {
+                FT.sBack = sbd;
+              
+            }
+         if(svd != null)
+         {
+             FT.dSaleVisit = svd.ToList();
+         }
+          
+     //       FT.dBooking = sbkd();
+
 
             model.Add(FT);
           
           //  a.Id = 22;
-         
+            Session["SessionBookingD"] = sbd;
             return View(model);
         }
 
-      
-        public ActionResult BookingDetail(FormCollection form)
+      public ActionResult BackBooking()
+        {
+            dBookingDetail bkd = new dBookingDetail();
+            SessionBookingD sbd = new SessionBookingD();
+            sbd.Title = Request["Title"];
+            sbd.FirstName = Request["FirstName"];
+            sbd.LastName = Request["LastName"];
+            sbd.Address = Request["Address"];
+            sbd.Email = Request["Email"];
+            sbd.Telephone = Request["Telephone"];
+            sbd.Mobile = Request["Moblie"];
+            sbd.Remark = Request["Remark"];
+
+            bkd = (dBookingDetail)Session["BookingDetail"];
+            Session["SessionBookingD"] = sbd;
+
+
+            return RedirectToAction("Booking", "LMS");
+
+        }
+      public ActionResult BookingDetail(FormCollection form)
         {
 
             Session["FMenu"] = "F";
             Session["Menu"] = "F1";
+
+        
 
             dBookingDetail bkd = new dBookingDetail();
             List<SaleVistDetail> svd = new List<SaleVistDetail>();
@@ -395,24 +641,35 @@ namespace LMS.Controllers
              //   bkd.ServiceType = Convert.ToInt32(Request.QueryString["ServiceType"]);
                 bkd.AgentID = Convert.ToInt32(Request.Form["SubAgent"]);
                 bkd.CustomerType = Convert.ToInt32(Request.Form["CustomerType"]);
-                bkd.UserID = Convert.ToInt32(Request.Form["UserType"]);
+                if (Request.Form["UserID"] == "")
+                {
+                    bkd.UserID = 0;
+                }
+                else
+                {
+                    bkd.UserID = Convert.ToInt32(Request.Form["UserID"]);
+                }
+             
                 bkd.Status = 1;
 
                 string sDate = "";
+              
 
                 if (bkd.ServiceType == 1)
                 {
                     bkd.VechileID = Convert.ToInt32(Request.Form["CarModel"]);
 
                     sDate = Request.Form["Date"];
-
+                  
                     if (sDate == null || sDate == "")
                     {
-                        sDate = DateTime.Now.ToString("yyyy-MM-dd");
+                        sDate = DateTime.Now.ToString("dd/MM/yyyy");
                     }
 
                     bkd.Date = Convert.ToDateTime(sDate);
 
+                    bkd.FromRemark = Request.Form["FromRemark"];
+                    bkd.ToRemark = Request.Form["ToRemark"];
 
                     bkd.FlightNo = Request.Form["Flight"];
                     bkd.FlightTime = Request.Form["FlightTime"];
@@ -438,11 +695,13 @@ namespace LMS.Controllers
 
                     if (sDate == null || sDate == "")
                     {
-                        sDate = DateTime.Now.ToString("yyyy-MM-dd");
+                        sDate = DateTime.Now.ToString("dd/MM/yyyy");
                     }
 
                     bkd.Date = Convert.ToDateTime(sDate);
 
+                    bkd.FromRemark = Request.Form["FromRemark2"];
+                    bkd.ToRemark = Request.Form["ToRemark2"];
 
                     bkd.FlightNo = Request.Form["Flight2"];
                     bkd.FlightTime = Request.Form["FlightTime2"];
@@ -468,7 +727,7 @@ namespace LMS.Controllers
 
                     if (sDate == null || sDate == "")
                     {
-                        sDate = DateTime.Now.ToString("yyyy-MM-dd");
+                        sDate = DateTime.Now.ToString("dd/MM/yyyy");
                     }
 
 
@@ -700,7 +959,9 @@ namespace LMS.Controllers
                             }
                         }
 
-                    bkd.AgentEmail = AgentEmail.aEmail;
+                  
+                        bkd.AgentEmail = AgentEmail.aEmail;
+                  
                     bkd.DiscountP = Convert.ToDecimal(AgentPrice.aDiscountP);
                     bkd.DiscountB = Convert.ToDecimal(AgentPrice.aDiscountB);
                     bkd.Discount = (bkd.Price * (Convert.ToDecimal(AgentPrice.aDiscountP) / 100)) + Convert.ToDecimal(AgentPrice.aDiscountB);
@@ -742,29 +1003,75 @@ namespace LMS.Controllers
                 svd = (List<SaleVistDetail>)Session["SaleVistDetail"];
             }
 
+            SessionBookingD sbd = new SessionBookingD();
            
 
-            return View(Tuple.Create(bkd, svd)); 
+            if (Session["SessionBookingD"] == null)
+            {
+
+                sbd.Title = "Mr";
+                sbd.Telephone = "";
+                sbd.Remark = "";
+                sbd.Mobile = "";
+                sbd.LastName = "";
+                sbd.FirstName = "";
+                sbd.Email = "";
+                sbd.Address = "";
+            }
+            else
+            {
+                sbd = (SessionBookingD)Session["SessionBookingD"];
+            }
+
+            return View(Tuple.Create(bkd,svd,sbd)); 
         }
 
-        public ActionResult BookingCommit()
+      public ActionResult BookingCommit(string submitButton)
         {
+
+
+            if (submitButton == "Back")
+            {
+                dBookingDetail sbkd = new dBookingDetail();
+                SessionBookingD sbd = new SessionBookingD();
+                List<SaleVistDetail> svd = new List<SaleVistDetail>();
+
+               
+                sbd.Title = Request["Title"];
+                sbd.FirstName = Request["FirstName"];
+                sbd.LastName = Request["LastName"];
+                sbd.Address = Request["Address"];
+                sbd.Email = Request["Email"];
+                sbd.Telephone = Request["Telephone"];
+                sbd.Mobile = Request["Mobile"];
+                sbd.Remark = Request["Remark"];
+
+                sbkd = (dBookingDetail)Session["BookingDetail"];
+                svd = (List<SaleVistDetail>)Session["SaleVistDetail"];
+
+                Session["bSessionBookingD"] = sbd;
+                Session["bSessionBooking"] = sbkd;
+                Session["bSaleVistDetail"] = svd;
+
+
+                return RedirectToAction("Booking", "LMS");
+            }
             string sAgentEmail = "";
 
             dBookingDetail bkd = new dBookingDetail();
             bkd = (dBookingDetail)Session["BookingDetail"];
             bkd.BookingDate = DateTime.Today.Date;
-            bkd.Title = Request["Title"];
-            bkd.FirstName = Request["FirstName"];
-            bkd.LastName = Request["LastName"];
-            bkd.Address = Request["Address"];
-            bkd.Telephone = Request["Telephone"];
-            bkd.Mobile = Request["Mobile"];
-            bkd.Email = Request["Email"];
-            bkd.Remark = Request["Remark"];
-            bkd.Price = Convert.ToDecimal(Request["Price"]);
-            bkd.Discount = Convert.ToDecimal(Request["Discount"]);
-            bkd.TotalPrice = Convert.ToDecimal(Request["TotalPrice"]);
+            bkd.Title = Request.Form["Title"];
+            bkd.FirstName = Request.Form["FirstName"];
+            bkd.LastName = Request.Form["LastName"];
+            bkd.Address = Request.Form["Address"];
+            bkd.Telephone = Request.Form["Telephone"];
+            bkd.Mobile = Request.Form["Mobile"];
+            bkd.Email = Request.Form["Email"];
+            bkd.Remark = Request.Form["Remark"];
+            bkd.Price = Convert.ToDecimal(Request.Form["Price"]);
+            bkd.Discount = Convert.ToDecimal(Request.Form["Discount"]);
+            bkd.TotalPrice = Convert.ToDecimal(Request.Form["TotalPrice"]);
 
             bkd.ToID = Convert.ToInt32(Request.Form["ToID"]);
             bkd.FromID = Convert.ToInt32(Request.Form["FromID"]);
@@ -820,6 +1127,13 @@ namespace LMS.Controllers
 
             }
 
+            String sDay = bkd.Date.Day.ToString("00");
+            String sMonth = bkd.Date.Month.ToString("00");
+            String sYear = bkd.Date.Year.ToString("0000");
+            int iYear = Convert.ToInt32(sYear) + 1086;
+
+            DateTime sDate = Convert.ToDateTime(sDay + "/" + sMonth + "/" + iYear);
+
             LMS_Booking AddBooking = new LMS_Booking();
          //   LMS_From ff = new LMS_From();
 
@@ -832,12 +1146,14 @@ namespace LMS.Controllers
             AddBooking.BookingID = BID;
             AddBooking.CarID = bkd.CarID;
             AddBooking.CustomerType = bkd.CustomerType;
-            AddBooking.Date = bkd.Date;
+            AddBooking.Date = sDate;
             AddBooking.Discount = bkd.Discount;
             AddBooking.Email = bkd.Email;
             AddBooking.FirstName = bkd.FirstName;
             AddBooking.FlightNo = bkd.FlightNo;
           //  AddBooking.FlightTime = bkd.FlightTime;
+            AddBooking.FromRemark = bkd.FromRemark;
+            AddBooking.ToRemark = bkd.ToRemark;
             AddBooking.FromDetail = bkd.FromDetail;
             AddBooking.LastName = bkd.LastName;
             AddBooking.Luggage = bkd.Luggage;
@@ -872,7 +1188,7 @@ namespace LMS.Controllers
                            where dc.DID == bkd.DID
                            select dc).Single();
 
-            DriverOfCar.LastJobDate = bkd.Date;
+            DriverOfCar.LastJobDate = sDate;
             DriverOfCar.LastJobTime = bkd.Time;
             DriverOfCar.LastBooking = BID;
         
@@ -907,6 +1223,8 @@ namespace LMS.Controllers
                                     Luggage = b.Luggage,
                                     FlightNo = b.FlightNo,
                                  //   FlightTime = b.FlightTime,
+                                 FromRemark = b.FromRemark,
+                                 ToRemark = b.ToRemark,
                                     FromDetail = b.FromDetail,
                                     ToDetail = b.ToDetail,
                                     Remark = b.Remark,
@@ -960,6 +1278,8 @@ namespace LMS.Controllers
                   a.FirstName = bl.FirstName;
                   a.FlightNo = bl.FlightNo;
               //    a.FlightTime = bl.FlightTime;
+                  a.FromRemark = bl.FromRemark;
+                  a.ToRemark = bl.ToRemark;
                   a.FromDetail = bl.FromDetail;
                   a.LastName = bl.LastName;
                   a.Luggage = Convert.ToInt32(bl.Luggage);
@@ -1117,11 +1437,11 @@ namespace LMS.Controllers
                   {
                   sb.Append("                                            <tr>");
                   sb.Append("                                                <td width=\"30%\"><b>From : &nbsp;</b></td>");
-                  sb.Append("                                                <td width=\"70%\">" + a.FromDetail + "</td>");
+                  sb.Append("                                                <td width=\"70%\">" + a.FromDetail + "<br>" + a.FromRemark +"</td>");
                   sb.Append("                                            </tr>");
                   sb.Append("                                            <tr>");
                   sb.Append("                                                <td width=\"30%\"><b>Send To : &nbsp;</b></td>");
-                  sb.Append("                                                <td width=\"70%\">" + a.ToDetail + "</td>");
+                  sb.Append("                                                <td width=\"70%\">" + a.ToDetail + "<br>" + a.ToRemark +"</td>");
                   sb.Append("                                            </tr>");
                   }
                   else
@@ -1313,6 +1633,14 @@ namespace LMS.Controllers
                     }
                   //  Session["BookingID"] = BID;
                   //  return RedirectToAction("BookingInfo", "LMS");
+                    Session["bSessionBookingD"] = null;
+                    Session["bSessionBooking"] = null;
+                    Session["bSaleVistDetail"] = null;
+
+                    Session["SessionBookingD"] = null;
+                    Session["SessionBooking"] = null;
+                    Session["SaleVistDetail"] = null;
+
                     return RedirectToAction("BookingInfo", "LMS", new { BID = BID });
             //return View();
         }
@@ -1366,6 +1694,8 @@ namespace LMS.Controllers
                                     Luggage = b.Luggage,
                                     FlightNo = b.FlightNo,
                                 //    FlightTime = b.FlightTime,
+                                FromRemark = b.FromRemark,
+                                ToRemark = b.ToRemark,
                                 FromID = b.FromID,
                                 ToID = b.ToID,
                                     FromDetail = b.FromDetail,
@@ -1424,6 +1754,8 @@ namespace LMS.Controllers
                 a.FirstName = bl.FirstName;
                 a.FlightNo = bl.FlightNo;
              //   a.FlightTime = bl.FlightTime.ToString();
+                a.FromRemark = bl.FromRemark;
+                a.ToRemark = bl.ToRemark;
                 a.FromDetail = bl.FromDetail;
                 a.LastName = bl.LastName;
                 a.Luggage = Convert.ToInt32(bl.Luggage);
@@ -1567,6 +1899,8 @@ namespace LMS.Controllers
                                     Luggage = b.Luggage,
                                     FlightNo = b.FlightNo,
                                     //    FlightTime = b.FlightTime,
+                                    FromRemark = b.FromRemark,
+                                    ToRemark = b.ToRemark,
                                     FromID = b.FromID,
                                     ToID = b.ToID,
                                     FromDetail = b.FromDetail,
@@ -1625,6 +1959,8 @@ namespace LMS.Controllers
                 a.FirstName = bl.FirstName;
                 a.FlightNo = bl.FlightNo;
                 //   a.FlightTime = bl.FlightTime.ToString();
+                a.FromRemark = bl.FromRemark;
+                a.ToRemark = bl.ToRemark;
                 a.FromDetail = bl.FromDetail;
                 a.LastName = bl.LastName;
                 a.Luggage = Convert.ToInt32(bl.Luggage);
@@ -1852,7 +2188,8 @@ namespace LMS.Controllers
                                         Title = d.Title,
                                         Name = d.Name,
                                         LastName = d.LastName,
-                                        Mobile = d.Mobile
+                                        Mobile = d.Mobile,
+                                        Status = d.Status
                                      
                                     }
                  ).ToList();
@@ -1864,6 +2201,7 @@ namespace LMS.Controllers
                     a.Name = dl.Name;
                     a.LastName = dl.LastName;
                     a.Mobile = dl.Mobile;
+                    a.Status = Convert.ToInt32(dl.Status);
                     model.Add(a);
 
                 }
@@ -2137,18 +2475,63 @@ namespace LMS.Controllers
             string aDate = Request.QueryString["sDate"];
             string bDate = Request.QueryString["eDate"];
 
+            DateTime sDate =  DateTime.Now.Date;
+            DateTime eDate =  DateTime.Now.Date;
+
+            String sDay;
+            String sMonth;
+            String sYear;
+            int isYear;
+
+
+            String eDay;
+            String eMonth;
+            String eYear;
+            int ieYear;
+
+
             if (aDate == null || aDate == "")
             {
-                aDate = DateTime.Now.ToString("yyyy-MM-dd");
+                aDate = DateTime.Now.ToString("dd/MM/yyyy");
+                sDate = Convert.ToDateTime(aDate);
+                 sDay = sDate.Day.ToString("00");
+                 sMonth = sDate.Month.ToString("00");
+                 sYear = sDate.Year.ToString("0000");
+                 isYear = Convert.ToInt32(sYear);
             }
+            else
+            {
+                sDate = Convert.ToDateTime(aDate);
+                sDay = sDate.Day.ToString("00");
+                sMonth = sDate.Month.ToString("00");
+                sYear = sDate.Year.ToString("0000");
+                isYear = Convert.ToInt32(sYear) + 1086;
+            }
+
             if (bDate == null || bDate == "")
             {
-                bDate = DateTime.Now.ToString("yyyy-MM-dd");
+                bDate = DateTime.Now.ToString("dd/MM/yyyy");
+                eDate = Convert.ToDateTime(bDate);
+                 eDay = eDate.Day.ToString("00");
+                 eMonth = eDate.Month.ToString("00");
+                 eYear = eDate.Year.ToString("0000");
+                 ieYear = Convert.ToInt32(eYear);
+
+            }
+            else
+            {
+                eDate = Convert.ToDateTime(bDate);
+                eDay = eDate.Day.ToString("00");
+                eMonth = eDate.Month.ToString("00");
+                eYear = eDate.Year.ToString("0000");
+                ieYear = Convert.ToInt32(eYear) + 1086;
+
             }
 
 
-            DateTime sDate = Convert.ToDateTime(aDate);
-            DateTime eDate = Convert.ToDateTime(bDate);
+            DateTime xDate = Convert.ToDateTime(sDay + "/" + sMonth + "/" + isYear);
+
+            DateTime yDate = Convert.ToDateTime(eDay + "/" + eMonth + "/" + ieYear);
 
             List<BookingList> model = new List<BookingList>();
             if (UserID.uAgentID == 0)
@@ -2156,7 +2539,7 @@ namespace LMS.Controllers
                 
                 var sBookingList = (from b in db.LMS_Booking
                                     join c in db.LMS_Car on b.CarID equals c.ID
-                                    where b.BookingDate >= sDate && b.BookingDate <= eDate 
+                                    where b.BookingDate >= xDate && b.BookingDate <= yDate 
                                     orderby b.BookingID descending
                                     select new
                                     {
@@ -2206,10 +2589,12 @@ namespace LMS.Controllers
             {
                 var sBookingList = (from b in db.LMS_Booking
                                     join v in db.LMS_Vehicle on b.CarID equals v.ID
-                                    where b.AgentID == UserID.uAgentID
+                                    where (b.BookingDate >= xDate && b.BookingDate <= yDate) 
+                                    && b.AgentID == UserID.uAgentID
                                     select new
                                     {
                                         BookingID = b.BookingID,
+                                        BookingDate = b.BookingDate,
                                         BDate = b.Date,
                                         BService = b.ServiceType,
                                         BForm = b.FromDetail,
@@ -2228,6 +2613,7 @@ namespace LMS.Controllers
                 {
                     BookingList a = new BookingList();
                     a.BookingID = bl.BookingID;
+                    a.BookingDate = Convert.ToDateTime(bl.BookingDate);
                     a.Date = Convert.ToDateTime(bl.BDate);
                     a.FromDetail = bl.BForm;
                     a.ToDetail = bl.BTo;
@@ -2298,6 +2684,20 @@ namespace LMS.Controllers
             DateTime sDate = Convert.ToDateTime(aDate);
             DateTime eDate = Convert.ToDateTime(bDate);
 
+            String sDay = sDate.Day.ToString("00");
+            String sMonth = sDate.Month.ToString("00");
+            String sYear = sDate.Year.ToString("0000");
+            int isYear = Convert.ToInt32(sYear) + 1086;
+
+            DateTime xDate = Convert.ToDateTime(sDay + "/" + sMonth + "/" + isYear);
+
+            String eDay = eDate.Day.ToString("00");
+            String eMonth = eDate.Month.ToString("00");
+            String eYear = eDate.Year.ToString("0000");
+            int ieYear = Convert.ToInt32(eYear) + 1086;
+
+            DateTime yDate = Convert.ToDateTime(eDay + "/" + eMonth + "/" + ieYear);
+
             List<BookingList> model = new List<BookingList>();
             if (UserID.uAgentID == 0)
             {
@@ -2305,7 +2705,7 @@ namespace LMS.Controllers
                 var sBookingList = (from b in db.LMS_Booking
                                     join c in db.LMS_Car on b.CarID equals c.ID
                                     join d in db.LMS_Driver on b.DriverID equals d.ID 
-                                    where b.Date >= sDate && b.Date <= eDate
+                                    where b.Date >= xDate && b.Date <= yDate
                                     orderby b.Date,b.DriverID
                                     select new
                                     {
@@ -2949,12 +3349,28 @@ namespace LMS.Controllers
             DateTime sDate = Convert.ToDateTime(aDate);
             DateTime eDate = Convert.ToDateTime(bDate);
 
+            String sDay = sDate.Day.ToString("00");
+            String sMonth = sDate.Month.ToString("00");
+            String sYear = sDate.Year.ToString("0000");
+            int isYear = Convert.ToInt32(sYear) + 1086;
+
+            DateTime xDate = Convert.ToDateTime(sDay + "/" + sMonth + "/" + isYear);
+
+            String eDay = eDate.Day.ToString("00");
+            String eMonth = eDate.Month.ToString("00");
+            String eYear = eDate.Year.ToString("0000");
+            int ieYear = Convert.ToInt32(eYear) + 1086;
+
+            DateTime yDate = Convert.ToDateTime(eDay + "/" + eMonth + "/" + ieYear);
+
+ 
+
             List<Invoice> model = new List<Invoice>();
 
             var sInvoice = (from i in db.LMS_Invoice
                             join s in db.LMS_SubAgent on i.SubID equals s.ID
                          //   where i.InvoiceDate.Value.Month == DateTime.Now.Month && i.InvoiceDate.Value.Year == DateTime.Now.Year
-                            where i.InvoiceDate >= sDate && i.InvoiceDate <= eDate 
+                            where i.InvoiceDate >= xDate && i.InvoiceDate <= yDate 
                             orderby i.InvoiceNo descending
                             select new
                             {
@@ -3402,11 +3818,29 @@ namespace LMS.Controllers
                
              }
 
+            DateTime InvoiceDate = Convert.ToDateTime(form["InvoiceDate"]);
+            DateTime DueDate = Convert.ToDateTime(form["DueDate"]);
+
+            String iDay = InvoiceDate.Day.ToString("00");
+            String iMonth = InvoiceDate.Month.ToString("00");
+            String iYear = InvoiceDate.Year.ToString("0000");
+            int iiYear = Convert.ToInt32(iYear) + 1086;
+
+            DateTime iDate = Convert.ToDateTime(iDay + "/" + iMonth + "/" + iiYear);
+
+            String dDay = DueDate.Day.ToString("00");
+            String dMonth = DueDate.Month.ToString("00");
+            String dYear = DueDate.Year.ToString("0000");
+            int idYear = Convert.ToInt32(dYear) + 1086;
+
+            DateTime dDate = Convert.ToDateTime(dDay + "/" + dMonth + "/" + idYear);
+
+
             LMS_Invoice AddInvoice = new LMS_Invoice();
 
             AddInvoice.InvoiceNo = InvoiceNo;
-            AddInvoice.InvoiceDate = Convert.ToDateTime(form["InvoiceDate"]);
-            AddInvoice.DueDate = Convert.ToDateTime(form["DueDate"]);
+            AddInvoice.InvoiceDate = iDate;
+            AddInvoice.DueDate = dDate;
             AddInvoice.SubID = Convert.ToInt32(form["SubID"]);
             AddInvoice.GrandTotal = GrandTotal;
             AddInvoice.CreditTerm = Convert.ToInt32(form["CreditTerm"]);
@@ -3905,12 +4339,28 @@ namespace LMS.Controllers
             DateTime sDate = Convert.ToDateTime(aDate);
             DateTime eDate = Convert.ToDateTime(bDate);
 
+            String sDay = sDate.Day.ToString("00");
+            String sMonth = sDate.Month.ToString("00");
+            String sYear = sDate.Year.ToString("0000");
+            int isYear = Convert.ToInt32(sYear) + 1086;
+
+            DateTime xDate = Convert.ToDateTime(sDay + "/" + sMonth + "/" + isYear);
+
+            String eDay = eDate.Day.ToString("00");
+            String eMonth = eDate.Month.ToString("00");
+            String eYear = eDate.Year.ToString("0000");
+            int ieYear = Convert.ToInt32(eYear) + 1086;
+
+            DateTime yDate = Convert.ToDateTime(eDay + "/" + eMonth + "/" + ieYear);
+
+ 
+
             List<Receipt> model = new List<Receipt>();
 
             var sReceipt = (from r in db.LMS_Receipt
                             join i in db.LMS_Invoice on r.InvoiceNo equals i.InvoiceNo
                             join s in db.LMS_SubAgent on i.SubID equals s.ID
-                            where r.ReceiptDate >= sDate && r.ReceiptDate <= eDate 
+                            where r.ReceiptDate >= xDate && r.ReceiptDate <= yDate 
                             orderby i.InvoiceNo descending
                             select new
                             {
@@ -4349,13 +4799,28 @@ namespace LMS.Controllers
                 GrandTotal = Convert.ToDecimal(form["GrandTotal"]);
             }
 
+            DateTime ReceiptDate = Convert.ToDateTime(form["ReceiptDate"]);
+            DateTime PaymentDate = Convert.ToDateTime(form["PaymentDate"]);
 
+            String rDay = ReceiptDate.Day.ToString("00");
+            String rMonth = ReceiptDate.Month.ToString("00");
+            String rYear = ReceiptDate.Year.ToString("0000");
+            int irYear = Convert.ToInt32(rYear) + 1086;
+
+            DateTime rDate = Convert.ToDateTime(rDay + "/" + rMonth + "/" + irYear);
+
+            String pDay = PaymentDate.Day.ToString("00");
+            String pMonth = PaymentDate.Month.ToString("00");
+            String pYear = PaymentDate.Year.ToString("0000");
+            int ipYear = Convert.ToInt32(pYear) + 1086;
+
+            DateTime pDate = Convert.ToDateTime(pDay + "/" + pMonth + "/" + ipYear);
 
             LMS_Receipt Addreceipt = new LMS_Receipt();
             Addreceipt.ReceiptNo = ReceiptNo;
-            Addreceipt.ReceiptDate = Convert.ToDateTime(form["ReceiptDate"]);
+            Addreceipt.ReceiptDate = rDate;
             Addreceipt.InvoiceNo = InvoiceNo;
-            Addreceipt.PaymentDate = Convert.ToDateTime(form["PaymentDate"]);
+            Addreceipt.PaymentDate = pDate;
             Addreceipt.GrandTotal = GrandTotal;
             Addreceipt.PaymentType = Convert.ToInt32(form["PaymentType"]);
             Addreceipt.Status = 1;
@@ -4913,6 +5378,11 @@ namespace LMS.Controllers
             model.Add(IL);
 
             return View(model);
+        }
+
+        public ActionResult Test()
+        {
+            return View();
         }
     }
 }

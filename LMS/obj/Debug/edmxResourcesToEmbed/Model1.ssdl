@@ -54,8 +54,10 @@
     <Property Name="FlightTime" Type="nvarchar" MaxLength="100" />
     <Property Name="FromID" Type="int" />
     <Property Name="FromDetail" Type="nvarchar" MaxLength="255" />
+    <Property Name="FromRemark" Type="nvarchar(max)" />
     <Property Name="ToID" Type="int" />
     <Property Name="ToDetail" Type="nvarchar" MaxLength="255" />
+    <Property Name="ToRemark" Type="nvarchar(max)" />
     <Property Name="RouteDetail" Type="nvarchar(max)" />
     <Property Name="Remark" Type="nvarchar(max)" />
     <Property Name="ProductID" Type="int" />

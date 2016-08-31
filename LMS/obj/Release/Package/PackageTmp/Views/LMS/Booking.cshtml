@@ -18,6 +18,7 @@
   
     @{ string UserFullName = "";
      string UserType = "0";
+     string UserID = "0";
      string UserTypeName = "";
      string AgentID = "";
      if (HttpContext.Current.Session["LogedUserFullname"] != null)
@@ -25,6 +26,7 @@
          UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
          AgentID = HttpContext.Current.Session["LogedAgentID"].ToString();
          UserType = HttpContext.Current.Session["LogedUserType"].ToString();
+         UserID = HttpContext.Current.Session["LogedUserID"].ToString();
 
          if (UserType == "1")
          {
@@ -41,7 +43,15 @@
 {
     
     <form action="/LMS/BookingDetail" method="post" onsubmit="return chk_form()">
-        @{DateTime dDate = DateTime.Now;}
+       
+
+        @{DateTime dDate = DateTime.Today;
+          string sDay = DateTime.Now.Day.ToString("00");
+          string sMonth = DateTime.Now.Month.ToString("00");
+          string sYear = DateTime.Now.Year.ToString("0000");
+        
+          }
+
         <div class="row">
             <div class="col-md-12">
 
@@ -62,15 +72,60 @@
                         <div class="form-group">
                             <div class="col-md-6">
                                 <label>Customer</label>
-
+                              
                                 <div class="radio">
-                                  
+                                    @{var dBK = item.dBooking;
+                                      int bAgentID = 0;
+                                      int bFromID = 0;
+                                      int bToID = 0;
+                                      string bFromRemark = "";
+                                      string bToRemark = "";
+                                      DateTime bServiceDate = DateTime.Today;
+                                      string bTime = "12:00";
+                                      string bFlightDetail = "";
+                                      int bServiceType = 1;
+                                      int bCustomerType = 1;
+                                      }
+                                    @if (dBK != null)
+                                    {
+                                        bAgentID = dBK.AgentID;
+                                        bFromID = dBK.FromID;
+                                        bFromRemark = dBK.FromRemark;
+                                        bToID = dBK.ToID;
+                                        bToRemark = dBK.ToRemark;
+
+                                        bServiceDate = dBK.Date;
+
+                                        sDay = bServiceDate.Day.ToString("00");
+                                        sMonth = bServiceDate.Month.ToString("00");
+                                        sYear = bServiceDate.Year.ToString("0000");
+
+                                        bFlightDetail = dBK.FlightNo;
+
+                                        bServiceType = dBK.ServiceType;
+                                        bCustomerType = dBK.CustomerType;
+                                        
+                                        <input id="bServiceType" name="bServiceType" type="hidden" class="form-control" value=@dBK.ServiceType>
+                                        <input id="bCustomerType" name="bCustomerType" type="hidden" class="form-control" value=@dBK.CustomerType>
+                                    }
+                                    
+                                
+                                    
+                                    @if (UserType == "0")
+                                    {
+                                        bCustomerType = 1;
+                                    }
+                                    else
+                                    {
+                                        bCustomerType = 2;
+                                    }
                                    
-                                    <input id="ServiceType" name="ServiceType" type="hidden" class="form-control" value="1">
+                                    <input id="ServiceType" name="ServiceType" type="hidden" class="form-control" value="@bServiceType">
                                     <input id="UserType" name="UserType" type="hidden" class="form-control" value="@UserType">
+                                    <input id="UserID" name="UserID" type="hidden" class="form-control" value="@UserID">
                                     @if (UserType == "1")
                                     {
-                                        <input id="CustomerType" name="CustomerType" type="hidden" class="form-control" value="2">
+                                        <input id="CustomerType" name="CustomerType" type="hidden" class="form-control" value="@bCustomerType">
                                         <div class="col-md-3">
 
                                             <label>
@@ -89,17 +144,24 @@
                                                 @*   <option value="">-- Type Sub Agent --</option>*@
                                                 @foreach (var SItem in item.sSubAgent)
                                                 {
-                                                    <option value="@SItem.AId">@SItem.AName</option>
+
+                                                    if (bAgentID == SItem.AId)
+                                                    {
+                                                        <option selected value="@SItem.AId">@SItem.AName</option>
+                                 
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@SItem.AId">@SItem.AName</option>
+                                                    }
+
                                                 }
                                             </select>
                                         </div>
-
-
-
                                     }
                                     else if (UserType == "2")
                                     {
-                                        <input id="CustomerType" name="CustomerType" type="hidden" class="form-control" value="2">
+                                        <input id="CustomerType" name="CustomerType" type="hidden" class="form-control" value="@bCustomerType">
                                         <div class="col-md-3">
                                             <label>
                                                 <input type="radio" name="optiosCustomer" id="optiosCustomer2" value="SubAgent" checked="checked" onclick="showhidedivC(this);">
@@ -111,11 +173,16 @@
 
                                                 @foreach (var SItem in item.sSubAgent)
                                                 {
-                                                    <option value="@SItem.AId">@SItem.AName</option>
-                                                    @*if (AgentID == SItem.UserID.ToString())
+                                                  
+                                                    if (bAgentID == SItem.AId)
+                                                    {
+                                                        <option selected value="@SItem.AId">@SItem.AName</option>
+
+                                                    }
+                                                    else
                                                     {
                                                         <option value="@SItem.AId">@SItem.AName</option>
-                                                    }*@
+                                                    }
 
                                                 }
                                             </select>
@@ -124,8 +191,9 @@
                                     }
                                     else
                                     {
-                                        <input id="CustomerType" name="CustomerType" type="hidden" class="form-control" value="1">
+                                        <input id="CustomerType" name="CustomerType" type="hidden" class="form-control" value="@bCustomerType">
                                         <div class="col-md-3">
+                                     
                                             <label>
                                                 <input type="radio" name="optiosCustomer" id="optiosCustomer1" value="WalkIn" checked>
                                                 Walk In
@@ -144,6 +212,8 @@
                                             One Way
                                         </label>
                                     </div>
+                                    @if (UserType == "1")
+                                    {
                                     <div class="col-md-4">
                                         <label>
                                             <input type="radio" name="optiosService" id="optiosService2" value="Return" onclick="showhidediv(this);">
@@ -156,6 +226,7 @@
                                             Sale Visit
                                         </label>
                                     </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -189,28 +260,88 @@
                                   @*  <option value="">-- Type pick-up location --</option>*@
                                     @foreach (var FItem in item.sFromModel)
                                     {
+                                        if (dBK == null)
+                                        {
+                                            if (@FItem.FId == 1)
+                                            {
+                                                <option selected value="@FItem.FId">@FItem.FDetail</option>
+                                            }
+                                            else
+                                            {
 
-                                        <option value="@FItem.FId">@FItem.FDetail</option>
+                                                <option value="@FItem.FId">@FItem.FDetail</option>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            bFromID = dBK.FromID;
+                                            if (bFromID == FItem.FId)
+                                            {
+                                                <option selected value="@FItem.FId">@FItem.FDetail</option>
+                                            }
+                                            else
+                                            {
+
+                                                <option value="@FItem.FId">@FItem.FDetail</option>
+                                            }
+
+                                        }
+
+
                                     }
                                     <option value="999">Other</option>
                                 
                                 </select>
                             </div>
                             <div class="col-md-6">
+                                <label>From Detail</label>
+                              
+                                <input id="FromRemark" name="FromRemark" type="text" class="form-control" value="@bFromRemark">
+                            </div>
+                            </div>
+                        <div class="form-group">
+                            <div class="col-md-6">
                                 <label>To</label>
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
                                 <select class="form-control" id="To" name="To" placeholder="-- Type drop-off location --" onchange="chk_ToOneWay();">
-                                 @*   <option value="">-- Type drop-off location --</option>*@
+                                    @*   <option value="">-- Type drop-off location --</option>*@
                                     @foreach (var TItem in item.sToModel)
-    {
-        <option value="@TItem.TId">@TItem.TDetail</option>
-    }
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (@TItem.TId == 1)
+                                            {
+                                                <option selected value="@TItem.TId">@TItem.TDetail</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@TItem.TId">@TItem.TDetail</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            bToID = dBK.ToID;
+                                            if (bToID == TItem.TId)
+                                            {
+                                                <option selected value="@TItem.TId">@TItem.TDetail</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@TItem.TId">@TItem.TDetail</option>
+                                            }
+                                        }
+
+                                    }
                                     <option value="999">Other</option>
                                 </select>
 
 
                             </div>
-
+                            <div class="col-md-6">
+                                <label>To Detail</label>
+                                <input id="ToRemark" name="ToRemark" type="text" class="form-control" value="@bToRemark">
+                            </div>
                         </div>
                         &nbsp;
                         <div class="form-group">
@@ -218,26 +349,20 @@
                                 <label>Date of Service</label>
                                 <div class="input-group date">
                                     <input type="text" class="form-control" name="Date" id="Date" data-select="datepicker"
-                                           data-val="true" data-val-required="Date is required" value="@dDate.ToString("dd/MM/yyyy")">
+                                           data-val="true" data-val-required="Date is required" value="@sDay/@sMonth/@sYear">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-success" data-toggle="datepicker">
                                             <i class="fa fa-calendar"></i>
                                         </button>
                                     </span>
 
-                                    @*<div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                  
-                                    <input class="form-control" data-val="true" data-val-required="Date is required"
-                                           id="Date" name="Date" type="date" value="1/11/1989" />*@
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label>Pick up time</label>
                                 <select class="form-control" id="Time" name="Time">
 
-                                 @*   <option value="">-- Select Pick up Time --</option>*@
+                                
                                     <option data-ng-value="00:00">00:00</option>
                                     <option data-ng-value="00:15">00:15</option>
                                     <option data-ng-value="00:30">00:30</option>
@@ -343,30 +468,67 @@
                                 <label>No of passenger</label>
                                 <select class="form-control" id="Passenger" name="Passenger">
 
-                                    @*  <option value="">-- Select No of passenger --</option>*@
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                    
+                                    @for (var i = 1; i <= 4; i++)
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            if (dBK.Passenger == i)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+
+                                    }
+
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label>No of luggage</label>
                                 <select class="form-control" id="Luggage" name="Luggage">
+                                    @for (var i = 1; i <= 5; i++)
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
 
-                                    @* <option value="">-- Select No of luggage --</option>*@
-                                    <option value="0">0</option>
-                                    <option selected value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
+                                        }
+                                        else
+                                        {
+                                            if (dBK.Luggage == i)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+
+
+                                    }
 
                                 </select>
                             </div>
@@ -375,7 +537,7 @@
                         <div class="form-group">
                             <div class="col-md-12">
                                 <label>Flight Detail</label>
-                                <input id="Flight" name="Flight" type="text" class="form-control" placeholder="Enter ...">
+                                <input id="Flight" name="Flight" type="text" class="form-control" value="@bFlightDetail">
                             </div>
                             @*<div class="col-md-6">
                                 <label>Time</label>
@@ -391,33 +553,77 @@
                                   @*  <option value="">-- Select Car Model --</option>*@
                                     @foreach (var CItem in item.sCar)
                                     {
-                                        <option value="@CItem.CId">@CItem.CModel</option>
+                                        if (@CItem.CId == 1)
+                                        {
+                                            <option value="@CItem.CId">@CItem.CModel</option>
+                                        }
                                     }
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label>No of vechile</label>
                                 <select class="form-control" id="Vechile" name="Vechile">
+                                    @for (var i = 1; i <= 4; i++)
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
 
-                                    @* <option value="">-- Select No of vechile --</option>*@
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
+                                        }
+                                        else
+                                        {
+                                            if (dBK.Vechile == i)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
 
+
+                                    }
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label>Currency</label>
                                 <select class="form-control" id="Currency" name="Currency">
 
-                                    @* <option value="">-- Select No of vechile --</option>*@
-                                    <option value="THB">THB</option>
-                                    <option value="USD">USD</option>
-                                    <option value="EUR">EUR</option>
+                                    @if (dBK == null)
+                                    {
+                                        <option value="THB">THB</option>
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                    }
+                                    else
+                                    {
+                                        if (dBK.Currency == "THB")
+                                        {
+                                            <option selected value="THB">THB</option>
+                                            <option value="USD">USD</option>
+                                            <option value="EUR">EUR</option>
+                                        }
+                                        else if (dBK.Currency == "USD")
+                                        {
+                                            <option value="THB">THB</option>
+                                            <option selected value="USD">USD</option>
+                                            <option value="EUR">EUR</option>
+                                        }
+                                        else if (dBK.Currency == "EUR")
+                                        {
+                                            <option value="THB">THB</option>
+                                            <option value="USD">USD</option>
+                                            <option selected value="EUR">EUR</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -461,12 +667,46 @@
                                     @foreach (var FItem in item.sFromModel)
                                     {
 
-                                        <option value="@FItem.FId">@FItem.FDetail</option>
+                                        if (dBK == null)
+                                        {
+                                            if (@FItem.FId == 1)
+                                            {
+                                                <option selected value="@FItem.FId">@FItem.FDetail</option>
+                                            }
+                                            else
+                                            {
+
+                                                <option value="@FItem.FId">@FItem.FDetail</option>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            bFromID = dBK.FromID;
+                                            if (bFromID == FItem.FId)
+                                            {
+                                                <option selected value="@FItem.FId">@FItem.FDetail</option>
+                                            }
+                                            else
+                                            {
+
+                                                <option value="@FItem.FId">@FItem.FDetail</option>
+                                            }
+
+                                        }
+
+
                                     }
                                     <option value="999">Other</option>
 
                                 </select>
                             </div>
+                            <div class="col-md-6">
+                                <label>From Detail</label>
+                                <input id="FromRemark2" name="FromRemark2" type="text" class="form-control" value="@bFromRemark">
+                            </div>
+                            </div>
+                        <div class="form-group">
                             <div class="col-md-6">
                                 <label>To</label>
                                 @* <input type="text" class="form-control" placeholder="Enter ...">*@
@@ -474,14 +714,40 @@
                                     @*   <option value="">-- Type drop-off location --</option>*@
                                     @foreach (var TItem in item.sToModel)
                                     {
-                                        <option value="@TItem.TId">@TItem.TDetail</option>
+                                        if (dBK == null)
+                                        {
+                                            if (@TItem.TId == 1)
+                                            {
+                                                <option selected value="@TItem.TId">@TItem.TDetail</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@TItem.TId">@TItem.TDetail</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            bToID = dBK.ToID;
+                                            if (bToID == TItem.TId)
+                                            {
+                                                <option selected value="@TItem.TId">@TItem.TDetail</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@TItem.TId">@TItem.TDetail</option>
+                                            }
+                                        }
+
                                     }
                                     <option value="999">Other</option>
                                 </select>
 
 
                             </div>
-
+                            <div class="col-md-6">
+                                <label>To Detail</label>
+                                <input id="ToRemark2" name="ToRemark2" type="text" class="form-control" value="@bToRemark">
+                            </div>
                         </div>
                         &nbsp;
                         <div class="form-group">
@@ -489,7 +755,7 @@
                                 <label>Date of Service</label>
                                 <div class="input-group date">
                                     <input type="text" class="form-control" name="Date2" id="Date2" data-select="datepicker"
-                                           data-val="true" data-val-required="Date is required" value="@dDate.ToString("dd/MM/yyyy")">
+                                           data-val="true" data-val-required="Date is required" value="@sDay/@sMonth/@sYear">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-success" data-toggle="datepicker">
                                             <i class="fa fa-calendar"></i>
@@ -613,15 +879,34 @@
                             <div class="col-md-6">
                                 <label>No of passenger</label>
                                 <select class="form-control" id="Passenger2" name="Passenger2">
+                                    @for (var i = 1; i <= 4; i++)
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
 
-                                    @*  <option value="">-- Select No of passenger --</option>*@
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
+                                        }
+                                        else
+                                        {
+                                            if (dBK.Passenger == i)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+
+                                    }
+                                  
 
                                 </select>
                             </div>
@@ -629,16 +914,34 @@
                                 <label>No of luggage</label>
                                 <select class="form-control" id="Luggage2" name="Luggage2">
 
-                                    @* <option value="">-- Select No of luggage --</option>*@
-                                    <option value="0">0</option>
-                                    <option selected value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
+                                    @for (var i = 1; i <= 5; i++)
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
 
+                                        }
+                                        else
+                                        {
+                                            if (dBK.Luggage == i)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+
+
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -646,7 +949,7 @@
                         <div class="form-group">
                             <div class="col-md-12">
                                 <label>Flight Detail</label>
-                                <input id="Flight2" name="Flight2" type="text" class="form-control" placeholder="Enter ...">
+                                <input id="Flight2" name="Flight2" type="text" class="form-control"  value="@bFlightDetail">
                             </div>
                             @*<div class="col-md-6">
                     <label>Time</label>
@@ -662,22 +965,44 @@
                                     @*  <option value="">-- Select Car Model --</option>*@
                                     @foreach (var CItem in item.sCar)
                                     {
-                                        <option value="@CItem.CId">@CItem.CModel</option>
+                                        if (@CItem.CId == 1)
+                                        {
+                                            <option value="@CItem.CId">@CItem.CModel</option>
+                                        }
                                     }
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label>No of vechile</label>
                                 <select class="form-control" id="Vechile2" name="Vechile2">
+                                    @for (var i = 1; i <= 4; i++)
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
 
-                                    @* <option value="">-- Select No of vechile --</option>*@
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
+                                        }
+                                        else
+                                        {
+                                            if (dBK.Vechile == i)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+
+
+                                    }
 
                                 </select>
                             </div>
@@ -685,10 +1010,34 @@
                                 <label>Currency</label>
                                 <select class="form-control" id="Currency2" name="Currency2">
 
-                                    @* <option value="">-- Select No of vechile --</option>*@
+                                 @if (dBK == null)
+                                 {
                                     <option value="THB">THB</option>
                                     <option value="USD">USD</option>
                                     <option value="EUR">EUR</option>
+                                 }
+                                 else
+                                 {
+                                     if (dBK.Currency == "THB")
+                                     {
+                                        <option selected value="THB">THB</option>
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                     }
+                                     else if (dBK.Currency == "USD")
+                                     {
+                                        <option value="THB">THB</option>
+                                          <option selected value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                     }
+                                     else if (dBK.Currency == "EUR")
+                                     {
+                                        <option value="THB">THB</option>
+                                        <option value="USD">USD</option>
+                                        <option selected value="EUR">EUR</option>
+                                     }
+                                 }
+                                   
                                 </select>
                             </div>
                         </div>
@@ -734,9 +1083,19 @@
                         <div class="form-group">
                             <div class="col-md-10">
                                 <label>Route Detail</label>
-                                <input id="counter" name="counter" type="hidden" class="form-control" value="0" onkeypress="return isNumberKey(event)">
+                                @{int cRow = 0;
+                                  int iRow = 1;}
+                                @if (item.dSaleVisit != null)
+                                {
+                                    foreach (var svitem in item.dSaleVisit)
+                                    {
+                                        cRow++;
+                                        iRow++;
+                                    }
+                                }
+                                <input id="counter" name="counter" type="hidden" class="form-control" value="@cRow" onkeypress="return isNumberKey(event)">
 
-                                <input id="limit" name="limit" type="hidden" class="form-control" value="1" onkeypress="return isNumberKey(event)">
+                                <input id="limit" name="limit" type="hidden" class="form-control" value="@iRow" onkeypress="return isNumberKey(event)">
                             </div>
                             <div class="col-md-1">
 
@@ -763,13 +1122,33 @@
                                     </div>
 
                                     <div id="Input">
-
+                                          @if (item.dSaleVisit != null)
+                                {
+                                              int aRow = 0;
+                                              int bRow = 1;
+                                    foreach (var svitem in item.dSaleVisit)
+                                    {
+                                           var bDetail = "Detail" + bRow;
+                                            var boDetail = "oDtail" + bRow;
+                                             var bNum = "Num" + bRow;
+                                        <div class="form-group" id="@boDetail" name="@boDetail">
+                                            <div class="col-md-1"><input type="text" id="@bNum" name="@bNum" class="form-control" value="@bRow" readonly></div>
+                                            <div class="col-md-11"><input type="text" id="@bDetail" name="@bDetail" class="form-control" value="@svitem.RouteDetail"></div>
+                                        </div>
+                                       
+                                       
+                                        aRow++;
+                                       bRow++;
+                                    }
+                                   
+                                }
 
                                     </div>
                                     
 
                                 </div>
                                 <!-- /.table-responsive -->
+                                &nbsp;
                             </div>
                             <hr />
                         </div>
@@ -780,7 +1159,7 @@
                                 <label>Date of Service</label>
                                 <div class="input-group date">
                                     <input type="text" class="form-control" name="Date3" id="Date3" data-select="datepicker"
-                                           data-val="true" data-val-required="Date is required" value="@dDate.ToString("dd/MM/yyyy")">
+                                           data-val="true" data-val-required="Date is required" value="@sDay/@sMonth/@sYear">
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-success" data-toggle="datepicker">
                                             <i class="fa fa-calendar"></i>
@@ -903,31 +1282,67 @@
                             <div class="col-md-6">
                                 <label>No of passenger</label>
                                 <select class="form-control" id="Passenger3" name="Passenger3">
+                                    @for (var i = 1; i <= 4; i++)
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
 
-                                    @*  <option value="">-- Select No of passenger --</option>*@
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
+                                        }
+                                        else
+                                        {
+                                            if (dBK.Passenger == i)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
 
+                                    }
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label>No of luggage</label>
                                 <select class="form-control" id="Luggage3" name="Luggage3">
 
-                                    @* <option value="">-- Select No of luggage --</option>*@
-                                    <option value="0">0</option>
-                                    <option selected value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
+                                    @for (var i = 1; i <= 5; i++)
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            if (dBK.Luggage == i)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+
+
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -935,7 +1350,7 @@
                         <div class="form-group">
                             <div class="col-md-12">
                                 <label>Flight Detail</label>
-                                <input id="Flight3" name="Flight3" type="text" class="form-control" placeholder="Enter ...">
+                                <input id="Flight3" name="Flight3" type="text" class="form-control" value="@bFlightDetail">
                             </div>
                             @*<div class="col-md-6">
                                 <label>Time</label>
@@ -951,7 +1366,10 @@
                                  @*   <option value="">-- Select Car Model --</option>*@
                                     @foreach (var CItem in item.sCar)
                                     {
-                                        <option value="@CItem.CId">@CItem.CModel</option>
+                                        if (@CItem.CId == 1)
+                                        {
+                                            <option value="@CItem.CId">@CItem.CModel</option>
+                                        }
                                     }
                                 </select>
                             </div>
@@ -959,25 +1377,67 @@
                                 <label>No of vechile</label>
                                 <select class="form-control" id="Vechile3" name="Vechile3">
 
-                                    @* <option value="">-- Select No of vechile --</option>*@
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
+                                    @for (var i = 1; i <= 4; i++)
+                                    {
+                                        if (dBK == null)
+                                        {
+                                            if (i == 1)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            if (dBK.Vechile == i)
+                                            {
+                                                <option selected value="@i">@i</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+
+
+                                    }
 
                                 </select>
                             </div>
                             <div class="col-md-3">
                                 <label>Currency</label>
                                 <select class="form-control" id="Currency3" name="Currency3">
-
-                                    @* <option value="">-- Select No of vechile --</option>*@
-                                    <option value="THB">THB</option>
-                                    <option value="USD">USD</option>
-                                    <option value="EUR">EUR</option>
+                                    @if (dBK == null)
+                                    {
+                                        <option value="THB">THB</option>
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                    }
+                                    else
+                                    {
+                                        if (dBK.Currency == "THB")
+                                        {
+                                            <option selected value="THB">THB</option>
+                                            <option value="USD">USD</option>
+                                            <option value="EUR">EUR</option>
+                                        }
+                                        else if (dBK.Currency == "USD")
+                                        {
+                                            <option value="THB">THB</option>
+                                            <option selected value="USD">USD</option>
+                                            <option value="EUR">EUR</option>
+                                        }
+                                        else if (dBK.Currency == "EUR")
+                                        {
+                                            <option value="THB">THB</option>
+                                            <option value="USD">USD</option>
+                                            <option selected value="EUR">EUR</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -1010,6 +1470,35 @@
         document.getElementById('Service2').style.display = 'none';
         document.getElementById('Service3').style.display = 'none';
        
+        var bServiceType = document.getElementById('bServiceType').value
+        var bCustomerType = document.getElementById('bCustomerType').value
+
+        if (bCustomerType == 1) {
+            document.getElementById('optiosCustomer1').checked = 'checked';
+        }
+        else if (bCustomerType == 2) {
+                document.getElementById('optiosCustomer2').checked = 'checked';
+            }
+
+        
+        if (bServiceType == 1) {
+            document.getElementById('optiosService1').checked = 'checked';
+            document.getElementById('Service1').style.display = 'block';
+            document.getElementById('Service2').style.display = 'none';
+            document.getElementById('Service3').style.display = 'none';
+        }
+        else if (bServiceType == 2) {
+            document.getElementById('optiosService2').checked = 'checked';
+            document.getElementById('Service1').style.display = 'none';
+            document.getElementById('Service2').style.display = 'block';
+            document.getElementById('Service3').style.display = 'none';
+        }
+        else if (bServiceType == 3) {
+            document.getElementById('optiosService3').checked = 'checked';
+            document.getElementById('Service1').style.display = 'none';
+            document.getElementById('Service2').style.display = 'none';
+            document.getElementById('Service3').style.display = 'block';
+        }
 
  function showhidediv(rad){
      var rads=document.getElementsByName(rad.name);

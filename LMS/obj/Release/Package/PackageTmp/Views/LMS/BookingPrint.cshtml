@@ -37,6 +37,10 @@
                 <div class="row invoice-info">
 
                     @{string SType = "";
+
+                      String sDay = item.Date.Day.ToString("00");
+                      String sMonth = item.Date.Month.ToString("00");
+                      String sYear = item.Date.Year.ToString("0000");
                 if (@item.ServiceType == 1)
                 {
                 SType = "One Way";
@@ -220,25 +224,25 @@
                                         </tr>
                                         <tr>
                                             <td width="30%"><b>Pick up date : &nbsp;</b> </td>
-                                            <td width="70%">@item.Date.ToString("dd/MM/yyyy")</td>
+                                            <td width="70%">@sDay/@sMonth/@sYear</td>
                                         </tr>
                                         <tr>
                                             <td width="30%"><b>Pick up time : &nbsp;</b> </td>
                                             <td width="70%">@item.Time</td>
                                         </tr>
                                         @if (@item.ServiceType != 3)
-                                    {
-                                    <tr>
-                                        <td width="30%"><b>From : &nbsp;</b></td>
-                                        <td width="70%">@item.FromDetail</td>
-                                    </tr>
-                                    <tr>
-                                        <td width="30%"><b>Send To : &nbsp;</b></td>
-                                        <td width="70%">@item.ToDetail</td>
-                                    </tr>
-                                    }
-                                    else
-                                    {
+                                        {
+                                            <tr>
+                                                <td width="30%"><b>From : &nbsp;</b></td>
+                                                <td width="70%">@item.FromDetail <br>@item.FromRemark</td>
+                                            </tr>
+                                            <tr>
+                                                <td width="30%"><b>Send To : &nbsp;</b></td>
+                                                <td width="70%">@item.ToDetail <br>@item.ToRemark</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
                                     <tr>
                                         <td width="30%"><b>Route Detail : &nbsp;</b></td>
                                         <td width="70%">

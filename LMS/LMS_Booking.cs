@@ -51,5 +51,7 @@ namespace LMS
         public Nullable<int> PaymentStatus { get; set; }
         public Nullable<int> FromID { get; set; }
         public Nullable<int> ToID { get; set; }
+        public string FromRemark { get; set; }
+        public string ToRemark { get; set; }
     }
 }

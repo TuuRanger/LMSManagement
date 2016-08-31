@@ -25,6 +25,9 @@ namespace LMS.Models
         public List<ToModel> sToModel { get; set; }
         public List<Car> sCar { get; set; }
         public List<SubAgent> sSubAgent { get; set; }
+        public dBookingDetail dBooking { get; set; }
+        public SessionBookingD sBack { get; set; }
+        public List<SaleVistDetail> dSaleVisit { get; set; }
 
     }
     public class SubAgent
@@ -123,6 +126,8 @@ namespace LMS.Models
          public string FlightTime { get; set; }
          public string FromDetail { get; set; }
          public string ToDetail { get; set; }
+         public string FromRemark { get; set; }
+         public string ToRemark { get; set; }
          public int FromID { get; set; }
          public int ToID { get; set; }
          public string Remark { get; set; }
@@ -175,6 +180,8 @@ namespace LMS.Models
         public string ToDetail { get; set; }
         public int FromID { get; set; }
         public int ToID { get; set; }
+        public string FromRemark { get; set; }
+        public string ToRemark { get; set; }
         public DateTime BookingDate { get; set; }
         public DateTime Date { get; set; }
         public string Time { get; set; }
@@ -242,6 +249,8 @@ namespace LMS.Models
         public string FlightTime { get; set; }
         public string FromDetail { get; set; }
         public string ToDetail { get; set; }
+        public string FromRemark { get; set; }
+        public string ToRemark { get; set; }
         public int FromID { get; set; }
         public int ToID { get; set; }
         public string Remark { get; set; }
@@ -354,5 +363,17 @@ namespace LMS.Models
         public dBookingDetail dBookingDetail { get; set; }
         public List<SaleVistDetail> dSaleVisit { get; set; }
       
+    }
+
+    public class SessionBookingD
+    {
+        public string Title { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public string Telephone { get; set; }
+        public string Mobile { get; set; }
+        public string Remark { get; set; }
     }
 }

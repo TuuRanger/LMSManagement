@@ -1414,6 +1414,8 @@
     <Content Include="Views\LMS\ReportInvoice.cshtml" />
     <Content Include="Views\LMS\ReportReceipt.cshtml" />
     <Content Include="Views\LMS\BookingPrint.cshtml" />
+    <Content Include="Views\LMS\CBooking.cshtml" />
+    <Content Include="Views\LMS\BackBooking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

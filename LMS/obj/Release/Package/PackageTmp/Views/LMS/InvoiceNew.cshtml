@@ -44,6 +44,15 @@
             @{
                 DateTime nDate = DateTime.Now;
                 DateTime dDate = DateTime.Now;
+
+                string nDay = DateTime.Now.Day.ToString("00");
+                string nMonth = DateTime.Now.Month.ToString("00");
+                string nYear = DateTime.Now.Year.ToString("0000");
+
+                string dDay = DateTime.Now.Day.ToString("00");
+                string dMonth = DateTime.Now.Month.ToString("00");
+                string dYear = DateTime.Now.Year.ToString("0000");
+                
                 int iRow = 1;
                 string sRow = "";
               }
@@ -132,7 +141,7 @@
                                     <label>Invoice Date</label>
                                     <div class="input-group date">
                                         <input type="text" class="form-control" name="InvoiceDate" id="InvoiceDate" data-select="datepicker"
-                                               data-val="true" data-val-required="Date is required" value="@nDate.ToString("dd/MM/yyyy")">
+                                               data-val="true" data-val-required="Date is required" value="@nDay/@nMonth/@nYear">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-success" data-toggle="datepicker">
                                                 <i class="fa fa-calendar"></i>
@@ -145,7 +154,7 @@
                                     <label>Due Date</label>
                                     <div class="input-group date">
                                         <input type="text" class="form-control" name="DueDate" id="DueDate" data-select="datepicker"
-                                               data-val="true" data-val-required="Date is required" value="@dDate.ToString("05/MM/yyyy")">
+                                               data-val="true" data-val-required="Date is required" value="@dDay/@dMonth/@dYear">
                                         <span class="input-group-btn">
                                             <button type="button" class="btn btn-success" data-toggle="datepicker">
                                                 <i class="fa fa-calendar"></i>
@@ -178,6 +187,10 @@
                                                 {
                                                     String ServiceName = "";
 
+                                                    String iDay = iBooking.Date.Day.ToString("00");
+                                                    String iMonth = iBooking.Date.Month.ToString("00");
+                                                    String iYear = iBooking.Date.Year.ToString("0000");
+                                                        
                                                     if (iBooking.ServiceType == 1)
                                                     {
                                                         ServiceName = "One Way";
@@ -222,7 +235,7 @@
                                                 <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                                     <td><input type="checkbox" id="@sRow" name="@sRow" value="@iBooking.BookingID" class="flat-red" checked>&nbsp; @iBooking.BookingID</td>
                                                     @*<td><a href="/LMS/BookingInfo?BID=@iBooking.BookingID">@iBooking.BookingID</a></td>*@
-                                                    <td>@iBooking.Date.ToString("dd/MM/yyyy")</td>
+                                                    <td>@iDay/@iMonth/@iYear</td>
                                                     <td>@ServiceName</td>
                                                     @if (iBooking.ServiceType == 3)
                                                         {

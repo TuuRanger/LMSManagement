@@ -67,10 +67,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                              
                                 @foreach (var item in Model)
                                 {
                                     String ServiceName = "";
+                                    
+                                    String sDay = item.BookingDate.Day.ToString("00");
+                                    String sMonth = item.BookingDate.Month.ToString("00");
+                                    String sYear = item.BookingDate.Year.ToString("0000");
 
+                                    String iDay = item.Date.Day.ToString("00");
+                                    String iMonth = item.Date.Month.ToString("00");
+                                    String iYear = item.Date.Year.ToString("0000");
+                                  
+                                    
                                     if (item.ServiceType == 1)
                                     {
                                         ServiceName = "One Way";
@@ -114,7 +124,7 @@
 
                                     <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/BookingInfo?BID=@item.BookingID">@item.BookingID</a></td>
-                                        <td>@item.BookingDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@sDay/@sMonth/@sYear</td>
                                         <td>@ServiceName</td>
                                         @if (item.ServiceType == 3)
                                         {
@@ -127,7 +137,7 @@
                                         }
                                         @*<td>@item.FromDetail</td>
                                 <td>@item.ToDetail</td>*@
-                                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                                        <td>@iDay/@iMonth/@iYear</td>
                                         <td>@item.Time</td>
                                         <td>@item.DTitle @item.DName &nbsp;@item.DLastName</td>
                                         <td>@item.CarModel</td>

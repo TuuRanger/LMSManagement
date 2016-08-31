@@ -83,13 +83,21 @@
                                         Status = "ยกเลิก";
                                         SClass = "label label-warning";
                                     }
+                                    String sDay = item.InvoiceDate.Day.ToString("00");
+                                    String sMonth = item.InvoiceDate.Month.ToString("00");
+                                    String sYear = item.InvoiceDate.Year.ToString("0000");
+
+                                    String iDay = item.DueDate.Day.ToString("00");
+                                    String iMonth = item.DueDate.Month.ToString("00");
+                                    String iYear = item.DueDate.Year.ToString("0000");
+
 
 
 
                                     <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/ReceiptNew?InvoiceNo=@item.InvoiceNo">@item.InvoiceNo</a></td>
-                                        <td>@item.InvoiceDate.ToString("dd/MM/yyyy")</td>
-                                        <td>@item.DueDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@sDay/@sMonth/@sYear</td>
+                                        <td>@iDay/@iMonth/@iYear</td>
                                         <td>@item.SubName</td>
                                         <td>@item.CreditTerm</td>
                                         <td><span class="@SClass">@Status</span></td>

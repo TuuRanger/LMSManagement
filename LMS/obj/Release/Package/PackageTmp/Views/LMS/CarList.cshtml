@@ -78,6 +78,11 @@
                                         ServiceName = "Delivered";
                                         SClass = "label label-primary";
                                     }
+                                    else if (item.Status == 3)
+                                    {
+                                        ServiceName = "Cancel";
+                                        SClass = "label label-danger";
+                                    }
 
                                     <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/Car">@item.Id</a></td>

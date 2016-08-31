@@ -26,7 +26,23 @@
                 @{
         DateTime nDate = DateTime.Now;
         DateTime dDate = DateTime.Now;
-      
+
+        string nDay = DateTime.Now.Day.ToString("00");
+        string nMonth = DateTime.Now.Month.ToString("00");
+        string nYear = DateTime.Now.Year.ToString("0000");
+
+        string dDay = DateTime.Now.Day.ToString("00");
+        string dMonth = DateTime.Now.Month.ToString("00");
+        string dYear = DateTime.Now.Year.ToString("0000");
+
+        String iDay = IInvoice.InvoiceDate.Day.ToString("00");
+        String iMonth = IInvoice.InvoiceDate.Month.ToString("00");
+        String iYear = IInvoice.InvoiceDate.Year.ToString("0000");
+
+        String uDay = IInvoice.DueDate.Day.ToString("00");
+        String uMonth = IInvoice.DueDate.Month.ToString("00");
+        String uYear = IInvoice.DueDate.Year.ToString("0000");
+
                 }
                 <div class="row">
 
@@ -75,7 +91,7 @@
                                         <label>Receipt Date</label>
                                         <div class="input-group date">
                                             <input type="text" class="form-control" name="ReceiptDate" id="ReceiptDate" data-select="datepicker"
-                                                   data-val="true" data-val-required="Date is required" value="@nDate.ToString("dd/MM/yyyy")">
+                                                   data-val="true" data-val-required="Date is required" value="@nDay/@nMonth/@nYear">
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-success" data-toggle="datepicker">
                                                     <i class="fa fa-calendar"></i>
@@ -88,7 +104,7 @@
                                         <label>Payment Date</label>
                                         <div class="input-group date">
                                             <input type="text" class="form-control" name="PaymentDate" id="PaymentDate" data-select="datepicker"
-                                                   data-val="true" data-val-required="Date is required" value="@nDate.ToString("dd/MM/yyyy")">
+                                                   data-val="true" data-val-required="Date is required" value="@dDay/@dMonth/@dYear">
                                             <span class="input-group-btn">
                                                 <button type="button" class="btn btn-success" data-toggle="datepicker">
                                                     <i class="fa fa-calendar"></i>
@@ -156,20 +172,21 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <table width="100%">
+
                                     <tr>
-                                        <td width="70%">
-                                            <img src="~/img/SYN-Logo-th-ol.jpg" width="15%"><b>บริษัท เซนเนอร์ยี่ 2016 จำกัด</b>
-                                            <br />
-                                            60/29 หมู่ 6 ถ.กิ่งแก้ว ต.ราชาเทวะ อ.บางพลี จ.สมุทรปราการ 10540
-                                            <br />
-                                            เลขประจำตัวผู้เสียภาษี 0105543092392 สำนักงานใหญ่
+                                        <td width="100%">
+                                            <img src="~/img/TOP.jpg" width="100%">
+                                            @*<br />
+                60/29 หมู่ 6 ถ.กิ่งแก้ว ต.ราชาเทวะ อ.บางพลี จ.สมุทรปราการ 10540
+                <br />
+                เลขประจำตัวผู้เสียภาษี 0105543092392 สำนักงานใหญ่*@
                                         </td>
-                                        <td width="30%" align="right">
-                                            <b>วันที่ / Date :</b> &nbsp; @IInvoice.InvoiceDate.ToString("dd/MM/yyyy")
-                                            <br />
-                                            <b>เลขที่ / No : </b> &nbsp; IV &nbsp; @IInvoice.InvoiceNo
-                                            <br />
-                                        </td>
+                                        @*<td width="30%" align="right">
+                <b>วันที่ / Date :</b> &nbsp; @IInvoice.InvoiceDate.ToString("dd/MM/yyyy")
+                <br />
+                <b>เลขที่ / No : </b> &nbsp; IV &nbsp; @IInvoice.InvoiceNo
+                <br />
+            </td>*@
                                     </tr>
                                 </table>
                                 <hr />
@@ -194,7 +211,7 @@
                                             <br />
                                             <b>เงื่อนไขการชำระเงิน :</b>&nbsp;Credit Term &nbsp; @IInvoice.CreditTerm
                                             <br />
-                                            <b>กำหนดชำระเงิน :</b>&nbsp; @IInvoice.DueDate.ToString("dd/MM/yyyy")
+                                            <b>กำหนดชำระเงิน :</b>&nbsp;@uDay/@uMonth/@uYear
                                         </td>
 
                                     </tr>
@@ -202,69 +219,79 @@
                                 </table>
 
                                 <hr />
-                                <table width="100%">
-                                    <tr>
-                                        <td width="10%">
-                                            <b>Booking ID</b>
-                                        </td>
-                                        <td width="10%">
-                                            <b>Date of Service</b>
-                                        </td>
-                                        <td width="10%">
-                                            <b>Service</b>
-                                        </td>
-                                        <td width="40%">
-                                            <b>Detail</b>
-                                        </td>
-                                        <td width="20%">
-                                            <b>Passenger</b>
-                                        </td>
-                                        <td width="10%">
-                                            <b>Amount</b>
-                                        </td>
+                                <div class="col-xs-12 table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td width="10%">
+                                                    <b>Booking ID</b>
+                                                </td>
+                                                <td width="10%">
+                                                    <b>Date of Service</b>
+                                                </td>
+                                                <td width="10%">
+                                                    <b>Service</b>
+                                                </td>
+                                                <td width="40%">
+                                                    <b>Detail</b>
+                                                </td>
+                                                <td width="20%">
+                                                    <b>Passenger</b>
+                                                </td>
+                                                <td width="10%">
+                                                    <b>Amount</b>
+                                                </td>
 
-                                    </tr>
-                                    @foreach (var IBooking in item.LBooking)
-                                    {
-                                        if (@IBooking.ServiceType == 1)
-                                        {
-                                            SType = "One Way";
-                                        }
-                                        else if (@IBooking.ServiceType == 2)
-                                        {
-                                            SType = "Return";
-                                        }
-                                        else if (@IBooking.ServiceType == 3)
-                                        {
-                                            SType = "Sale Visit";
-                                        }
-
-                                        <tr>
-                                            <td width="10%">
-                                                @IBooking.BookingID
-                                            </td>
-                                            <td width="10%">
-                                                @IBooking.Date.ToString("dd/MM/yyyy")
-                                            </td>
-                                            <td width="10%">
-                                                @SType
-                                            </td>
-                                            @if (IBooking.ServiceType == 3)
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var IBooking in item.LBooking)
                                             {
-                                                <td width="40%">@IBooking.RouteDetail</td>
+                                                if (@IBooking.ServiceType == 1)
+                                                {
+                                                    SType = "One Way";
+                                                }
+                                                else if (@IBooking.ServiceType == 2)
+                                                {
+                                                    SType = "Return";
+                                                }
+                                                else if (@IBooking.ServiceType == 3)
+                                                {
+                                                    SType = "Sale Visit";
+                                                }
+
+                                                String aDay = IBooking.Date.Day.ToString("00");
+                                                String aMonth = IBooking.Date.Month.ToString("00");
+                                                String aYear = IBooking.Date.Year.ToString("0000");
+
+                                                <tr>
+                                                    <td width="10%">
+                                                        @IBooking.BookingID
+                                                    </td>
+                                                    <td width="10%">
+                                                        @aDay/@aMonth/@aYear
+                                                    </td>
+                                                    <td width="10%">
+                                                        @SType
+                                                    </td>
+                                                    @if (IBooking.ServiceType == 3)
+                                                    {
+                                                        <td width="40%">@IBooking.RouteDetail</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@IBooking.FromDetail &nbsp; to &nbsp; @IBooking.ToDetail</td>
+                                                    }
+                                                    <td width="20%">@IBooking.Title @IBooking.FirstName &nbsp; @IBooking.LastName</td>
+                                                    <td width="10%" align="right">@IBooking.TotalPrice.ToString("#,###.##") &nbsp; @IBooking.Currency</td>
+
+                                                </tr>
+
                                             }
-                                            else
-                                            {
-                                                <td>@IBooking.FromDetail &nbsp; to &nbsp; @IBooking.ToDetail</td>
-                                            }
-                                            <td width="20%">@IBooking.Title @IBooking.FirstName &nbsp; @IBooking.LastName</td>
-                                            <td width="10%" align="right">@IBooking.TotalPrice.ToString("#,###.##") &nbsp; @IBooking.Currency</td>
+                                        </tbody>
+                                    </table>
 
-                                        </tr>
-
-                                    }
-
-                                </table>
+                                </div>
                                 <hr />
                                 <table width="100%">
                                     <tr>
@@ -289,7 +316,14 @@
                                     </tr>
 
                                 </table>
-                                <hr />
+                                <br />
+                                <table width="100%">
+                                    <tr>
+                                        <td width="100%">
+                                            <img src="~/img/Bottom.jpg" width="100%">
+
+                                    </tr>
+                                </table>
                             </div>
                             <!-- /.col -->
                         </div>

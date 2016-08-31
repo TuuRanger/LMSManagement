@@ -257,6 +257,8 @@
     <Property Name="PaymentStatus" Type="Int32" />
     <Property Name="FromID" Type="Int32" />
     <Property Name="ToID" Type="Int32" />
+    <Property Name="FromRemark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ToRemark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="LMS_Invoice">
     <Key>

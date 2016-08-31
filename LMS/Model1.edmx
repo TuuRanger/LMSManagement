@@ -59,8 +59,10 @@
           <Property Name="FlightTime" Type="nvarchar" MaxLength="100" />
           <Property Name="FromID" Type="int" />
           <Property Name="FromDetail" Type="nvarchar" MaxLength="255" />
+          <Property Name="FromRemark" Type="nvarchar(max)" />
           <Property Name="ToID" Type="int" />
           <Property Name="ToDetail" Type="nvarchar" MaxLength="255" />
+          <Property Name="ToRemark" Type="nvarchar(max)" />
           <Property Name="RouteDetail" Type="nvarchar(max)" />
           <Property Name="Remark" Type="nvarchar(max)" />
           <Property Name="ProductID" Type="int" />
@@ -574,6 +576,8 @@
           <Property Name="PaymentStatus" Type="Int32" />
           <Property Name="FromID" Type="Int32" />
           <Property Name="ToID" Type="Int32" />
+          <Property Name="FromRemark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ToRemark" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LMS_Invoice">
           <Key>
@@ -842,6 +846,8 @@
           <EntitySetMapping Name="LMS_Booking">
             <EntityTypeMapping TypeName="synergilimoModel.LMS_Booking">
               <MappingFragment StoreEntitySet="LMS_Booking">
+                <ScalarProperty Name="ToRemark" ColumnName="ToRemark" />
+                <ScalarProperty Name="FromRemark" ColumnName="FromRemark" />
                 <ScalarProperty Name="ToID" ColumnName="ToID" />
                 <ScalarProperty Name="FromID" ColumnName="FromID" />
                 <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />

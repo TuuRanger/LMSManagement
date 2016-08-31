@@ -59,20 +59,33 @@
                                     <th align="center"><font color="#fff">First Name</font></th>
                                     <th align="center"><font color="#fff">Last Name</font></th>
                                     <th align="center"><font color="#fff">Mobile</font></th>
-                                 
+                                    <th align="center"><font color="#fff">Status</font></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-
+                                    String Status = "";
+                                    String SClass = "";
+                                    String ServiceName = "";
+                                    if (item.Status == 1)
+                                    {
+                                        ServiceName = "Work";
+                                        SClass = "label label-success";
+                                    }
+                                  
+                                    else if (item.Status == 2)
+                                    {
+                                        ServiceName = "Resign";
+                                        SClass = "label label-danger";
+                                    }
                                     <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/Driver">@item.Id</a></td>
                                         <td>@item.Title</td>
                                         <td>@item.Name</td>
                                         <td>@item.LastName</td>
                                         <td>@item.Mobile</td>
-
+                                        <td><span class="@SClass">@ServiceName</span></td>
                                     </tr>
 
 

@@ -42,18 +42,61 @@
                     @{string aDate = Request.QueryString["sDate"];
                     string bDate = Request.QueryString["eDate"];
 
+                    string aDay = "";
+                    string aMonth = "";
+                    string aYear = "";
+                    int iaYear = 2016;
+
+                    string bDay = "";
+                    string bMonth = "";
+                    string bYear = "";
+                    int ibYear = 2016;
+                    DateTime sDate = DateTime.Today;
+                    DateTime eDate = DateTime.Today;
+
                     if (aDate == null || aDate == "")
                     {
                         aDate = DateTime.Now.ToString("dd/MM/yyyy");
+                        sDate = Convert.ToDateTime(aDate);
+                        aDay = sDate.Day.ToString("00");
+                        aMonth = sDate.Month.ToString("00");
+                        iaYear = Convert.ToInt32(sDate.Year);
+                        aYear = iaYear.ToString("0000");
+
                     }
+                    else
+                    {
+                        sDate = Convert.ToDateTime(aDate);
+                        aDay = sDate.Day.ToString("00");
+                        aMonth = sDate.Month.ToString("00");
+                        iaYear = Convert.ToInt32(sDate.Year) + 543;
+                        aYear = iaYear.ToString("0000");
+
+                    }
+
                     if (bDate == null || bDate == "")
                     {
                         bDate = DateTime.Now.ToString("dd/MM/yyyy");
+                        eDate = Convert.ToDateTime(bDate);
+                        bDay = eDate.Day.ToString("00");
+                        bMonth = eDate.Month.ToString("00");
+
+                        ibYear = Convert.ToInt32(eDate.Year);
+                        bYear = ibYear.ToString("0000");
+                    }
+                    else
+                    {
+                        eDate = Convert.ToDateTime(bDate);
+                        bDay = eDate.Day.ToString("00");
+                        bMonth = eDate.Month.ToString("00");
+
+                        ibYear = Convert.ToInt32(eDate.Year) + 543;
+                        bYear = ibYear.ToString("0000");
                     }
                     }
 
                     <h3 class="box-title">Booking</h3><br />
-                    (Search Between @aDate To @bDate)
+                    (Search Between @aDay/@aMonth/@aYear To @bDay/@bMonth/@bYear)
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -62,16 +105,13 @@
                     </div>
                 </div>
                 <form action="/LMS/JobOrder" method="get" onsubmit="return chk_form()">
-                    @{
-                        DateTime sDate = DateTime.Now;
-                        DateTime eDate = DateTime.Now;
-                    }
+                   
                     <div class="box-header with-border">
                         <div class="col-md-4">
                             <label>Travel Date Form</label>
                             <div class="input-group date">
                                 <input type="text" class="form-control" name="sDate" id="sDate" data-select="datepicker"
-                                       data-val="true" data-val-required="Date is required" value="@aDate">
+                                       data-val="true" data-val-required="Date is required" value="@aDay/@aMonth/@aYear">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-success" data-toggle="datepicker">
                                         <i class="fa fa-calendar"></i>
@@ -90,7 +130,7 @@
                             <label>Travel Date To</label>
                             <div class="input-group date">
                                 <input type="text" class="form-control" name="eDate" id="eDate" data-select="datepicker"
-                                       data-val="true" data-val-required="Date is required" value="@bDate">
+                                       data-val="true" data-val-required="Date is required" value="@bDay/@bMonth/@bYear">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-success" data-toggle="datepicker">
                                         <i class="fa fa-calendar"></i>
@@ -170,10 +210,13 @@
                                         SClass = "label label-danger";
                                     }
 
+                                    String sDay = item.Date.Day.ToString("00");
+                                    String sMonth = item.Date.Month.ToString("00");
+                                    String sYear = item.Date.Year.ToString("0000");
 
                                     <tr onmouseover="ChangeBackgroundColor(this)" onmouseout="RestoreBackgroundColor(this)">
                                         <td><a href="/LMS/JobOrderInfo?BID=@item.BookingID">@item.BookingID</a></td>
-                                        <td>@item.Date.ToString("dd/MM/yyyy")</td>
+                                        <td>@sDay/@sMonth/@sYear</td>
                                         <td>@item.Time</td>
                                         <td>@item.DTitle @item.DName &nbsp; @item.DLastName</td>
                                         <td>@ServiceName</td>

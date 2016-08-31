@@ -25,7 +25,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2016 14:53:15</publishTime>
     </File>
     <File Include="bin/LMS.dll">
-      <publishTime>08/05/2016 01:36:22</publishTime>
+      <publishTime>09/01/2016 06:10:29</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>04/25/2016 14:01:04</publishTime>
@@ -3562,7 +3562,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2016 14:04:04</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>06/09/2016 20:31:12</publishTime>
+      <publishTime>08/26/2016 23:54:08</publishTime>
     </File>
     <File Include="Views/LMS/advanced.html">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -3570,32 +3570,38 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/LMS/AfterLogin.cshtml">
       <publishTime>05/05/2016 18:38:13</publishTime>
     </File>
+    <File Include="Views/LMS/BackBooking.cshtml">
+      <publishTime>08/21/2016 23:13:10</publishTime>
+    </File>
     <File Include="Views/LMS/Booking.cshtml">
-      <publishTime>02/08/2016 02:52:43</publishTime>
+      <publishTime>08/26/2016 14:58:29</publishTime>
     </File>
     <File Include="Views/LMS/BookingCommit.cshtml">
       <publishTime>03/05/2016 04:11:54</publishTime>
     </File>
     <File Include="Views/LMS/BookingDetail.cshtml">
-      <publishTime>02/08/2016 04:17:37</publishTime>
+      <publishTime>08/27/2016 01:39:46</publishTime>
     </File>
     <File Include="Views/LMS/BookingInfo.cshtml">
-      <publishTime>05/08/2016 00:07:03</publishTime>
+      <publishTime>08/10/2016 04:53:17</publishTime>
     </File>
     <File Include="Views/LMS/BookingPrint.cshtml">
-      <publishTime>05/08/2016 00:07:14</publishTime>
+      <publishTime>08/10/2016 04:54:53</publishTime>
     </File>
     <File Include="Views/LMS/Car.cshtml">
       <publishTime>05/26/2016 00:38:02</publishTime>
     </File>
     <File Include="Views/LMS/CarList.cshtml">
-      <publishTime>07/28/2016 19:53:15</publishTime>
+      <publishTime>09/01/2016 06:04:08</publishTime>
+    </File>
+    <File Include="Views/LMS/CBooking.cshtml">
+      <publishTime>08/19/2016 13:16:36</publishTime>
     </File>
     <File Include="Views/LMS/Driver.cshtml">
       <publishTime>05/26/2016 00:01:56</publishTime>
     </File>
     <File Include="Views/LMS/DriverList.cshtml">
-      <publishTime>07/28/2016 19:51:22</publishTime>
+      <publishTime>09/01/2016 06:04:43</publishTime>
     </File>
     <File Include="Views/LMS/EditCar.cshtml">
       <publishTime>05/26/2016 00:38:14</publishTime>
@@ -3604,34 +3610,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/26/2016 00:02:33</publishTime>
     </File>
     <File Include="Views/LMS/Index.cshtml">
-      <publishTime>08/03/2016 02:32:32</publishTime>
+      <publishTime>08/26/2016 22:39:44</publishTime>
     </File>
     <File Include="Views/LMS/InvoiceCommit.cshtml">
       <publishTime>07/06/2016 01:21:03</publishTime>
     </File>
     <File Include="Views/LMS/InvoiceInfo.cshtml">
-      <publishTime>08/03/2016 02:13:39</publishTime>
+      <publishTime>08/19/2016 14:09:56</publishTime>
     </File>
     <File Include="Views/LMS/InvoiceList.cshtml">
-      <publishTime>07/28/2016 18:08:28</publishTime>
+      <publishTime>08/10/2016 04:16:43</publishTime>
     </File>
     <File Include="Views/LMS/InvoiceNew.cshtml">
-      <publishTime>07/28/2016 18:14:21</publishTime>
+      <publishTime>08/10/2016 05:24:44</publishTime>
     </File>
     <File Include="Views/LMS/InvoicePrint.cshtml">
-      <publishTime>08/03/2016 01:28:19</publishTime>
+      <publishTime>08/19/2016 13:33:35</publishTime>
     </File>
     <File Include="Views/LMS/InvoiceSub.cshtml">
       <publishTime>08/03/2016 00:28:35</publishTime>
     </File>
     <File Include="Views/LMS/JobOrder.cshtml">
-      <publishTime>08/03/2016 02:55:04</publishTime>
+      <publishTime>08/19/2016 13:19:18</publishTime>
     </File>
     <File Include="Views/LMS/JobOrderInfo.cshtml">
-      <publishTime>08/03/2016 02:51:09</publishTime>
+      <publishTime>08/19/2016 13:24:32</publishTime>
     </File>
     <File Include="Views/LMS/JobOrderPrint.cshtml">
-      <publishTime>08/03/2016 02:50:57</publishTime>
+      <publishTime>08/19/2016 13:27:51</publishTime>
     </File>
     <File Include="Views/LMS/Login.cshtml">
       <publishTime>05/05/2016 23:02:51</publishTime>
@@ -3658,31 +3664,31 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/28/2016 19:49:30</publishTime>
     </File>
     <File Include="Views/LMS/ReceiptInfo.cshtml">
-      <publishTime>08/03/2016 02:20:44</publishTime>
+      <publishTime>08/19/2016 13:36:58</publishTime>
     </File>
     <File Include="Views/LMS/ReceiptInvoice.cshtml">
-      <publishTime>07/28/2016 18:08:49</publishTime>
+      <publishTime>08/10/2016 05:14:12</publishTime>
     </File>
     <File Include="Views/LMS/ReceiptList.cshtml">
-      <publishTime>07/28/2016 18:01:45</publishTime>
+      <publishTime>08/10/2016 04:18:40</publishTime>
     </File>
     <File Include="Views/LMS/ReceiptNew.cshtml">
-      <publishTime>06/07/2016 12:23:35</publishTime>
+      <publishTime>08/19/2016 13:49:38</publishTime>
     </File>
     <File Include="Views/LMS/ReceiptPrint.cshtml">
-      <publishTime>08/03/2016 02:05:38</publishTime>
+      <publishTime>08/19/2016 13:37:33</publishTime>
     </File>
     <File Include="Views/LMS/ReportBooking.cshtml">
-      <publishTime>08/03/2016 02:53:37</publishTime>
+      <publishTime>08/18/2016 15:48:35</publishTime>
     </File>
     <File Include="Views/LMS/ReportInvoice.cshtml">
-      <publishTime>08/03/2016 02:57:49</publishTime>
+      <publishTime>08/18/2016 16:12:43</publishTime>
     </File>
     <File Include="Views/LMS/ReportReceipt.cshtml">
-      <publishTime>08/03/2016 02:57:29</publishTime>
+      <publishTime>08/18/2016 16:14:20</publishTime>
     </File>
     <File Include="Views/LMS/test.cshtml">
-      <publishTime>04/29/2016 13:32:36</publishTime>
+      <publishTime>08/18/2016 15:09:08</publishTime>
     </File>
     <File Include="Views/LMS/TestMail.cshtml">
       <publishTime>03/05/2016 23:03:47</publishTime>
@@ -3691,7 +3697,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2016 14:00:55</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/28/2016 19:35:44</publishTime>
+      <publishTime>08/27/2016 01:22:08</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutLogIn.cshtml">
       <publishTime>04/25/2016 23:44:59</publishTime>
@@ -3703,7 +3709,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/25/2016 14:00:55</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/30/2016 01:32:08</publishTime>
+      <publishTime>08/27/2016 01:22:47</publishTime>
     </File>
   </ItemGroup>
 </Project>

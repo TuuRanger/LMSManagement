@@ -29,6 +29,13 @@
         SType = "Sale Visit";
     }
 
+    String sDay = item.Date.Day.ToString("00");
+    String sMonth = item.Date.Month.ToString("00");
+    String sYear = item.Date.Year.ToString("0000");
+
+    String bDay = item.BookingDate.Day.ToString("00");
+    String bMonth = item.BookingDate.Month.ToString("00");
+    String bYear = item.BookingDate.Year.ToString("0000");
 
     <section class="invoice">
 
@@ -56,7 +63,7 @@
                     <tr>
                         <td  width="50%" valign="top">
                             <br />
-                            <b>วันที่ / Date :</b> &nbsp; @item.Date.ToString("dd/MM/yyyy")
+                            <b>วันที่ / Date :</b> &nbsp; @bDay/@bMonth/@bYear
                            
                             <br />
                         </td>
@@ -82,7 +89,7 @@
                             <br />
                             <b>เที่ยวบิน :</b>&nbsp;@item.FlightNo &nbsp; @item.FlightTime
                             <br />
-                            <b>วันที่นัด :</b>&nbsp;@item.Date.ToString("dd/MM/yyyy")
+                            <b>วันที่นัด :</b>&nbsp;@sDay/@sMonth/@sYear
                             <br />
                             <b>เวลานัด :</b>&nbsp;@item.Time
                         </td>

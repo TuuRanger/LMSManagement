@@ -1,4 +1,4 @@
-﻿@model Tuple<LMS.Models.dBookingDetail, List<LMS.Models.SaleVistDetail>>
+﻿@model Tuple<LMS.Models.dBookingDetail, List<LMS.Models.SaleVistDetail>,LMS.Models.SessionBookingD>
 @{
     ViewBag.Title = "Booking Detail";
     //Layout = "~/Views/Shared/_LayoutLogIn.cshtml";
@@ -18,8 +18,31 @@
 <section class="content">
     @*<form action="page.cgi" method="post" name="form1" onsubmit="JavaScript:return fncSubmit();">*@
         <form action="/LMS/BookingCommit" method="post" name="form1" onsubmit="JavaScript: return fncSubmit();">
-@{var item = Model.Item1;}
+            @{ string UserFullName = "";
+             string UserType = "0";
+             string UserID = "0";
+             string UserTypeName = "";
+             string AgentID = "";
+             if (HttpContext.Current.Session["LogedUserFullname"] != null)
+             {
+                 UserFullName = HttpContext.Current.Session["LogedUserFullname"].ToString();
+                 AgentID = HttpContext.Current.Session["LogedAgentID"].ToString();
+                 UserType = HttpContext.Current.Session["LogedUserType"].ToString();
+                 UserID = HttpContext.Current.Session["LogedUserID"].ToString();
 
+                 if (UserType == "1")
+                 {
+                     UserTypeName = "Internal";
+                 }
+                 else if (UserType == "2")
+                 {
+                     UserTypeName = "Sub Agent";
+                 }
+             }
+
+            }
+@{var item = Model.Item1;}
+@{var sbitem = Model.Item3;}
 
             <div class="row">
                 <div class="col-md-7">
@@ -41,40 +64,59 @@
                             <div class="form-group">
                                 <label>Title</label>
                                 <select class="form-control" id="Title" name="Title">
+                             
+                                       @if (sbitem.Title == "Mr")
+                                        {
+                                            <option selected value="Mr">Mr.</option>
+                                            <option value="Ms">Ms.</option>
+                                            <option value="Mrs">Mrs.</option>
+                                        }
 
-                                    <option value="Mr">Mr.</option>
-                                    <option value="Ms">Ms.</option>
-                                    <option value="Mrs">Mrs.</option>
+                                        else if (sbitem.Title == "Ms")
+                                        {
+                                            <option value="Mr">Mr.</option>
+                                            <option selected value="Ms">Ms.</option>
+                                            <option value="Mrs">Mrs.</option>
 
+                                        }
+                                        else if (sbitem.Title == "Mrs")
+                                        {
+                                            <option value="Mr">Mr.</option>
+                                            <option value="Ms">Ms.</option>
+                                            <option selected value="Mrs">Mrs.</option>
+
+                                        }
+
+                            
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>First Name<font style="color:red">&nbsp;&nbsp;&nbsp;*Required</font></label>
-                                <input id="FirstName" name="FirstName" type="text" class="form-control">
+                                <input id="FirstName" name="FirstName" type="text" class="form-control" value="@sbitem.FirstName">
                             </div>
                             <div class="form-group">
                                 <label>Last Name<font style="color:red">&nbsp;&nbsp;&nbsp;*Required</font></label>
-                                <input id="LastName" name="LastName" type="text" class="form-control">
+                                <input id="LastName" name="LastName" type="text" class="form-control" value="@sbitem.LastName">
                             </div>
                             <div class="form-group">
-                                <label>Address<font style="color:red">&nbsp;&nbsp;&nbsp;*Required</font></label>
-                                <textarea id="Address" name="Address" class="form-control" rows="3"></textarea>
+                                <label>Address</label>
+                                <textarea id="Address" name="Address" class="form-control" rows="3">@sbitem.Address</textarea>
                             </div>
                             <div class="form-group">
                                 <label>E-Mail<font style="color:red">&nbsp;&nbsp;&nbsp;*Required</font></label>
-                                <input id="Email" name="Email" type="text" class="form-control">
+                                <input id="Email" name="Email" type="text" class="form-control" value="@sbitem.Email">
                             </div>
                             <div class="form-group">
                                 <label>Telephone</label>
-                                <input id="Telephone" name="Telephone" type="text" class="form-control" placeholder="Enter ...">
+                                <input id="Telephone" name="Telephone" type="text" class="form-control" value="@sbitem.Telephone">
                             </div>
                             <div class="form-group">
-                                <label>Moblie<font style="color:red">&nbsp;&nbsp;&nbsp;*Required</font></label>
-                                <input id="Mobile" name="Mobile" type="text" class="form-control">
+                                <label>Mobile<font style="color:red">&nbsp;&nbsp;&nbsp;*Required</font></label>
+                                <input id="Mobile" name="Mobile" type="text" class="form-control" value="@sbitem.Mobile">
                             </div>
                             <div class="form-group">
                                 <label>Remark</label>
-                                <textarea id="Remark" name="Remark" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                <textarea id="Remark" name="Remark" class="form-control" rows="3" placeholder="Enter ...">@sbitem.Remark</textarea>
                             </div>
                             @*@if (@Model.CustomerType == 1)
                                 {
@@ -116,8 +158,15 @@
                                 @*  <a href="javascript:void(0)" class="btn btn-sm btn-success btn-flat pull-right">Confirm</a>*@
                                 @*  <a href="#" class="btn btn-success btn-block"><b>Confirm</b></a>*@
                              @*   <input name="btnSubmit1" type="submit" value="Submit">*@
-                                <button type="submit" class="btn btn-success btn-block" data-animation-type="bounce" data-animation-duration="1" style="animation-duration: 1s; visibility: visible;">Confirm</button>
-                            </div>
+                                <div class="col-md-4">
+                                    <button type="submit" name="submitButton" value="Back" class="btn btn-warning btn-block" data-animation-type="bounce" data-animation-duration="1" style="animation-duration: 1s; visibility: visible;">Back</button>
+                               </div>
+                                <div class="col-md-8">
+                                    <button type="submit" name="submitButton" value="Commit" class="btn btn-success btn-block" data-animation-type="bounce" data-animation-duration="1" style="animation-duration: 1s; visibility: visible;">Confirm</button>
+                                </div>
+    
+                                 
+                                </div>
 
                         </div>
                         <!-- /.box-body -->
@@ -166,32 +215,86 @@
 
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>Customer</b> <a class="pull-right">@CustomerName (@item.AgentName)</a>
+                                 @*   <b>Customer</b> <a class="pull-right">@CustomerName (@item.AgentName)</a>*@
+                                    <b>Customer</b><a class="pull-right">@CustomerName</a>
+                                    <div class="post">
+
+                                        <p>
+                                            <a class="pull-right">@item.AgentName</a>
+                                            <br>
+                                        </p>
+
+                                    </div>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Service</b> <a class="pull-right">@ServiceName</a>
                                 </li>
                                 @if (@item.ServiceType != 3)
                                 {
+                                    
                                     <li class="list-group-item">
                                         @if (@item.FromID == 999)
                                         {
-                                            <b>From</b> <a class="pull-right">Others</a>
+                                            @*<b>From</b> <a class="pull-right">Others</a>*@
+    <b>From</b>    <a class="pull-right">Others</a>
+    <div class="post">
+
+        <p>
+            <a class="pull-right">
+                @item.FromRemark
+            </a>
+            <br>
+        </p>
+
+    </div>
                                         }
                                         else
                                         {
-                                            <b>From</b> <a class="pull-right">@item.FromDetail</a>
+                                            @*<b>From</b> <a class="pull-right">@item.FromDetail</a>*@
+    <b>From</b>    <a class="pull-right">@item.FromDetail</a>
+    <div class="post">
+
+        <p>
+            <a class="pull-right">
+                @item.FromRemark
+            </a>
+            <br>
+        </p>
+
+    </div>
                                         }
 
                                     </li>
                                     <li class="list-group-item">
                                         @if (@item.ToID == 999)
                                         {
-                                            <b>To</b> <a class="pull-right">Others</a>
+                                            @*<b>To</b> <a class="pull-right">Others</a>*@
+    <b>To</b>    <a class="pull-right">Others</a>
+    <div class="post">
+
+        <p>
+            <a class="pull-right">
+                @item.ToRemark
+            </a>
+            <br>
+        </p>
+
+    </div>
                                         }
                                         else
                                         {
-                                            <b>To</b> <a class="pull-right">@item.ToDetail</a>
+                                            @*<b>To</b> <a class="pull-right">@item.ToDetail</a>*@
+                                            <b>To</b>    <a class="pull-right">@item.ToDetail</a>
+                                            <div class="post">
+
+                                                <p>
+                                                    <a class="pull-right">
+                                                        @item.ToRemark
+                                                    </a>
+                                                    <br>
+                                                </p>
+
+                                            </div>
                                         }
 
                                     </li>
@@ -214,7 +317,12 @@
                                     <div class="post">
 
                                         <p>
-                                            @item.FlightNo
+                                          
+
+                                            <a class="pull-right">
+                                                @item.FlightNo
+                                            </a>
+                                            <br>
                                         </p>
 
                                     </div>
@@ -260,9 +368,12 @@
 
                                        string lNum = dNum + ".";
                                      
-                                   @lNum@itemS.RouteDetail
-                                     
-                                       <br />
+                                 
+    <a class="pull-left">
+        @lNum@itemS.RouteDetail
+    </a>
+    <br>
+                                    
                                        dNum = dNum+1;
                                    }
                                 </p>
@@ -355,20 +466,41 @@
                                     </li>
                                 }
 
-                                <li class="list-group-item">
-                                    <b>Total (@item.Currency)</b> <a class="pull-right"><input type="text" id="Price" name="Price" style="text-align:right" placeholder="@item.Price" value="@Price.ToString("#,###.00")"></a>
+                                @if (UserType == "1")
+                                {
+                                    <li class="list-group-item">
+                                        <b>Total (@item.Currency)</b> <a class="pull-right"><input type="text" id="Price" name="Price" style="text-align:right" placeholder="@item.Price" value="@Price.ToString("####.00")" onkeypress="return isNumberKey(event)"></a>
 
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Discount (@item.Currency)</b> <a class="pull-right"><input type="text" id="Discount" name="Discount" style="text-align:right" placeholder="@item.Discount" value="@Discount.ToString("#,###.00")"></a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Discount (@item.Currency)</b> <a class="pull-right"><input type="text" id="Discount" name="Discount" style="text-align:right" placeholder="@item.Discount" value="@Discount.ToString("####.00")" onkeypress="return isNumberKey(event)"></a>
 
-                                </li>
+                                    </li>
 
 
-                                <li class="list-group-item">
-                                    <b>Grand Total (@item.Currency)</b> <a class="pull-right"><input type="text" id="TotalPrice" name="TotalPrice" style="text-align:right" placeholder="@SumPrice" value="@SumPrice.ToString("#,###.00")"></a>
+                                    <li class="list-group-item">
+                                        <b>Grand Total (@item.Currency)</b> <a class="pull-right"><input type="text" id="TotalPrice" name="TotalPrice" style="text-align:right" placeholder="@SumPrice" value="@SumPrice.ToString("####.00")" onkeypress="return isNumberKey(event)"></a>
 
-                                </li>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="list-group-item">
+                                        <b>Total (@item.Currency)</b> <a class="pull-right"><input type="text" id="Price" name="Price" style="text-align:right" placeholder="@item.Price" value="@Price.ToString("####.00")" readonly></a>
+
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Discount (@item.Currency)</b> <a class="pull-right"><input type="text" id="Discount" name="Discount" style="text-align:right" placeholder="@item.Discount" value="@Discount.ToString("####.00")" readonly></a>
+
+                                    </li>
+
+
+                                    <li class="list-group-item">
+                                        <b>Grand Total (@item.Currency)</b> <a class="pull-right"><input type="text" id="TotalPrice" name="TotalPrice" style="text-align:right" placeholder="@SumPrice" value="@SumPrice.ToString("####.00")" readonly></a>
+
+                                    </li>
+                                }
+                               
 
 
                             </ul>
@@ -408,14 +540,14 @@
             document.form1.LastName.focus();
             return false;
         }
-        if (document.form1.Address.value == "") {
-            alert('Please input Address');
+        //if (document.form1.Address.value == "") {
+        //    alert('Please input Address');
 
-            document.form1.Address.focus();
+        //    document.form1.Address.focus();
 
-            return false;
+        //    return false;
 
-        }
+        //}
         if (document.form1.Email.value == "") {
             alert('Please input Email');
 
@@ -437,4 +569,19 @@
     }
 
 </script>
+<script language="JavaScript" type="text/javascript">
+
+    function isNumberKey(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+
+    }
+</script>
+
+
 
